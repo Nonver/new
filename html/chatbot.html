@@ -644,1420 +644,541 @@ function renderBlock(body, item) {
 
 // ==================== 模板数据（来自 data/*.sample.json） ====================
 var TPL_DATA = {
-  "care_advice_card": {
-    "badge": "个性化调理方案",
-    "elderName": "张明华",
-    "constitution": "血瘀质",
-    "syndrome": "肝阳上亢兼血瘀",
-    "planTime": "2026-07-28",
-    "aiNote": "AI 生成 · 基于体质与证候的康养建议，仅供参考，执行前请咨询医师",
-    "herbal_count": 2,
-    "herbal": [
-      {
-        "name": "天麻钩藤饮",
-        "tag": "平肝潜阳",
-        "content": "清热安神、平肝熄风，适用于肝阳上亢所致头晕头痛、急躁易怒。每日 1 剂，分两次温服。"
-      },
-      {
-        "name": "血府逐瘀汤",
-        "tag": "活血化瘀",
-        "content": "活血化瘀、行气止痛，改善面色晦暗与舌质偏暗。建议在医师辨证后使用，连服 2 周复诊。"
-      }
-    ],
-    "acupoints_count": 4,
-    "acupoints": [
-      {
-        "name": "太冲穴",
-        "tag": "平肝熄风",
-        "content": "位于足背第一、二跖骨间，每日按揉 3 分钟，以局部酸胀为度。"
-      },
-      {
-        "name": "曲池穴",
-        "tag": "降压通络",
-        "content": "屈肘成直角，肘横纹外侧端，早晚各按揉 2 分钟，有助辅助降压。"
-      },
-      {
-        "name": "百会穴",
-        "tag": "醒脑开窍",
-        "content": "头顶正中线与两耳尖连线交点，轻柔点按 2 分钟，缓解头晕昏沉。"
-      },
-      {
-        "name": "合谷穴",
-        "tag": "通络止痛",
-        "content": "手背第一、二掌骨间，配合太冲穴同用（开四关），缓解头部胀痛。"
-      }
-    ],
-    "dietary_count": 4,
-    "dietary": [
-      {
-        "name": "低盐低脂饮食",
-        "tag": "日常",
-        "content": "每日食盐控制在 5g 以内，减少动物油脂与腌制食品摄入。"
-      },
-      {
-        "name": "活血降压食材",
-        "tag": "宜食",
-        "content": "多食芹菜、黑木耳、山楂、洋葱，有助活血通脉、辅助控压。"
-      },
-      {
-        "name": "少食辛辣油腻",
-        "tag": "节制",
-        "content": "减少烧烤、油炸与浓茶咖啡，晚餐七分饱为宜。"
-      },
-      {
-        "name": "严格忌烟酒",
-        "tag": "禁忌",
-        "content": "烟酒会加重血管痉挛与肝阳上亢，建议完全戒除。"
-      }
-    ],
-    "exercise_count": 3,
-    "exercise": [
-      {
-        "name": "太极拳",
-        "tag": "舒缓",
-        "content": "每日 20 分钟，动作舒缓不憋气，注重呼吸配合。"
-      },
-      {
-        "name": "步行锻炼",
-        "tag": "有氧",
-        "content": "每日散步 30 分钟，速度以能正常交谈为宜，心率不超过 110 次/分。"
-      },
-      {
-        "name": "运动禁忌",
-        "tag": "注意",
-        "content": "避免剧烈运动、快速转头与屏气用力动作，运动前后监测血压。"
-      }
-    ],
-    "contraindications": [
-      {
-        "type": "饮食",
-        "items": "忌高盐高脂、忌烟酒、忌暴饮暴食"
-      },
-      {
-        "type": "生活",
-        "items": "避免情绪激动、避免熬夜、避免骤然起身与冷水洗浴"
-      },
-      {
-        "type": "用药",
-        "items": "降压药不可擅自停用或调整剂量，中西药需间隔 1 小时服用"
-      }
-    ],
-    "followUp": "建议 2 周后复诊评估调理效果，期间每日早晚各测量一次血压并记录；若出现持续头痛、视物模糊或肢体麻木，请立即就医。",
-    "sourceLabel": "体质辨识 + 中医证候模型"
-  },
-  "constitution_card": {
-    "badge": "中医九种体质辨识",
-    "elderName": "张阿姨",
-    "elderAge": "72岁",
-    "method": "舌诊 + 问卷",
-    "assessTime": "2026-07-30",
-    "primary_constitution": "血瘀质",
-    "primaryScore": 62,
-    "primaryLevel": "倾向明显",
-    "primaryDesc": "血瘀质以血行不畅、瘀血内停为主要特征，常见面色晦暗、唇色偏紫、肌肤干燥、易生瘀斑，宜活血化瘀、畅通气机。",
-    "constitutions_count": 9,
-    "constitutions": [
-      {
-        "name": "血瘀质 ★",
-        "level": "主体质",
-        "score": 62,
-        "barClass": "bad",
-        "note": "得分最高，为本次判定的主体质"
-      },
-      {
-        "name": "阴虚质",
-        "level": "兼夹",
-        "score": 55,
-        "barClass": "warn",
-        "note": "口干咽燥、夜间盗汗倾向"
-      },
-      {
-        "name": "痰湿质",
-        "level": "兼夹",
-        "score": 45,
-        "barClass": "warn",
-        "note": "形体偏胖、肢体困重"
-      },
-      {
-        "name": "湿热质",
-        "level": "轻度",
-        "score": 40,
-        "barClass": "",
-        "note": ""
-      },
-      {
-        "name": "气郁质",
-        "level": "轻度",
-        "score": 35,
-        "barClass": "",
-        "note": ""
-      },
-      {
-        "name": "气虚质",
-        "level": "轻度",
-        "score": 35,
-        "barClass": "",
-        "note": ""
-      },
-      {
-        "name": "平和质",
-        "level": "偏低",
-        "score": 30,
-        "barClass": "",
-        "note": "平和质偏低，整体调养空间较大"
-      },
-      {
-        "name": "阳虚质",
-        "level": "轻度",
-        "score": 25,
-        "barClass": "",
-        "note": ""
-      },
-      {
-        "name": "特禀质",
-        "level": "不明显",
-        "score": 15,
-        "barClass": "",
-        "note": ""
-      }
-    ],
-    "tendencies": [
-      {
-        "name": "阴虚质",
-        "score": 55,
-        "pillClass": "warn",
-        "itemClass": "warn",
-        "desc": "与主体质血瘀相互影响，表现为舌暗少津、手足心热。"
-      },
-      {
-        "name": "痰湿质",
-        "score": 45,
-        "pillClass": "warn",
-        "itemClass": "",
-        "desc": "舌体偏胖、苔腻，建议控制油腻甜食并增加活动量。"
-      }
-    ],
-    "suggestions_count": 3,
-    "suggestions": [
-      {
-        "aspect": "饮食调养",
-        "tagLabel": "优先",
-        "pillClass": "ok",
-        "content": "适量食用山楂、黑木耳、玫瑰花茶等活血食材，少食生冷油腻。"
-      },
-      {
-        "aspect": "起居运动",
-        "tagLabel": "建议",
-        "pillClass": "ok",
-        "content": "每日快走或八段锦 30 分钟，避免久坐久卧，注意保暖防寒。"
-      },
-      {
-        "aspect": "情志调摄",
-        "tagLabel": "建议",
-        "pillClass": "blue",
-        "content": "保持心情舒畅，避免郁怒；可通过书法、园艺等舒缓活动疏肝理气。"
-      }
-    ],
-    "reminder": "体质辨识为阶段性倾向判断，若近期出现头晕头痛、胸闷心悸等不适，请及时到医疗机构就诊。",
-    "sourceLabel": "AI 生成 · 基于舌诊与问卷的中医九种体质辨识"
-  },
-  "dietary_regimen_card": {
-    "sectionBadge": "膳食调养",
-    "title": "食疗调养方案",
-    "elderName": "张明华",
-    "constitution": "气郁质兼脾虚",
-    "planTime": "2026-07-28",
-    "dietaryAdvice": "宜食用清淡、易消化、富含优质蛋白及膳食纤维的食物，如小米、山药、莲子、百合、绿叶蔬菜、鱼类等；三餐定时定量，细嚼慢咽。",
-    "dietaryAvoid": "忌食辛辣刺激、油腻煎炸、生冷寒凉及过甜过咸食物，如辣椒、烧烤、冰淇淋、肥肉等；晚餐不宜过饱。",
-    "principles": [
-      "少食多餐",
-      "低盐低脂",
-      "温热为宜",
-      "疏肝理气",
-      "健脾和胃",
-      "睡前 2 小时不进食"
-    ],
-    "recipes_count": 3,
-    "recipes": [
-      {
-        "recipeEmoji": "🍵",
-        "recipeTitle": "三花橘皮茶",
-        "recipeTag": "代茶饮",
-        "recipePill": "ok",
-        "recipeMedicine": "菊花、茉莉花、玫瑰花各 3g",
-        "recipeIngredients": "陈皮 5g、枸杞 6 粒、冰糖适量",
-        "recipeMethod": "将药材与食材洗净后放入杯中，沸水冲泡 5–8 分钟，可反复冲泡 2–3 次。",
-        "recipeEffect": "疏肝理气、健脾和胃，适合情志不畅、腹胀食少者日常调养。",
-        "recipeSource": "《常见病食疗方》"
-      },
-      {
-        "recipeEmoji": "🥣",
-        "recipeTitle": "山药小米粥",
-        "recipeTag": "主食粥品",
-        "recipePill": "ok",
-        "recipeMedicine": "怀山药 30g",
-        "recipeIngredients": "小米 50g、红枣 4 枚、清水适量",
-        "recipeMethod": "小米淘洗后加水煮开，加入去皮山药块与红枣，转小火熬煮 30 分钟至粘稠即可。",
-        "recipeEffect": "健脾益胃、养心安神，有助于改善睡眠不佳、食少腹胀。",
-        "recipeSource": "《中医食疗养生手册》"
-      },
-      {
-        "recipeEmoji": "🍲",
-        "recipeTitle": "百合莲子汤",
-        "recipeTag": "甜汤",
-        "recipePill": "blue",
-        "recipeMedicine": "干百合 15g、莲子 20g",
-        "recipeIngredients": "银耳 10g、冰糖适量",
-        "recipeMethod": "银耳提前泡发撕小朵，与百合、莲子同煮 40 分钟至软糯，出锅前加冰糖调味。",
-        "recipeEffect": "润肺宁心、清心安神，适合情志不畅、睡眠欠佳者。",
-        "recipeSource": "《药膳食疗精选》"
-      }
-    ],
-    "tips": [
-      {
-        "tipTitle": "服用时机",
-        "tipText": "药膳宜餐后 30 分钟温服；胃寒者不宜空腹饮用花草代茶饮。"
-      },
-      {
-        "tipTitle": "食用周期",
-        "tipText": "建议连续调养 2–4 周后复评，症状缓解可减量维持。"
-      },
-      {
-        "tipTitle": "个体差异",
-        "tipText": "糖尿病人群请去除冰糖；对花粉过敏者慎用三花橘皮茶。"
-      }
-    ],
-    "notice": "药膳配方需在中医师辨证指导下使用，孕妇、过敏体质及正在服药人群请先咨询医师。",
-    "sourceLabel": "体质辨识 + 中医食疗方库"
-  },
-  "elder_duplicate_confirm_card": {
-    "badge": "同名老人确认",
-    "name": "王秀兰",
-    "count": 2,
-    "queryTime": "2026-07-30 18:20",
-    "notice": "系统发现 2 位名为「王秀兰」的老人，为避免评估对象错误，请从下方候选中选择正确的一位后再继续。",
-    "candidates": [
-      {
-        "num": 1,
-        "name": "王秀兰",
-        "age": 68,
-        "gender": "女",
-        "pillClass": "blue",
-        "area": "东区1栋",
-        "chronic": "无",
-        "lastAssess": "2026-05-12 · 风险等级：良好",
-        "mark": "档案编号 LR-2018-0631 · 联系人：儿子 王先生"
-      },
-      {
-        "num": 2,
-        "name": "王秀兰",
-        "age": 75,
-        "gender": "女",
-        "pillClass": "warn",
-        "area": "西区3栋",
-        "chronic": "高血压、关节炎",
-        "lastAssess": "2026-07-21 · 风险等级：关注",
-        "mark": "档案编号 LR-2015-0207 · 联系人：女儿 王女士"
-      }
-    ],
-    "tips": [
-      {
-        "label": "年龄差异",
-        "level": "优先核对",
-        "desc": "两位老人相差 7 岁，可先向家属确认实际年龄。"
-      },
-      {
-        "label": "居住区域",
-        "level": "建议核对",
-        "desc": "分别居住在东区1栋与西区3栋，可按楼栋快速区分。"
-      },
-      {
-        "label": "慢病史",
-        "level": "辅助核对",
-        "desc": "一位无慢病记录，另一位有高血压、关节炎既往史。"
-      }
-    ],
-    "quickReplies": [
-      "选第 1 位",
-      "选第 2 位",
-      "都不是，重新搜索",
-      "按档案编号查询"
-    ],
-    "nextStep": "回复候选序号（如「选第 2 位」）即可锁定评估对象；若均不匹配，请提供档案编号或联系人信息重新检索。",
-    "sourceLabel": "老人档案库同名匹配"
-  },
-  "face_observation_card": {
-    "badge": "云诊面象辨识",
-    "elderName": "张阿姨",
-    "elderAge": "72岁",
-    "device": "云诊365 面象仪",
-    "assessTime": "2026-07-30 09:20",
-    "conclusion": "气血不畅 · 面色晦暗",
-    "face_summary": "面色晦暗少泽、唇色暗紫、眼神欠神，提示气血运行不畅，与血瘀体质倾向一致。",
-    "abnormal_count": 5,
-    "abnormalNumClass": "bad",
-    "normal_count": 3,
-    "indicators_count": 8,
-    "face_indicators": [
-      {
-        "name": "面色",
-        "value": "晦暗",
-        "statusLabel": "异常",
-        "valClass": "bad"
-      },
-      {
-        "name": "光泽",
-        "value": "少泽",
-        "statusLabel": "异常",
-        "valClass": "bad"
-      },
-      {
-        "name": "眼神",
-        "value": "欠神",
-        "statusLabel": "异常",
-        "valClass": "warn"
-      },
-      {
-        "name": "黑眼圈",
-        "value": "明显",
-        "statusLabel": "异常",
-        "valClass": "warn"
-      },
-      {
-        "name": "唇色",
-        "value": "暗紫",
-        "statusLabel": "异常",
-        "valClass": "bad"
-      },
-      {
-        "name": "鼻部",
-        "value": "正常",
-        "statusLabel": "正常",
-        "valClass": "ok"
-      },
-      {
-        "name": "耳廓",
-        "value": "正常",
-        "statusLabel": "正常",
-        "valClass": "ok"
-      },
-      {
-        "name": "肤质",
-        "value": "偏干",
-        "statusLabel": "正常",
-        "valClass": "ok"
-      }
-    ],
-    "abnormal_items_count": 2,
-    "abnormal_items": [
-      {
-        "name": "面色晦暗",
-        "levelLabel": "重点关注",
-        "pillClass": "bad",
-        "itemClass": "bad",
-        "desc": "提示气虚阴亏、气血不畅，多见于血瘀或阳虚体质，建议加强活血与作息调养。"
-      },
-      {
-        "name": "唇色暗紫",
-        "levelLabel": "异常",
-        "pillClass": "warn",
-        "itemClass": "warn",
-        "desc": "提示血瘀内停，与舌象偏暗相互印证，需关注心脑血管相关表现。"
-      }
-    ],
-    "crossCheck": "面象「面色晦暗、唇色暗紫」与舌象「舌色偏暗」、体质辨识「血瘀质为主」三者一致，判定可信度较高。",
-    "advice": "建议保持规律作息与适度运动，2 周后复采面象对比；若出现胸闷、心悸等症状请及时就医。",
-    "sourceLabel": "AI 生成 · 云诊面象设备结构化数据"
-  },
-  "health_report_card": {
-    "badge": "完整风险评估报告",
-    "name": "张明华",
-    "age": 72,
-    "gender": "男",
-    "chronic": "高血压（3年）",
-    "dementia": "无",
-    "disability": "无",
-    "id_card": "YL-2026-0001",
-    "reportIntro": "本报告涵盖基础信息、综合风险总评、疾病风险、体质辨识、中医证候、个性化调理、禁忌提醒与维度结论八大模块。",
-    "overall_score": 6.5,
-    "overall_label": "中风险",
-    "overallClass": "warn",
-    "abnormal_count": 4,
-    "conclusion": "多项舌诊指标异常，血瘀体质趋于明显，兼见阴虚与肝郁，建议尽早中医调理干预并规律监测血压。",
-    "quick_indicators": [
-      {
-        "name": "舌色",
-        "value": "偏暗",
-        "statusLabel": "异常",
-        "statusClass": "bad"
-      },
-      {
-        "name": "苔色",
-        "value": "薄黄",
-        "statusLabel": "异常",
-        "statusClass": "bad"
-      },
-      {
-        "name": "舌体",
-        "value": "正常",
-        "statusLabel": "正常",
-        "statusClass": "ok"
-      },
-      {
-        "name": "舌下络脉",
-        "value": "正常",
-        "statusLabel": "正常",
-        "statusClass": "ok"
-      },
-      {
-        "name": "脉象",
-        "value": "弦细",
-        "statusLabel": "异常",
-        "statusClass": "bad"
-      },
-      {
-        "name": "面色",
-        "value": "微黄",
-        "statusLabel": "异常",
-        "statusClass": "bad"
-      }
-    ],
-    "disease_risks": [
-      {
-        "name": "高血压风险",
-        "score": 68,
-        "level": "中",
-        "barClass": "warn"
-      },
-      {
-        "name": "心脑血管疾病风险",
-        "score": 55,
-        "level": "中",
-        "barClass": "warn"
-      },
-      {
-        "name": "中风风险",
-        "score": 42,
-        "level": "中",
-        "barClass": "warn"
-      },
-      {
-        "name": "肝病风险",
-        "score": 45,
-        "level": "中",
-        "barClass": "warn"
-      },
-      {
-        "name": "脾胃病风险",
-        "score": 40,
-        "level": "中",
-        "barClass": ""
-      }
-    ],
-    "primary_constitution": "血瘀质",
-    "constitutions": [
-      {
-        "name": "血瘀质",
-        "score": 62,
-        "mark": "主体质 ★",
-        "barClass": "bad"
-      },
-      {
-        "name": "阴虚质",
-        "score": 55,
-        "mark": "",
-        "barClass": "warn"
-      },
-      {
-        "name": "痰湿质",
-        "score": 45,
-        "mark": "",
-        "barClass": ""
-      },
-      {
-        "name": "湿热质",
-        "score": 40,
-        "mark": "",
-        "barClass": ""
-      },
-      {
-        "name": "气郁质",
-        "score": 35,
-        "mark": "",
-        "barClass": ""
-      }
-    ],
-    "syndrome_name": "肝阳上亢兼血瘀",
-    "syndrome_desc": "肝阳偏亢，血行不畅。舌暗苔薄黄，脉弦细。多见头晕头痛，急躁易怒，面色晦暗。",
-    "herbal": [
-      {
-        "name": "天麻钩藤饮",
-        "content": "平肝潜阳、清热安神，适用于肝阳上亢所致头晕头痛。"
-      },
-      {
-        "name": "血府逐瘀汤",
-        "content": "活血化瘀、行气止痛，改善面色晦暗与舌质偏暗。"
-      }
-    ],
-    "acupoints": [
-      {
-        "name": "太冲",
-        "content": "平肝熄风，每日按揉 3 分钟，以酸胀为度。"
-      },
-      {
-        "name": "曲池",
-        "content": "降压通络，配合合谷穴按揉效果更佳。"
-      },
-      {
-        "name": "百会",
-        "content": "醒脑开窍，早晚各按揉 2 分钟。"
-      },
-      {
-        "name": "合谷",
-        "content": "通络止痛，缓解头部胀痛不适。"
-      }
-    ],
-    "dietary": [
-      {
-        "name": "低盐低脂饮食",
-        "content": "每日食盐控制在 5g 以内，减少动物油脂摄入。"
-      },
-      {
-        "name": "活血食材",
-        "content": "多食芹菜、木耳、山楂，有助于活血降压。"
-      },
-      {
-        "name": "戒烟限酒",
-        "content": "少食辛辣油腻，严格忌烟酒。"
-      }
-    ],
-    "exercise": [
-      {
-        "name": "太极拳",
-        "content": "每日 20 分钟，动作舒缓不憋气。"
-      },
-      {
-        "name": "步行锻炼",
-        "content": "每日散步 30 分钟，心率不超过 110 次/分。"
-      },
-      {
-        "name": "运动禁忌",
-        "content": "避免剧烈运动、避免屏气用力动作。"
-      }
-    ],
-    "contraindications": [
-      {
-        "type": "饮食",
-        "items": "忌高盐高脂、忌烟酒、忌暴饮暴食"
-      },
-      {
-        "type": "生活",
-        "items": "避免情绪激动、避免熬夜、避免骤然起身"
-      },
-      {
-        "type": "用药",
-        "items": "降压药不可擅自停用或调整剂量"
-      }
-    ],
-    "dimension_conclusion": "综合舌诊、脉诊、面诊与问卷数据，老人以血瘀质为主，兼见阴虚与肝郁；疾病风险以高血压及心脑血管事件最为突出；建议以平肝潜阳、活血化瘀为调理主线，配合低盐膳食与情志调摄，每 3 个月复评一次。",
-    "report_code": "TCM-R-20260728-0001",
-    "generate_time": "2026-07-28 09:30",
-    "data_source": "舌诊报告 + 健康问卷 + 居家监测数据",
-    "footer_note": "本报告由人工智能分析生成，仅供健康管理参考，不构成医疗诊断依据；如有不适请及时就医。"
-  },
-  "health_risk_rule_card": {
-    "badge": "风险规则",
-    "elderName": "张阿姨",
-    "ruleLibrary": "健康风险预警规则库",
-    "period": "近 7 天",
-    "assessTime": "2026-07-30 18:20",
-    "rules_count": 3,
-    "topLevel": "预警",
-    "scanCount": 18,
-    "judgement": "本次共扫描 18 条风险规则，命中 3 条，其中「血压持续偏高」为预警级，建议 48 小时内安排家庭医生随访。",
-    "rules": [
-      {
-        "ruleName": "血压持续偏高",
-        "riskLevel": "预警",
-        "levelPill": "bad",
-        "itemClass": "bad",
-        "condition": "收缩压 ≥ 140 mmHg 且持续 ≥ 3 天",
-        "evidence": "近 7 天有 4 天收缩压 ≥ 140 mmHg，最高 152 mmHg"
-      },
-      {
-        "ruleName": "夜间心率异常波动",
-        "riskLevel": "关注",
-        "levelPill": "warn",
-        "itemClass": "warn",
-        "condition": "夜间静息心率 < 60 次/分 且波动幅度 > 15 次/分",
-        "evidence": "近 7 天中 3 晚出现心率低于 60 次/分"
-      },
-      {
-        "ruleName": "服药依从性下降",
-        "riskLevel": "提示",
-        "levelPill": "warn",
-        "itemClass": "",
-        "condition": "近 7 天漏服记录 ≥ 2 次",
-        "evidence": "7 月 26 日、7 月 29 日降压药未打卡"
-      }
-    ],
-    "ruleVersion": "v2.4.1（2026-07 版）",
-    "dataWindow": "2026-07-24 至 2026-07-30",
-    "judgeMode": "本地规则库自动研判",
+  "complaint_detail": {
+    "status": "已处理",
+    "title": "护理员上门迟到32分钟，未提前通知",
+    "complaintId": "CP-20260801-003",
+    "createdAt": "2026-08-01 14:30",
+    "severity": "一般",
+    "complainant": "陈**家属",
+    "orgName": "阳光社区养老服务中心",
+    "staffName": "张美丽",
+    "complaintType": "服务时效",
+    "workOrderNo": "WO-20260801-003",
+    "description": "预约上门护理时间为下午 2 点，护理员实际到达时间为 2 点 32 分，且未提前电话通知，影响老人午休后的护理安排。",
     "timeline": [
       {
-        "time": "2026-07-30 18:05",
-        "node": "数据汇集",
-        "detail": "汇总 4 类设备信号共 86 条采集记录",
-        "stepClass": "done"
-      },
-      {
-        "time": "2026-07-30 18:12",
-        "node": "规则扫描",
-        "detail": "对 18 条风险规则逐条比对，命中 3 条",
-        "stepClass": "done"
-      },
-      {
-        "time": "2026-07-30 18:18",
-        "node": "等级判定",
-        "detail": "取最高命中等级，判定整体风险为「预警」",
+        "time": "08-01 14:30",
+        "node": "投诉提交",
+        "detail": "家属通过老人端提交投诉",
         "stepClass": "bad"
       },
       {
-        "time": "2026-07-30 18:20",
-        "node": "生成建议",
-        "detail": "输出处置建议并推送至家属与护理员",
+        "time": "08-01 15:00",
+        "node": "系统分派",
+        "detail": "投诉自动派发至机构管理员",
         "stepClass": ""
-      }
-    ],
-    "nextSteps": "建议 48 小时内联系家庭医生复核血压趋势；每日早晚定时测量并记录，同时提醒老人按时服药。",
-    "sourceLabel": "健康风险预警规则库"
-  },
-  "health_risk_signal_card": {
-    "badge": "设备信号",
-    "elderName": "张阿姨",
-    "deviceScope": "居家监测设备",
-    "period": "近 7 天",
-    "assessTime": "2026-07-30 18:20",
-    "signals_count": 4,
-    "abnormalCount": 2,
-    "normalCount": 2,
-    "summary": "近 7 天共采集 4 项设备信号，其中血压、夜间心率两项持续偏离参考范围，建议加强居家观察并按时复测。",
-    "signals": [
-      {
-        "type": "血压",
-        "value": "148/92 mmHg",
-        "status_label": "异常",
-        "statusPill": "bad",
-        "itemClass": "bad",
-        "source": "本地血压计",
-        "reference": "收缩压 90–139 / 舒张压 60–89 mmHg"
       },
       {
-        "type": "夜间心率",
-        "value": "58 次/分",
-        "status_label": "偏低",
-        "statusPill": "warn",
-        "itemClass": "warn",
-        "source": "智能手环",
-        "reference": "静息 60–100 次/分"
-      },
-      {
-        "type": "空腹血糖",
-        "value": "6.1 mmol/L",
-        "status_label": "正常",
-        "statusPill": "ok",
-        "itemClass": "ok",
-        "source": "本地血糖仪",
-        "reference": "3.9–6.1 mmol/L"
-      },
-      {
-        "type": "跌倒检测",
-        "value": "0 次",
-        "status_label": "正常",
-        "statusPill": "ok",
-        "itemClass": "ok",
-        "source": "居家雷达传感器",
-        "reference": "7 天内 0 次"
-      }
-    ],
-    "deviceName": "智能血压计 · 血糖仪 · 手环 · 雷达传感器",
-    "lastSyncTime": "2026-07-30 18:05",
-    "uploadMode": "蓝牙自动上报（每日 3 次）",
-    "abnormalTags": [
-      {
-        "name": "血压持续偏高",
-        "tagClass": "bad"
-      },
-      {
-        "name": "夜间心率偏低",
-        "tagClass": "bad"
-      },
-      {
-        "name": "作息不规律",
-        "tagClass": ""
-      }
-    ],
-    "remoteGap": "远程体检指标（云诊365）暂不可用，缺失项目：血脂趋势、糖化血红蛋白，建议线下补测。",
-    "sourceLabel": "本地设备信号"
-  },
-  "health_warning_card": {
-    "badge": "健康风险预警",
-    "elderName": "张阿姨",
-    "elderAge": "72岁",
-    "assessTime": "2026-07-30 18:20",
-    "level": "关注",
-    "levelIcon": "⚠️",
-    "summary": "结合老人近 7 天设备信号与风险规则，当前风险等级为“关注”，建议加强居家观察并补充远程指标。",
-    "signals_count": 2,
-    "signals": [
-      {
-        "type": "血压",
-        "value": "148/92 mmHg",
-        "statusLabel": "异常",
-        "statusPill": "bad",
-        "source": "本地设备"
-      },
-      {
-        "type": "心率",
-        "value": "92 次/分",
-        "statusLabel": "正常",
-        "statusPill": "ok",
-        "source": "本地设备"
-      }
-    ],
-    "rules_count": 1,
-    "rules": [
-      {
-        "ruleName": "血压持续偏高",
-        "riskLevel": "关注",
-        "condition": "收缩压≥140 且持续≥3天"
-      }
-    ],
-    "actions_count": 2,
-    "recommendedActions": [
-      {
-        "priority": "高",
-        "priorityPill": "bad",
-        "owner": "家属/护理员",
-        "action": "每日测量血压并记录"
-      },
-      {
-        "priority": "中",
-        "priorityPill": "warn",
-        "owner": "护理员",
-        "action": "减少高盐饮食、保证作息规律"
-      }
-    ],
-    "nextSteps": "建议补充远程体检指标（云诊365）以提升判定置信度；如信号持续异常请转人工复核。",
-    "remoteGap": "",
-    "sourceLabel": "本地设备信号 + 风险规则"
-  },
-  "help_card": {
-    "badge": "使用帮助",
-    "title": "健康风险评估师",
-    "subtitle": "对话式中医体质复合风险助手",
-    "version": "v2.6",
-    "intro": "直接用日常口语提问即可，我会自动识别意图并调取对应的评估结果；也可以点右上角随时切换评估对象。",
-    "helps_count": 7,
-    "helps": [
-      {
-        "cmd": "总体 / 总评",
-        "scene": "综合研判",
-        "pillClass": "blue",
-        "text": "查看老人的综合风险评估结论与总分。"
-      },
-      {
-        "cmd": "舌象 / 面象",
-        "scene": "中医四诊",
-        "pillClass": "blue",
-        "text": "查看舌诊、面诊的观察要点与提示信息。"
-      },
-      {
-        "cmd": "体质 / 证型",
-        "scene": "中医辨识",
-        "pillClass": "blue",
-        "text": "查看中医体质类型判定与主要证型分析。"
-      },
-      {
-        "cmd": "调理 / 建议",
-        "scene": "康养方案",
-        "pillClass": "ok",
-        "text": "获取饮食、起居、运动等个性化康养调理建议。"
-      },
-      {
-        "cmd": "报告 / 生成",
-        "scene": "报告导出",
-        "pillClass": "ok",
-        "text": "导出完整风险评估报告，共八大模块。"
-      },
-      {
-        "cmd": "风险等级",
-        "scene": "标准说明",
-        "pillClass": "warn",
-        "text": "了解五级风险划分标准及各等级处置口径。"
-      },
-      {
-        "cmd": "切换 / 换老人",
-        "scene": "对象管理",
-        "pillClass": "warn",
-        "text": "切换当前评估对象，也可点击右上角按钮操作。"
-      }
-    ],
-    "keywords": [
-      "总体",
-      "舌象",
-      "面象",
-      "体质",
-      "证型",
-      "调理",
-      "报告",
-      "风险等级",
-      "换老人"
-    ],
-    "levels": [
-      {
-        "name": "良好",
-        "range": "0-19 分",
-        "pillClass": "ok",
-        "itemClass": "ok",
-        "desc": "各项指标稳定，保持现有生活方式并定期随访。"
-      },
-      {
-        "name": "注意",
-        "range": "20-39 分",
-        "pillClass": "ok",
-        "itemClass": "",
-        "desc": "存在轻微偏差，建议加强日常观察与作息调整。"
-      },
-      {
-        "name": "关注",
-        "range": "40-59 分",
-        "pillClass": "warn",
-        "itemClass": "warn",
-        "desc": "出现持续异常信号，需家属或护理员重点跟进。"
-      },
-      {
-        "name": "预警",
-        "range": "60-79 分",
-        "pillClass": "bad",
-        "itemClass": "warn",
-        "desc": "多项风险叠加，建议尽快安排线下复查。"
-      },
-      {
-        "name": "高危",
-        "range": "80-100 分",
-        "pillClass": "bad",
-        "itemClass": "bad",
-        "desc": "风险显著升高，请立即联系家庭医生或就医。"
-      }
-    ],
-    "steps": [
-      {
-        "stage": "第 1 步",
-        "node": "确认评估对象",
-        "detail": "输入老人姓名，若存在同名会弹出确认卡片，请选择正确的一位。",
-        "stepClass": "done"
-      },
-      {
-        "stage": "第 2 步",
-        "node": "按需提问",
-        "detail": "说「总体」「体质」「调理」等关键词，查看对应模块结果。",
-        "stepClass": "done"
-      },
-      {
-        "stage": "第 3 步",
-        "node": "生成完整报告",
-        "detail": "说「生成报告」导出八大模块完整风险评估报告并分享给家属。",
+        "time": "08-01 17:00",
+        "node": "联系投诉人",
+        "detail": "机构电话回访并说明原因",
         "stepClass": ""
+      },
+      {
+        "time": "08-02 09:00",
+        "node": "处理完成",
+        "detail": "投诉人确认满意，工单关闭",
+        "stepClass": "done"
       }
     ],
-    "disclaimer": "本报告由人工智能分析生成，仅供参考，不构成医疗诊断依据；如有不适请及时就医。",
-    "sourceLabel": "桂颐智养 · 健康风险评估师"
+    "orgImpact": "-2.3",
+    "staffImpact": "-4.1",
+    "impactClass": "bad",
+    "impactAnalysis": "该投诉计入 T-1 投诉工单数，影响机构与人员 D4 投诉率；如连续出现同类投诉，应触发整改建议。",
+    "resultTitle": "已完成回访与规范提醒",
+    "satisfaction": "满意",
+    "satisfactionClass": "ok",
+    "resultText": "机构已对护理员进行谈话提醒，并建立迟到提前通知规范；投诉人确认不再追诉。",
+    "source": "服务质量评估 · 投诉详情"
   },
-  "risk_assessment_card": {
-    "badge": "综合风险评估",
-    "elderly_name": "张明华",
-    "age": 72,
-    "gender": "男",
-    "chronic": "高血压（3年）",
-    "dementia": "无",
-    "disability": "无",
-    "aiNote": "AI 生成 · 基于最新舌诊/脉诊/面诊数据，仅供参考，不构成医疗诊断",
-    "overall_score": 6.5,
-    "overall_label": "中风险",
-    "scoreClass": "warn",
-    "abnormal_count": 4,
-    "conclusion": "多项舌诊指标异常，体质偏颇趋于明显，血瘀与肝阳上亢并见，建议尽早介入中医调理并加强血压监测。",
-    "indicators": [
-      {
-        "name": "舌色",
-        "value": "偏暗",
-        "statusLabel": "异常",
-        "statusClass": "bad"
-      },
-      {
-        "name": "苔色",
-        "value": "薄黄",
-        "statusLabel": "异常",
-        "statusClass": "bad"
-      },
-      {
-        "name": "舌体",
-        "value": "正常",
-        "statusLabel": "正常",
-        "statusClass": "ok"
-      },
-      {
-        "name": "舌下络脉",
-        "value": "正常",
-        "statusLabel": "正常",
-        "statusClass": "ok"
-      },
-      {
-        "name": "脉象",
-        "value": "弦细",
-        "statusLabel": "异常",
-        "statusClass": "bad"
-      },
-      {
-        "name": "面色",
-        "value": "微黄",
-        "statusLabel": "异常",
-        "statusClass": "bad"
-      }
-    ],
-    "tongue_summary": "舌偏暗，苔薄黄，舌体正常，舌下络脉正常，提示血行不畅兼有内热。",
-    "pulse_type": "弦细",
-    "pulse_rate": "78次/分",
-    "pulse_interpretation": "脉弦细，主肝郁血虚或阴虚阳亢，与血压偏高相互印证。",
-    "face_complexion": "微黄",
-    "face_interpretation": "面色微黄少华，提示脾虚运化不足或气血生化乏源。",
-    "disease_risks": [
-      {
-        "name": "高血压风险",
-        "score": 68,
-        "level": "中",
-        "barClass": "warn"
-      },
-      {
-        "name": "心脑血管疾病风险",
-        "score": 55,
-        "level": "中",
-        "barClass": "warn"
-      },
-      {
-        "name": "中风风险",
-        "score": 42,
-        "level": "中",
-        "barClass": "warn"
-      },
-      {
-        "name": "肝病风险",
-        "score": 45,
-        "level": "中",
-        "barClass": "warn"
-      },
-      {
-        "name": "脾胃病风险",
-        "score": 40,
-        "level": "中",
-        "barClass": ""
-      }
-    ],
-    "primary_constitution": "血瘀质",
-    "constitutions": [
-      {
-        "name": "血瘀质",
-        "score": 62,
-        "mark": "主体质 ★",
-        "barClass": "bad"
-      },
-      {
-        "name": "阴虚质",
-        "score": 55,
-        "mark": "",
-        "barClass": "warn"
-      },
-      {
-        "name": "痰湿质",
-        "score": 45,
-        "mark": "",
-        "barClass": ""
-      },
-      {
-        "name": "湿热质",
-        "score": 40,
-        "mark": "",
-        "barClass": ""
-      },
-      {
-        "name": "气郁质",
-        "score": 35,
-        "mark": "",
-        "barClass": ""
-      }
-    ],
-    "syndrome_name": "肝阳上亢兼血瘀",
-    "syndrome_desc": "肝阳偏亢，血行不畅。舌暗苔薄黄，脉弦细。多见头晕头痛，急躁易怒，面色晦暗。",
-    "care_summary": [
-      {
-        "label": "🌿 中药",
-        "content": "天麻钩藤饮、血府逐瘀汤"
-      },
-      {
-        "label": "📍 穴位",
-        "content": "太冲、曲池、百会、合谷"
-      },
-      {
-        "label": "🍲 膳食",
-        "content": "低盐低脂，芹菜、木耳、山楂"
-      },
-      {
-        "label": "🏃 运动",
-        "content": "太极拳、每日散步 30 分钟"
-      }
-    ],
-    "contraindications": [
-      {
-        "type": "饮食",
-        "items": "忌高盐高脂、忌烟酒、忌暴饮暴食"
-      },
-      {
-        "type": "生活",
-        "items": "避免情绪激动、避免熬夜、避免骤然起身"
-      },
-      {
-        "type": "用药",
-        "items": "降压药不可擅自停用或调整剂量"
-      }
-    ],
-    "report_code": "TCM-20260728-0001",
-    "generate_time": "2026-07-28 09:00",
-    "data_source": "最新舌诊报告 + 问诊问卷",
-    "sourceLabel": "中医四诊数据 + 复合风险模型"
-  },
-  "risk_level_card": {
-    "badge": "评估标准",
-    "title": "风险等级标准",
-    "subtitle": "中医体质复合风险 0–10 分制",
-    "version": "v2.4",
-    "aiNote": "中医体质复合风险采用 0–10 分制，按得分高低划分为 5 个等级，分数越高代表需要干预的紧迫度越高。",
-    "levels_count": 5,
-    "risk_levels": [
-      {
-        "label": "无风险",
-        "pillClass": "ok",
-        "itemClass": "ok",
-        "score_range": "0–2",
-        "desc": "当前指标正常，继续保持",
-        "action": "维持现有作息与饮食习惯"
-      },
-      {
-        "label": "低风险",
-        "pillClass": "blue",
-        "itemClass": "",
-        "score_range": "2–4",
-        "desc": "存在轻微异常，建议关注",
-        "action": "自我观察，30 天后常规复评"
-      },
-      {
-        "label": "中风险",
-        "pillClass": "warn",
-        "itemClass": "warn",
-        "score_range": "4–6",
-        "desc": "多项指标异常，需要干预",
-        "action": "制定调理方案，14 天内复测"
-      },
-      {
-        "label": "高风险",
-        "pillClass": "bad",
-        "itemClass": "bad",
-        "score_range": "6–8",
-        "desc": "风险较高，请尽快就医",
-        "action": "48 小时内联系家庭医生随访"
-      },
-      {
-        "label": "紧急风险",
-        "pillClass": "bad",
-        "itemClass": "bad",
-        "score_range": "8–10",
-        "desc": "紧急情况，需立即处理",
-        "action": "立即就医并通知紧急联系人"
-      }
-    ],
+  "evaluation_standard": {
+    "standardName": "养老服务质量评估标准",
+    "version": "v2.0",
+    "effectiveDate": "2026-07-01 生效",
+    "formula": "综合评分 = D1×30% + D2×20% + D3×20% + D4×30%；评分范围 0-100 分，保留 1 位小数。",
     "dimensions": [
       {
-        "name": "体质辨识得分",
-        "weight": "40%"
+        "code": "D1",
+        "name": "用户评价评分",
+        "weight": "30%",
+        "target": "评价",
+        "orgRule": "机构：由归属人员 D1 按 T-1 工单量加权推导。",
+        "staffRule": "人员：好中差评得分 0.5 + 星级评分 0.5，取近 30 日加权。"
       },
       {
-        "name": "设备信号异常",
-        "weight": "30%"
+        "code": "D2",
+        "name": "工单满意度 / 流程完成度",
+        "weight": "20%",
+        "target": "流程",
+        "orgRule": "机构：已完成工单中满意反馈占比。",
+        "staffRule": "人员：完成全流程工单数 / 总工单数。"
       },
       {
-        "name": "既往病史加权",
-        "weight": "20%"
+        "code": "D3",
+        "name": "工单服务质量 / 时长达标率",
+        "weight": "20%",
+        "target": "执行",
+        "orgRule": "机构：准时到达率 50% + 完成率 50%。",
+        "staffRule": "人员：实际服务时长达到标准时长的工单占比。"
       },
       {
-        "name": "依从性与照护",
-        "weight": "10%"
+        "code": "D4",
+        "name": "投诉率",
+        "weight": "30%",
+        "target": "风险",
+        "orgRule": "机构：（1 - T-1 投诉工单数 / T-1 总工单数）×100，投诉率低于 1% 满分。",
+        "staffRule": "人员：（1 - T-1 投诉工单数 / T-1 总工单数）×100。"
       }
     ],
-    "cycle": "每 30 天一次",
-    "dataSource": "体质问卷 + 设备信号 + 病史档案",
-    "recheckRule": "等级上升一级即触发复评",
-    "tips": "同一等级下若伴随急性症状（胸痛、剧烈头晕、意识改变等），应直接按紧急风险处理，不必等待下一次评估周期。",
-    "sourceLabel": "桂颐智养健康风险评估标准"
-  },
-  "risk_warning_card": {
-    "badge": "风险预警",
-    "warningTitle": "风险预警",
-    "subtitle": "基于中医体质辨识与健康信号的综合提示",
-    "assessTime": "2026-07-30",
-    "warnings_count": 3,
-    "topLevel": "中",
-    "scope": "体质辨识",
-    "summary": "本次辨识提示以肝胆疏泄不畅与中焦运化无力为主，多与近期作息紊乱、情志不舒相关，建议先从起居与饮食调整入手，观察 2 周后复评。",
-    "warnings": [
+    "positiveTags": [
+      "服务态度好",
+      "技术专业",
+      "准时到达",
+      "耐心细致",
+      "沟通清晰"
+    ],
+    "negativeTags": [
+      "态度不好",
+      "迟到早退",
+      "服务不专业"
+    ],
+    "applications": [
       {
-        "category": "肝胆异常",
-        "level": "中",
-        "levelPill": "bad",
-        "itemClass": "bad",
-        "warningText": "提示肝胆异常。可能有睡眠不佳、情志不畅、口苦咽干等表现。",
-        "advice": "23 点前入睡，避免熬夜与久坐，适度舒展运动以疏肝理气。"
+        "range": "前 20%",
+        "tag": "推荐 / 适配",
+        "pillClass": "ok",
+        "itemClass": "ok",
+        "desc": "机构写入优先推荐标签，人员写入服务适配标签。"
       },
       {
-        "category": "中焦郁滞",
-        "level": "中",
-        "levelPill": "warn",
-        "itemClass": "warn",
-        "warningText": "提示中焦郁滞或下焦壅塞。可能有腹胀、食少、大便不畅等表现。",
-        "advice": "少食生冷油腻，饭后缓步 20 分钟，规律三餐、忌暴饮暴食。"
-      },
-      {
-        "category": "气血偏虚",
-        "level": "低",
-        "levelPill": "warn",
+        "range": "中间 70%",
+        "tag": "常规归档",
+        "pillClass": "blue",
         "itemClass": "",
-        "warningText": "提示气血略有不足。可能有乏力、面色少华、易疲倦等表现。",
-        "advice": "保证午间小憩，适量增加优质蛋白与红枣、山药等平补食材。"
+        "desc": "结果归档并进入下一期趋势对比，不额外触发动作。"
+      },
+      {
+        "range": "后 10%",
+        "tag": "预警推送",
+        "pillClass": "bad",
+        "itemClass": "bad",
+        "desc": "机构推送监管端，人员推送对应机构管理员并生成整改跟踪。"
       }
     ],
-    "symptomTags": [
+    "calcFreq": "每日 02:00",
+    "dataScope": "T-1 完整数据",
+    "targets": "机构 / 服务人员",
+    "source": "服务质量评估 · 标准说明"
+  },
+  "institution_quality_report": {
+    "badge": "机构日报 · T-1 数据",
+    "orgName": "阳光社区养老服务中心",
+    "period": "2026-08-01",
+    "serviceScope": "上门/院内/巡访",
+    "totalScore": 85.2,
+    "level": "B级",
+    "percentile": 92,
+    "delta": "+1.5",
+    "rankLabel": "正常归档",
+    "workOrderCount": 286,
+    "goodRate": 94.6,
+    "complaintRate": 2.3,
+    "complaintClass": "warn",
+    "dimensions": [
       {
-        "name": "睡眠不佳",
-        "tagClass": "bad"
+        "code": "D1",
+        "name": "用户评价评分",
+        "weight": "30%",
+        "score": 92.1,
+        "pct": 92,
+        "barClass": "",
+        "desc": "由归属服务人员 D1 按工单量加权推导"
       },
       {
-        "name": "情志不畅",
-        "tagClass": "bad"
+        "code": "D2",
+        "name": "工单满意度",
+        "weight": "20%",
+        "score": 88.0,
+        "pct": 88,
+        "barClass": "",
+        "desc": "已完成工单中满意反馈占比"
       },
       {
-        "name": "腹胀食少",
-        "tagClass": "bad"
+        "code": "D3",
+        "name": "工单服务质量",
+        "weight": "20%",
+        "score": 78.5,
+        "pct": 79,
+        "barClass": "warn",
+        "desc": "准时到达率 50% + 完成率 50%"
       },
       {
-        "name": "口苦咽干",
-        "tagClass": ""
-      },
-      {
-        "name": "易疲倦",
-        "tagClass": ""
+        "code": "D4",
+        "name": "投诉率",
+        "weight": "30%",
+        "score": 76.3,
+        "pct": 76,
+        "barClass": "warn",
+        "desc": "投诉率低于 1% 时满分"
       }
     ],
+    "problemCount": 2,
+    "problemTop": [
+      {
+        "title": "服务时效",
+        "count": 5,
+        "desc": "迟到、等待过长集中在上门护理服务",
+        "itemClass": "warn",
+        "pillClass": "warn"
+      },
+      {
+        "title": "服务态度",
+        "count": 3,
+        "desc": "沟通不够耐心，主要来自家属反馈",
+        "itemClass": "",
+        "pillClass": "blue"
+      }
+    ],
+    "praiseTags": [
+      "服务态度好",
+      "技术专业",
+      "准时到达"
+    ],
+    "riskTags": [
+      "迟到早退",
+      "服务不专业"
+    ],
+    "suggestionCount": 2,
+    "aiSuggestions": [
+      {
+        "type": "投诉率偏高",
+        "dimension": "D4",
+        "text": "近期投诉率为 2.3%，建议关注服务时效类问题改善，并建立迟到提前告知机制。",
+        "itemClass": "warn",
+        "pillClass": "warn"
+      },
+      {
+        "type": "工单质量偏低",
+        "dimension": "D3",
+        "text": "近期准时到达率拉低 D3，建议复核高峰时段路线与护理员排班密度。",
+        "itemClass": "",
+        "pillClass": "blue"
+      }
+    ],
+    "warnText": "后 10% 机构会推送监管端；当前机构未进入后 10%，但 D4 需要连续跟踪。",
+    "source": "服务质量评估 · 机构报告"
+  },
+  "org_quality_ranking": {
+    "badge": "监管视图 · 机构排名",
+    "region": "南宁市辖区",
+    "period": "2026-08-01",
+    "orgTotal": 156,
+    "recommendCount": 31,
+    "warningCount": 16,
+    "ranking": [
+      {
+        "rank": 1,
+        "noClass": "ok",
+        "itemClass": "ok",
+        "orgName": "青秀区颐养中心",
+        "area": "青秀区",
+        "score": 95.2,
+        "level": "A",
+        "levelClass": "ok",
+        "tag": "优先推荐",
+        "tagClass": "good",
+        "delta": "+2.1",
+        "d1": 96.0,
+        "d2": 94.2,
+        "d3": 93.5,
+        "d4": 97.1
+      },
+      {
+        "rank": 2,
+        "noClass": "ok",
+        "itemClass": "ok",
+        "orgName": "秀峰区爱心护理站",
+        "area": "秀峰区",
+        "score": 91.8,
+        "level": "A",
+        "levelClass": "ok",
+        "tag": "优先推荐",
+        "tagClass": "good",
+        "delta": "+1.2",
+        "d1": 93.1,
+        "d2": 90.6,
+        "d3": 92.2,
+        "d4": 91.0
+      },
+      {
+        "rank": 3,
+        "noClass": "blue",
+        "itemClass": "",
+        "orgName": "邕宁区安康养老",
+        "area": "邕宁区",
+        "score": 89.3,
+        "level": "B",
+        "levelClass": "blue",
+        "tag": "常规归档",
+        "tagClass": "",
+        "delta": "+0.8",
+        "d1": 91.2,
+        "d2": 87.0,
+        "d3": 88.5,
+        "d4": 90.0
+      },
+      {
+        "rank": 156,
+        "noClass": "bad",
+        "itemClass": "bad",
+        "orgName": "城中区安康居家服务点",
+        "area": "城中区",
+        "score": 38.4,
+        "level": "D",
+        "levelClass": "bad",
+        "tag": "预警推送",
+        "tagClass": "bad",
+        "delta": "-4.6",
+        "d1": 42.0,
+        "d2": 31.4,
+        "d3": 55.1,
+        "d4": 24.5
+      }
+    ],
+    "alertClass": "bad",
+    "supervisionNote": "后 10% 机构应进入监管端消息中心，并生成整改跟踪任务；末位机构主要失分项为投诉率和工单满意度。",
+    "source": "服务质量评估 · 机构排名"
+  },
+  "rectification_suggestion": {
+    "period": "2026-08-01",
+    "targetName": "阳光社区养老服务中心",
+    "targetType": "机构管理员",
+    "weakDimension": "D4 投诉率",
+    "weakScore": 76.3,
+    "confidence": 91,
+    "openIssues": 3,
+    "complaints": 7,
+    "slaHours": 24,
+    "causeCount": 2,
+    "causes": [
+      {
+        "title": "投诉率偏高",
+        "dimension": "D4",
+        "desc": "T-1 投诉率高于区域均值，TOP1 类型为服务时效。",
+        "itemClass": "bad",
+        "pillClass": "bad"
+      },
+      {
+        "title": "流程完成度波动",
+        "dimension": "D2",
+        "desc": "部分上门护理工单缺少签退或服务小结。",
+        "itemClass": "warn",
+        "pillClass": "warn"
+      }
+    ],
+    "suggestionCount": 2,
     "suggestions": [
       {
-        "name": "起居调摄",
-        "tag": "优先",
-        "pillClass": "bad",
-        "detail": "固定作息，23 点前入睡；晨起开窗通风，午后小憩 20–30 分钟。"
+        "title": "建立迟到提前告知机制",
+        "owner": "机构管理员",
+        "action": "超过预约时间前 10 分钟仍无法到达时，系统提醒护理员电话告知家属。",
+        "acceptance": "服务时效类投诉连续 7 日下降"
       },
       {
-        "name": "饮食调理",
-        "tag": "建议",
-        "pillClass": "warn",
-        "detail": "清淡易消化为主，少辛辣油腻；可用陈皮、山楂代茶饮助运化。"
-      },
-      {
-        "name": "情志疏导",
-        "tag": "建议",
-        "pillClass": "ok",
-        "detail": "每日户外散步或八段锦 20 分钟，与家人多交流以舒畅情志。"
+        "title": "补齐上门服务闭环节点",
+        "owner": "护理主管",
+        "action": "复训签到、服务小结、签退三节点；缺失节点纳入当日质检。",
+        "acceptance": "流程完成度 D2 回升至 90 分以上"
       }
     ],
-    "notice": "若出现持续腹痛、明显黄疸、剧烈头晕或胸闷气促等情况，请立即前往医院就诊，勿自行用药。",
-    "sourceLabel": "中医体质辨识 + 健康风险规则"
+    "handoffClass": "bad",
+    "handoffText": "建议生成整改工单并抄送机构管理员；若连续三日 D4 < 70，转监管端重点督导。",
+    "source": "服务质量评估 · 整改建议"
   },
-  "tcm_syndrome_card": {
-    "badge": "中医证候辨识",
-    "elderName": "张阿姨",
-    "elderAge": "72岁",
-    "method": "舌诊 + 脉诊 + 面诊",
-    "assessTime": "2026-07-30",
-    "syndrome_name": "肝阳上亢兼血瘀",
-    "syndromeMain": "肝阳上亢",
-    "syndromeSub": "血瘀内停",
-    "confidenceLabel": "置信度 中高",
-    "syndrome_desc": "肝阳偏亢，血行不畅。舌暗苔薄黄，脉弦细。多见头晕头痛，急躁易怒，面色晦暗，失眠多梦。",
-    "evidences": [
+  "staff_quality_ranking": {
+    "badge": "机构管理端 · 人员排名",
+    "orgName": "阳光社区养老服务中心",
+    "period": "2026-08-01",
+    "staffTotal": 58,
+    "adaptCount": 12,
+    "warningCount": 6,
+    "ranking": [
       {
-        "k": "舌象",
-        "v": "舌质偏暗、苔薄黄"
+        "rank": 1,
+        "noClass": "ok",
+        "itemClass": "ok",
+        "staffName": "李秀琴",
+        "serviceType": "上门服务",
+        "score": 96.1,
+        "level": "A",
+        "levelClass": "ok",
+        "tag": "服务适配",
+        "tagClass": "good",
+        "workOrders": 92,
+        "complaints": 0,
+        "delta": "+1.4"
       },
       {
-        "k": "脉象",
-        "v": "弦细"
+        "rank": 2,
+        "noClass": "ok",
+        "itemClass": "ok",
+        "staffName": "王桂芳",
+        "serviceType": "院内服务",
+        "score": 94.0,
+        "level": "A",
+        "levelClass": "ok",
+        "tag": "服务适配",
+        "tagClass": "good",
+        "workOrders": 88,
+        "complaints": 0,
+        "delta": "+0.9"
       },
       {
-        "k": "面象",
-        "v": "面色晦暗、唇色暗紫"
+        "rank": 3,
+        "noClass": "blue",
+        "itemClass": "",
+        "staffName": "张美丽",
+        "serviceType": "上门服务",
+        "score": 91.2,
+        "level": "A",
+        "levelClass": "blue",
+        "tag": "常规归档",
+        "tagClass": "",
+        "workOrders": 86,
+        "complaints": 1,
+        "delta": "-0.4"
       },
       {
-        "k": "问诊",
-        "v": "头晕、夜寐不安、易急躁"
-      }
-    ],
-    "symptoms_count": 4,
-    "symptoms": [
-      {
-        "name": "头晕头痛",
-        "degree": "突出",
-        "pillClass": "bad",
+        "rank": 58,
+        "noClass": "bad",
         "itemClass": "bad",
-        "desc": "多于晨起或情绪激动后加重，与肝阳上亢相关。"
+        "staffName": "孙伟",
+        "serviceType": "巡访服务",
+        "score": 55.8,
+        "level": "D",
+        "levelClass": "bad",
+        "tag": "预警推送",
+        "tagClass": "bad",
+        "workOrders": 47,
+        "complaints": 3,
+        "delta": "-4.1"
+      }
+    ],
+    "complaintTopCount": 2,
+    "complaintTop": [
+      {
+        "staffName": "孙伟",
+        "count": 3,
+        "summary": "服务态度与巡访记录缺失集中出现",
+        "itemClass": "bad",
+        "pillClass": "bad"
       },
       {
-        "name": "急躁易怒",
-        "degree": "常见",
-        "pillClass": "warn",
+        "staffName": "陈建华",
+        "count": 2,
+        "summary": "签到签退不完整，影响 D2 流程完成度",
         "itemClass": "warn",
-        "desc": "情志不畅、肝气郁而化火的典型表现。"
-      },
-      {
-        "name": "失眠多梦",
-        "degree": "常见",
-        "pillClass": "warn",
-        "itemClass": "",
-        "desc": "入睡困难、夜间易醒，需关注睡眠质量。"
-      },
-      {
-        "name": "面色晦暗",
-        "degree": "轻度",
-        "pillClass": "",
-        "itemClass": "",
-        "desc": "血行不畅、瘀血内停的外在体现。"
+        "pillClass": "warn"
       }
     ],
-    "treatments": [
-      {
-        "aspect": "治法方向",
-        "tagLabel": "核心",
-        "pillClass": "ok",
-        "content": "平肝潜阳、活血化瘀，兼顾养阴安神。"
-      },
-      {
-        "aspect": "药膳食疗",
-        "tagLabel": "建议",
-        "pillClass": "ok",
-        "content": "可用天麻炖鸡、菊花决明子茶；少食辛辣温燥之品。"
-      },
-      {
-        "aspect": "外治调理",
-        "tagLabel": "可选",
-        "pillClass": "blue",
-        "content": "按揉太冲、太溪、三阴交穴位，每次 3-5 分钟，早晚各一次。"
-      }
-    ],
-    "relatedRisk": "该证型与高血压、脑血管意外风险相关，建议每日监测血压并保持情绪平稳，血压持续偏高时及时就医。",
-    "sourceLabel": "AI 生成 · 基于舌诊、脉诊与面诊综合判读"
+    "alertClass": "warn",
+    "supervisionNote": "后 10% 人员建议由机构管理员发起谈话与复训，并在 7 日内复评；连续两期预警需调整排班。",
+    "source": "服务质量评估 · 人员排名"
   },
-  "tongue_diagnosis_card": {
-    "badge": "云诊舌象辨识",
-    "elderName": "张阿姨",
-    "elderAge": "72岁",
-    "device": "云诊365 舌诊仪",
-    "assessTime": "2026-07-30 09:15",
-    "conclusion": "血行不畅 · 兼有热象",
-    "tongue_summary": "舌偏暗，苔薄黄，舌体正常，舌下络脉正常；提示血行不畅、兼有热象，与血瘀质倾向相互印证。",
-    "indicators_count": 6,
-    "tongue_indicators": [
+  "staff_quality_report": {
+    "staffName": "张美丽",
+    "staffNo": "NN20240015",
+    "orgName": "阳光社区养老服务中心",
+    "serviceType": "上门服务",
+    "totalScore": 91.2,
+    "level": "A级",
+    "orgRank": 3,
+    "orgTotal": 58,
+    "tagStatus": "前20%服务适配候选",
+    "workOrderCount": 86,
+    "onTimeRate": 95.3,
+    "complaintCount": 1,
+    "complaintClass": "warn",
+    "dimensions": [
       {
-        "name": "舌色",
-        "value": "偏暗",
-        "statusLabel": "异常",
-        "valClass": "bad"
+        "code": "D1",
+        "name": "用户评价评分",
+        "weight": "30%",
+        "score": 93.5,
+        "pct": 94,
+        "barClass": "",
+        "desc": "好中差评得分 0.5 + 星级评分 0.5"
       },
       {
-        "name": "苔色",
-        "value": "薄黄",
-        "statusLabel": "异常",
-        "valClass": "warn"
+        "code": "D2",
+        "name": "流程完成度",
+        "weight": "20%",
+        "score": 88.7,
+        "pct": 89,
+        "barClass": "",
+        "desc": "完成全流程工单数 / 总工单数"
       },
       {
-        "name": "舌体",
-        "value": "正常",
-        "statusLabel": "正常",
-        "valClass": "ok"
+        "code": "D3",
+        "name": "时长达标率",
+        "weight": "20%",
+        "score": 92.1,
+        "pct": 92,
+        "barClass": "",
+        "desc": "实际服务时长达到标准时长的工单占比"
       },
       {
-        "name": "舌下络脉",
-        "value": "正常",
-        "statusLabel": "正常",
-        "valClass": "ok"
-      },
-      {
-        "name": "脉象",
-        "value": "弦细",
-        "statusLabel": "异常",
-        "valClass": "warn"
-      },
-      {
-        "name": "面色",
-        "value": "微黄",
-        "statusLabel": "异常",
-        "valClass": "warn"
+        "code": "D4",
+        "name": "投诉率",
+        "weight": "30%",
+        "score": 90.8,
+        "pct": 91,
+        "barClass": "",
+        "desc": "投诉越少得分越高"
       }
     ],
-    "measures": [
+    "goodTags": [
+      "服务态度好",
+      "技术专业",
+      "耐心细致"
+    ],
+    "badTags": [
+      "迟到早退"
+    ],
+    "reviewCount": 2,
+    "reviews": [
       {
-        "k": "舌体面积占比",
-        "v": "约 78%（偏胖大）"
+        "who": "陈**家属",
+        "stars": "5 星",
+        "starClass": "ok",
+        "text": "护理动作熟练，也会提前说明注意事项。"
       },
       {
-        "k": "苔质厚薄",
-        "v": "薄苔"
-      },
-      {
-        "k": "润燥程度",
-        "v": "偏干"
-      },
-      {
-        "k": "采集图像质量",
-        "v": "合格"
+        "who": "李**",
+        "stars": "4 星",
+        "starClass": "blue",
+        "text": "服务整体满意，希望到达前能再提前电话确认。"
       }
     ],
-    "abnormal_count": 2,
-    "abnormal_items": [
+    "suggestionCount": 2,
+    "aiSuggestions": [
       {
-        "name": "舌色偏暗",
-        "levelLabel": "重点关注",
-        "pillClass": "bad",
-        "itemClass": "bad",
-        "desc": "提示血行不畅、瘀血内停，常见于血瘀质，建议结合面象与脉象综合判断。"
+        "type": "流程完成度关注",
+        "dimension": "D2",
+        "text": "近期签退完整率略低，建议强化上门结束节点拍照与备注规范。",
+        "itemClass": "",
+        "pillClass": "blue"
       },
       {
-        "name": "苔薄黄",
-        "levelLabel": "异常",
-        "pillClass": "warn",
-        "itemClass": "warn",
-        "desc": "提示有热象，多为阴虚内热或湿热蕴结，注意清淡饮食、充足饮水。"
+        "type": "综合表现优秀",
+        "dimension": "综合",
+        "text": "各维度均高于 70 分，可作为上门护理服务示范案例沉淀。",
+        "itemClass": "ok",
+        "pillClass": "ok"
       }
     ],
-    "risk_warning": "提示肝郁血虚、阴虚阳亢倾向，关注头晕头痛、急躁易怒等表现，必要时进行中医干预。",
-    "advice": "建议 2 周后复采舌象对比变化；若同期血压持续偏高，请转人工中医复核。",
-    "sourceLabel": "AI 生成 · 云诊舌诊设备结构化数据"
+    "source": "服务质量评估 · 人员报告"
   }
 };
 
@@ -2554,7 +1675,7 @@ function renderCard(cardType, data) {
 }
 
 function renderPreviewTemplateCard(data) {
-  var tplId = data.tplId || 'health_report_card';
+  var tplId = data.tplId || 'institution_quality_report';
   var tplName = (TPL_LIST.find(function(t){return t.id===tplId}) || {}).name || tplId;
   var tplEl = document.getElementById('tpl_' + tplId);
   if (!tplEl) {
@@ -2577,7 +1698,7 @@ function renderPreviewTemplateCard(data) {
     '<div class="card-body">' +
       '<div class="tpl-scope">' + inner + '</div>' +
       '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--n100,#E4E0D8);display:flex;justify-content:flex-end;gap:8px;">' +
-        '<button class="export-btn" onclick="exportReport(\'' + tplId + '\')" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1.5px solid var(--primary,#E8843C);border-radius:var(--r-full,999px);background:transparent;color:var(--primary,#E8843C);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;">' +
+        '<button class="export-btn" onclick="exportReport(\'' + tplId + '\')" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1.5px solid var(--primary,#3A6B8C);border-radius:var(--r-full,999px);background:transparent;color:var(--primary,#3A6B8C);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
         ' 导出报告</button>' +
       '</div>' +
@@ -3253,17 +2374,13 @@ function selectDuplicateElderly(index) {
 var state_pickerTab = 'patients'; // 'patients' | 'templates'
 function switchPickerTab(tab) {
   state_pickerTab = tab;
-  // 切换 tab 按钮样式
   document.querySelectorAll('.picker-tab').forEach(function(el) {
     el.classList.toggle('active', el.dataset.tab === tab);
   });
-  // 切换内容区
   document.getElementById('tabPatients').classList.toggle('active', tab === 'patients');
   document.getElementById('tabTemplates').classList.toggle('active', tab === 'templates');
-  // 模板 tab 进入时渲染卡片列表
   if (tab === 'templates') renderTplCardList();
 }
-// 渲染模板卡片列表（模板 tab 内使用）
 function renderTplCardList() {
   var c = document.getElementById('tplCardList');
   if (!c) return;
@@ -3275,7 +2392,6 @@ function renderTplCardList() {
       '<div class="tpl-card-check"></div></div>';
   }).join('');
 }
-// 从模板卡片列表选择模板——点击即执行（与选择老人同一流程）
 function selectTplFromCard(id) {
   state_selectedTpl = id;
   var tplName = (TPL_LIST.find(function(t){return t.id===id}) || {}).name || '预览模板';
@@ -3288,7 +2404,6 @@ function selectTplFromCard(id) {
 }
 
 // ==================== buildReportTemplateData（缺失修复） ====================
-// 将当前老人 MOCK_DATA 映射为 Mustache 模板变量
 function buildReportTemplateData() {
   var elderly = null;
   if (state && state.currentElderlyId) {
@@ -3299,7 +2414,6 @@ function buildReportTemplateData() {
   var tr = elderly.tongueReport || {};
   var report = calculateCompositeRisk({ elderlyProfile: p, tongueReport: tr });
   var level = RISK_LEVELS[report.overallRiskLevel] || RISK_LEVELS[0];
-  // 舌诊快捷指标
   var quickIndicators = [];
   if (tr.tongueColor) quickIndicators.push({name:'舌色', value:tr.tongueColor, statusLabel: isNormalTongue(tr.tongueColor,'color')?'正常':'异常', statusClass: isNormalTongue(tr.tongueColor,'color')?'ok':'bad'});
   if (tr.coatingColor) quickIndicators.push({name:'苔色', value:tr.coatingColor, statusLabel: isNormalTongue(tr.coatingColor,'coating')?'正常':'异常', statusClass: isNormalTongue(tr.coatingColor,'coating')?'ok':'bad'});
@@ -3307,15 +2421,12 @@ function buildReportTemplateData() {
   if (tr.sublingualVein) quickIndicators.push({name:'舌下络脉', value:tr.sublingualVein, statusLabel:'异常', statusClass:'bad'});
   if (tr.pulseType) quickIndicators.push({name:'脉象', value:tr.pulseType, statusLabel: isNormalTongue(tr.pulseType,'pulse')?'正常':'异常', statusClass: isNormalTongue(tr.pulseType,'pulse')?'ok':'bad'});
   if (tr.faceComplexion) quickIndicators.push({name:'面色', value:tr.faceComplexion, statusLabel: isNormalTongue(tr.faceComplexion,'face')?'正常':'异常', statusClass: isNormalTongue(tr.faceComplexion,'face')?'ok':'bad'});
-  // 风险等级列表
   var levels = [];
   for (var li = 0; li <= 4; li++) {
     var lv = RISK_LEVELS[li];
     levels.push({name:lv.label, range:'', desc:lv.text, itemClass: li===report.overallRiskLevel?'active':'', pillClass: li<=1?'ok':(li===2?'warn':'bad')});
   }
-  // 使用帮助关键词
   var keywords = ['总评','风险','建议','报告','体质','舌诊','调理','导出'];
-  // 步骤
   var steps = [
     {stage:'1', node:'选择老人', detail:'从列表中选择要评估的老人', stepClass:'done'},
     {stage:'2', node:'查看结果', detail:'自动分析并展示评估结果', stepClass: report.overallScore>0?'done':''},
@@ -3354,16 +2465,9 @@ function buildReportTemplateData() {
     version: 'v2.6'
   };
 }
-// 舌诊指标是否正常的辅助判断
 function isNormalTongue(val, type) {
   if (!val) return false;
-  var normalMap = {
-    color: ['淡红','红润'],
-    coating: ['薄白'],
-    body: ['正常','适中'],
-    pulse: ['平和','有力'],
-    face: ['红润','正常']
-  };
+  var normalMap = { color:['淡红','红润'], coating:['薄白'], body:['正常','适中'], pulse:['平和','有力'], face:['红润','正常'] };
   var normals = normalMap[type] || [];
   return normals.indexOf(val) >= 0;
 }
@@ -3395,19 +2499,19 @@ function exportReport(tplId, useElderlyData, rawHtml) {
     var baseCss = 'html{-webkit-text-size-adjust:100%;}' +
       'body{font-family:var(--font-sans);background:var(--n0);color:var(--n800);font-size:16px;line-height:1.6;padding:12px;overflow-wrap:anywhere;word-break:break-word;-webkit-font-smoothing:antialiased;}';
     var fullHtml = '<!DOCTYPE html><html lang="zh-CN" data-layout="vertical"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
-      '<title>健康报告 - ' + elderlyName + '</title>' +
+      '<title>评估报告 - ' + elderlyName + '</title>' +
       '<style>' + baseCss + nativeCss + '</style>' +
       '</head><body><div class="card" data-layout="vertical">' + rawHtml + '</div></body></html>';
     var blob = new Blob([fullHtml], {type: 'text/html;charset=utf-8'});
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
-    a.href = url; a.download = '健康报告_' + elderlyName + '_' + Date.now() + '.html';
+    a.href = url; a.download = '评估报告_' + elderlyName + '_' + Date.now() + '.html';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
     return;
   }
   // 模板渲染模式：用指定模板 + 数据渲染后导出
-  tplId = tplId || state_selectedTpl || 'health_report_card';
+  tplId = tplId || state_selectedTpl || 'institution_quality_report';
   var tplEl = document.getElementById('tpl_' + tplId);
   if (!tplEl) { alert('报告模板未加载: ' + tplId); return; }
   var tpl = tplEl.textContent || tplEl.innerText || '';
@@ -3426,13 +2530,13 @@ function exportReport(tplId, useElderlyData, rawHtml) {
     : '<div class="card" data-template="' + tplId + '" data-layout="vertical">' + html + '</div>';
   // 构建完整可独立打开的 HTML（与 preview/*.preview.html 同款）
   var fullHtml = '<!DOCTYPE html><html lang="zh-CN" data-layout="vertical"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
-    '<title>健康风险评估报告 - ' + (tplData.name || tplId) + '</title>' +
+    '<title>服务质量评估报告 - ' + (tplData.name || tplId) + '</title>' +
     '<style>' + baseCss + nativeCss + '</style>' +
     '</head><body>' + cardHtml + '</body></html>';
   var blob = new Blob([fullHtml], {type: 'text/html;charset=utf-8'});
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
-  a.href = url; a.download = '健康报告_' + (tplData.name || tplId) + '_' + Date.now() + '.html';
+  a.href = url; a.download = '评估报告_' + (tplData.name || tplId) + '_' + Date.now() + '.html';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
 }
@@ -3452,21 +2556,13 @@ function exportCurrentElderlyCard(btn) {
 
 // ==================== 预览模板选择（开发完成的模板） ====================
 var TPL_LIST = [
-  {id:"health_report_card",name:"完整报告卡",desc:"8大模块完整报告"},
-  {id:"risk_assessment_card",name:"综合风险评估",desc:"多维度评分·疾病TOP5"},
-  {id:"tongue_diagnosis_card",name:"舌诊详情",desc:"舌象六项指标"},
-  {id:"constitution_card",name:"体质辨识",desc:"九种体质评分"},
-  {id:"tcm_syndrome_card",name:"中医证候",desc:"证型名称·辨证"},
-  {id:"care_advice_card",name:"调理建议",desc:"中药/穴位/膳食/运动"},
-  {id:"dietary_regimen_card",name:"膳食方案",desc:"饮食调理建议"},
-  {id:"face_observation_card",name:"面诊观察",desc:"面色望诊·五色辨证"},
-  {id:"health_warning_card",name:"健康预警卡",desc:"风险总览·首屏入口"},
-  {id:"risk_warning_card",name:"中医风险预警",desc:"单项风险详情"},
-  {id:"health_risk_signal_card",name:"风险信号卡",desc:"异常信号追踪"},
-  {id:"health_risk_rule_card",name:"风险规则卡",desc:"评估规则说明"},
-  {id:"risk_level_card",name:"风险等级卡",desc:"5级分级标准"},
-  {id:"elder_duplicate_confirm_card",name:"重名确认卡",desc:"同名老人选择"},
-  {id:"help_card",name:"使用帮助卡",desc:"功能指引"}
+  {id:"institution_quality_report",name:"机构质量报告",desc:"机构质量评估完整报告"},
+  {id:"org_quality_ranking",name:"机构质量排名",desc:"机构排名榜单"},
+  {id:"staff_quality_report",name:"人员评估报告",desc:"服务人员评估"},
+  {id:"staff_quality_ranking",name:"人员排名榜",desc:"服务人员排名"},
+  {id:"rectification_suggestion",name:"整改建议",desc:"整改事项清单"},
+  {id:"complaint_detail",name:"投诉详情",desc:"投诉处理记录"},
+  {id:"evaluation_standard",name:"评估标准",desc:"评估指标说明"}
 ];
 var state_selectedTpl = 'health_report_card'; // 默认
 
@@ -3482,7 +2578,7 @@ function selectTpl(id) {
   renderTplChips();
 }
 
-var EXPORT_THEME = 'orange';
+var EXPORT_THEME = 'blue';
 
 // ==================== 初始化 ====================
 function init() {
@@ -3493,17 +2589,17 @@ function init() {
     });
   }
   setTimeout(function() {
-    addAIMessage('您好！我是健康风险评估师AI助手。\n\n我可以为您查看健康风险总评、疾病风险、体质辨识和个性化调理建议。请问需要什么帮助？', null, null, null);
+    addAIMessage('您好！我是服务质量评估AI助手。\n\n我可以为您查看机构质量评分、服务指标、投诉分析和改进建议。请问需要什么帮助？', null, null, null);
   }, 300);
 }
 window.addEventListener('DOMContentLoaded', init);
 
 // ==================== 报告导出（使用开发好的模板 html） ====================
-// 注意：导出所套用的模板即 preview 目录中开发完成的 health_report_card.html，
+// 注意：导出所套用的模板即 preview 目录中开发完成的模板，
 // 通过下方
 </script>
 <style id="tpl-scope-styles">
-/* ===== care_advice_card ===== */
+/* ===== complaint_detail ===== */
 .tpl-scope {
 --primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
   --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
@@ -3747,9 +2843,13 @@ font-size:36px;
 .tpl-scope .grid.three {
 grid-template-columns:repeat(2,minmax(0,1fr));
 }
+}
+.tpl-scope {
+--primary:#3A6B8C; --primary-deep:#1E4A66; --primary-soft:#E8F0F5;
+  --accent:#E8843C; --accent-soft:#FDF6F0; --accent-deep:#D06E2A;
 }
 
-/* ===== constitution_card ===== */
+/* ===== evaluation_standard ===== */
 .tpl-scope {
 --primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
   --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
@@ -3993,9 +3093,13 @@ font-size:36px;
 .tpl-scope .grid.three {
 grid-template-columns:repeat(2,minmax(0,1fr));
 }
+}
+.tpl-scope {
+--primary:#3A6B8C; --primary-deep:#1E4A66; --primary-soft:#E8F0F5;
+  --accent:#E8843C; --accent-soft:#FDF6F0; --accent-deep:#D06E2A;
 }
 
-/* ===== dietary_regimen_card ===== */
+/* ===== institution_quality_report ===== */
 .tpl-scope {
 --primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
   --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
@@ -4239,9 +3343,13 @@ font-size:36px;
 .tpl-scope .grid.three {
 grid-template-columns:repeat(2,minmax(0,1fr));
 }
+}
+.tpl-scope {
+--primary:#3A6B8C; --primary-deep:#1E4A66; --primary-soft:#E8F0F5;
+  --accent:#E8843C; --accent-soft:#FDF6F0; --accent-deep:#D06E2A;
 }
 
-/* ===== elder_duplicate_confirm_card ===== */
+/* ===== org_quality_ranking ===== */
 .tpl-scope {
 --primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
   --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
@@ -4485,9 +3593,13 @@ font-size:36px;
 .tpl-scope .grid.three {
 grid-template-columns:repeat(2,minmax(0,1fr));
 }
+}
+.tpl-scope {
+--primary:#3A6B8C; --primary-deep:#1E4A66; --primary-soft:#E8F0F5;
+  --accent:#E8843C; --accent-soft:#FDF6F0; --accent-deep:#D06E2A;
 }
 
-/* ===== face_observation_card ===== */
+/* ===== rectification_suggestion ===== */
 .tpl-scope {
 --primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
   --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
@@ -4731,9 +3843,13 @@ font-size:36px;
 .tpl-scope .grid.three {
 grid-template-columns:repeat(2,minmax(0,1fr));
 }
+}
+.tpl-scope {
+--primary:#3A6B8C; --primary-deep:#1E4A66; --primary-soft:#E8F0F5;
+  --accent:#E8843C; --accent-soft:#FDF6F0; --accent-deep:#D06E2A;
 }
 
-/* ===== health_report_card ===== */
+/* ===== staff_quality_ranking ===== */
 .tpl-scope {
 --primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
   --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
@@ -4977,9 +4093,13 @@ font-size:36px;
 .tpl-scope .grid.three {
 grid-template-columns:repeat(2,minmax(0,1fr));
 }
+}
+.tpl-scope {
+--primary:#3A6B8C; --primary-deep:#1E4A66; --primary-soft:#E8F0F5;
+  --accent:#E8843C; --accent-soft:#FDF6F0; --accent-deep:#D06E2A;
 }
 
-/* ===== health_risk_rule_card ===== */
+/* ===== staff_quality_report ===== */
 .tpl-scope {
 --primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
   --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
@@ -5224,3293 +4344,453 @@ font-size:36px;
 grid-template-columns:repeat(2,minmax(0,1fr));
 }
 }
-
-/* ===== health_risk_signal_card ===== */
 .tpl-scope {
---primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
-  --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
-  --ok:#6B9B7A; --ok-soft:#E8F2EC; --ok-deep:#3D6B4D;
-  --warn:#D4A537; --warn-soft:#FBF3DD; --warn-deep:#9C7715;
-  --danger:#E5484D; --danger-soft:#FDECEC; --danger-deep:#b91c1c;
-  
-  --n0:#FAF8F5; --n50:#F0EDE7; --n100:#E4E0D8; --n200:#D9D4CC; --n300:#C4BEB4;
-  --n400:#A8A09A; --n500:#8A8278; --n600:#6B6660; --n700:#4A463F; --n800:#3D3A36;
-  
-  --font-serif:'Noto Serif SC','Songti SC','STSong',serif;
-  --font-sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;
-  
-  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px; --r-full:999px;
-  
-  --sh-sm:0 1px 3px rgba(62,56,50,.08); --sh-md:0 4px 12px rgba(62,56,50,.10); --sh-lg:0 8px 24px rgba(62,56,50,.12);
-}
-.tpl-scope * {
-margin:0; padding:0; box-sizing:border-box;
-}
-.tpl-scope img {
-max-width:100%; height:auto; display:block;
-}
-.tpl-scope a {
-color:var(--primary); text-decoration:none;
-}
-.tpl-scope .card {
-max-width:430px; margin:0 auto; background:#fff; border:1px solid var(--n100);
-  border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--sh-md);
-}
-.tpl-scope .hero {
-padding:16px; color:#fff; background:linear-gradient(135deg,var(--primary),var(--primary-deep));
-}
-.tpl-scope .hero.blue {
-background:linear-gradient(135deg,var(--accent),var(--accent-deep));
-}
-.tpl-scope .eyebrow {
-display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:var(--r-full);
-  background:rgba(255,255,255,.18); font-size:12px; font-weight:600;
-}
-.tpl-scope .hero h1 {
-font-family:var(--font-serif); margin:8px 0 0; font-size:22px; line-height:1.18; letter-spacing:.5px;
-}
-.tpl-scope .hero .sub {
-margin-top:6px; color:rgba(255,255,255,.88); font-size:13px;
-}
-.tpl-scope .hero-row {
-display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-}
-.tpl-scope .score {
-font-size:42px; font-weight:800; line-height:1;
-}
-.tpl-scope .score small {
-font-size:14px; font-weight:600; opacity:.82;
-}
-.tpl-scope .section {
-padding:13px 14px; border-top:1px solid var(--n100);
-}
-.tpl-scope .section-title {
-margin:0 0 10px; display:flex; align-items:center; gap:7px; color:var(--n800);
-  font-size:15px; font-weight:800; font-family:var(--font-serif);
-}
-.tpl-scope .section-title::before {
-content:""; width:4px; height:16px; border-radius:2px; background:var(--primary);
-}
-.tpl-scope .section-title.blue::before {
-background:var(--accent);
-}
-.tpl-scope .pill {
-display:inline-flex; align-items:center; justify-content:center; min-height:22px; padding:2px 9px;
-  border-radius:var(--r-full); background:var(--primary-soft); color:var(--primary-deep);
-  font-size:12px; font-weight:700; white-space:nowrap;
-}
-.tpl-scope .pill.blue {
-background:var(--accent-soft); color:var(--accent);
-}
-.tpl-scope .pill.ok {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .pill.warn {
-background:var(--warn-soft); color:var(--warn-deep);
-}
-.tpl-scope .pill.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .grid {
-display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(3,minmax(0,1fr));
-}
-.tpl-scope .stat {
-min-width:0; padding:10px 9px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .stat .num {
-color:var(--primary-deep); font-size:20px; font-weight:800; line-height:1.1;
-}
-.tpl-scope .stat .num.bad {
-color:var(--danger);
-}
-.tpl-scope .stat .num.warn {
-color:var(--warn-deep);
-}
-.tpl-scope .stat .num.ok {
-color:var(--ok-deep);
-}
-.tpl-scope .stat .lbl {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .dim {
-padding:9px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .dim:last-child {
-border-bottom:0;
-}
-.tpl-scope .dim-head {
-display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:13px;
-}
-.tpl-scope .dim-name {
-font-weight:700;
-}
-.tpl-scope .dim-name small {
-margin-left:5px; color:var(--n400); font-weight:600;
-}
-.tpl-scope .dim-score {
-color:var(--primary-deep); font-weight:800; white-space:nowrap;
-}
-.tpl-scope .bar {
-height:7px; margin-top:6px; border-radius:var(--r-full); background:var(--n200); overflow:hidden;
-}
-.tpl-scope .bar > span {
-display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--primary),var(--accent));
-}
-.tpl-scope .bar > span.warn {
-background:linear-gradient(90deg,var(--warn),#f97316);
-}
-.tpl-scope .bar > span.bad {
-background:linear-gradient(90deg,var(--danger),#fb7185);
-}
-.tpl-scope .note {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .row {
-display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .row:last-child {
-border-bottom:0;
-}
-.tpl-scope .row .k {
-color:var(--n500); flex:0 0 auto;
-}
-.tpl-scope .row .v {
-font-weight:700; text-align:right; min-width:0;
-}
-.tpl-scope .list {
-display:flex; flex-direction:column; gap:8px;
-}
-.tpl-scope .item {
-padding:10px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .item.warn {
-background:var(--warn-soft); border-color:#fde68a;
-}
-.tpl-scope .item.bad {
-background:var(--danger-soft); border-color:#fecaca;
-}
-.tpl-scope .item.ok {
-background:var(--ok-soft); border-color:#bbf7d0;
-}
-.tpl-scope .item .top {
-display:flex; align-items:center; justify-content:space-between; gap:8px; font-weight:800;
-}
-.tpl-scope .item .txt {
-margin-top:5px; color:var(--n600); font-size:12px;
-}
-.tpl-scope .tags {
-display:flex; flex-wrap:wrap; gap:6px;
-}
-.tpl-scope .tag {
-padding:4px 8px; border-radius:var(--r-md); background:var(--n200); color:var(--n500); font-size:12px; font-weight:600;
-}
-.tpl-scope .tag.good {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .tag.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .timeline {
-position:relative; padding-left:22px;
-}
-.tpl-scope .timeline::before {
-content:""; position:absolute; left:7px; top:7px; bottom:7px; width:2px; background:var(--n100);
-}
-.tpl-scope .step {
-position:relative; padding:7px 0 9px;
-}
-.tpl-scope .step::before {
-content:""; position:absolute; left:-20px; top:12px; width:10px; height:10px; border-radius:50%;
-  background:var(--primary); box-shadow:0 0 0 3px var(--primary-soft);
-}
-.tpl-scope .step.done::before {
-background:var(--ok); box-shadow:0 0 0 3px var(--ok-soft);
-}
-.tpl-scope .step.bad::before {
-background:var(--danger); box-shadow:0 0 0 3px var(--danger-soft);
-}
-.tpl-scope .step .time {
-color:var(--n400); font-size:11px;
-}
-.tpl-scope .step .node {
-font-weight:800;
-}
-.tpl-scope .step .detail {
-color:var(--n600); font-size:12px;
-}
-.tpl-scope .alert {
-padding:10px; border-radius:var(--r-md); background:var(--warn-soft); border:1px solid #fde68a; color:var(--warn-deep); font-size:12px;
-}
-.tpl-scope .alert.bad {
-background:var(--danger-soft); border-color:#fecaca; color:var(--danger-deep);
-}
-.tpl-scope .foot {
-padding:10px 14px; border-top:1px solid var(--n100); color:var(--n400); font-size:11px;
-}
-.tpl-scope .muted {
-color:var(--n500);
-}
-.tpl-scope .faint {
-color:var(--n400);
-}
-.tpl-scope .text {
-font-size:13px; color:var(--n600); line-height:1.6;
-}
-@media (max-width:360px) {
-.tpl-scope .hero h1 {
-font-size:20px;
-}
-.tpl-scope .score {
-font-size:36px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(2,minmax(0,1fr));
-}
-}
-
-/* ===== health_warning_card ===== */
-.tpl-scope {
---primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
-  --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
-  --ok:#6B9B7A; --ok-soft:#E8F2EC; --ok-deep:#3D6B4D;
-  --warn:#D4A537; --warn-soft:#FBF3DD; --warn-deep:#9C7715;
-  --danger:#E5484D; --danger-soft:#FDECEC; --danger-deep:#b91c1c;
-  
-  --n0:#FAF8F5; --n50:#F0EDE7; --n100:#E4E0D8; --n200:#D9D4CC; --n300:#C4BEB4;
-  --n400:#A8A09A; --n500:#8A8278; --n600:#6B6660; --n700:#4A463F; --n800:#3D3A36;
-  
-  --font-serif:'Noto Serif SC','Songti SC','STSong',serif;
-  --font-sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;
-  
-  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px; --r-full:999px;
-  
-  --sh-sm:0 1px 3px rgba(62,56,50,.08); --sh-md:0 4px 12px rgba(62,56,50,.10); --sh-lg:0 8px 24px rgba(62,56,50,.12);
-}
-.tpl-scope * {
-margin:0; padding:0; box-sizing:border-box;
-}
-.tpl-scope img {
-max-width:100%; height:auto; display:block;
-}
-.tpl-scope a {
-color:var(--primary); text-decoration:none;
-}
-.tpl-scope .card {
-max-width:430px; margin:0 auto; background:#fff; border:1px solid var(--n100);
-  border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--sh-md);
-}
-.tpl-scope .hero {
-padding:16px; color:#fff; background:linear-gradient(135deg,var(--primary),var(--primary-deep));
-}
-.tpl-scope .hero.blue {
-background:linear-gradient(135deg,var(--accent),var(--accent-deep));
-}
-.tpl-scope .eyebrow {
-display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:var(--r-full);
-  background:rgba(255,255,255,.18); font-size:12px; font-weight:600;
-}
-.tpl-scope .hero h1 {
-font-family:var(--font-serif); margin:8px 0 0; font-size:22px; line-height:1.18; letter-spacing:.5px;
-}
-.tpl-scope .hero .sub {
-margin-top:6px; color:rgba(255,255,255,.88); font-size:13px;
-}
-.tpl-scope .hero-row {
-display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-}
-.tpl-scope .score {
-font-size:42px; font-weight:800; line-height:1;
-}
-.tpl-scope .score small {
-font-size:14px; font-weight:600; opacity:.82;
-}
-.tpl-scope .section {
-padding:13px 14px; border-top:1px solid var(--n100);
-}
-.tpl-scope .section-title {
-margin:0 0 10px; display:flex; align-items:center; gap:7px; color:var(--n800);
-  font-size:15px; font-weight:800; font-family:var(--font-serif);
-}
-.tpl-scope .section-title::before {
-content:""; width:4px; height:16px; border-radius:2px; background:var(--primary);
-}
-.tpl-scope .section-title.blue::before {
-background:var(--accent);
-}
-.tpl-scope .pill {
-display:inline-flex; align-items:center; justify-content:center; min-height:22px; padding:2px 9px;
-  border-radius:var(--r-full); background:var(--primary-soft); color:var(--primary-deep);
-  font-size:12px; font-weight:700; white-space:nowrap;
-}
-.tpl-scope .pill.blue {
-background:var(--accent-soft); color:var(--accent);
-}
-.tpl-scope .pill.ok {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .pill.warn {
-background:var(--warn-soft); color:var(--warn-deep);
-}
-.tpl-scope .pill.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .grid {
-display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(3,minmax(0,1fr));
-}
-.tpl-scope .stat {
-min-width:0; padding:10px 9px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .stat .num {
-color:var(--primary-deep); font-size:20px; font-weight:800; line-height:1.1;
-}
-.tpl-scope .stat .num.bad {
-color:var(--danger);
-}
-.tpl-scope .stat .num.warn {
-color:var(--warn-deep);
-}
-.tpl-scope .stat .num.ok {
-color:var(--ok-deep);
-}
-.tpl-scope .stat .lbl {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .dim {
-padding:9px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .dim:last-child {
-border-bottom:0;
-}
-.tpl-scope .dim-head {
-display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:13px;
-}
-.tpl-scope .dim-name {
-font-weight:700;
-}
-.tpl-scope .dim-name small {
-margin-left:5px; color:var(--n400); font-weight:600;
-}
-.tpl-scope .dim-score {
-color:var(--primary-deep); font-weight:800; white-space:nowrap;
-}
-.tpl-scope .bar {
-height:7px; margin-top:6px; border-radius:var(--r-full); background:var(--n200); overflow:hidden;
-}
-.tpl-scope .bar > span {
-display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--primary),var(--accent));
-}
-.tpl-scope .bar > span.warn {
-background:linear-gradient(90deg,var(--warn),#f97316);
-}
-.tpl-scope .bar > span.bad {
-background:linear-gradient(90deg,var(--danger),#fb7185);
-}
-.tpl-scope .note {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .row {
-display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .row:last-child {
-border-bottom:0;
-}
-.tpl-scope .row .k {
-color:var(--n500); flex:0 0 auto;
-}
-.tpl-scope .row .v {
-font-weight:700; text-align:right; min-width:0;
-}
-.tpl-scope .list {
-display:flex; flex-direction:column; gap:8px;
-}
-.tpl-scope .item {
-padding:10px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .item.warn {
-background:var(--warn-soft); border-color:#fde68a;
-}
-.tpl-scope .item.bad {
-background:var(--danger-soft); border-color:#fecaca;
-}
-.tpl-scope .item.ok {
-background:var(--ok-soft); border-color:#bbf7d0;
-}
-.tpl-scope .item .top {
-display:flex; align-items:center; justify-content:space-between; gap:8px; font-weight:800;
-}
-.tpl-scope .item .txt {
-margin-top:5px; color:var(--n600); font-size:12px;
-}
-.tpl-scope .tags {
-display:flex; flex-wrap:wrap; gap:6px;
-}
-.tpl-scope .tag {
-padding:4px 8px; border-radius:var(--r-md); background:var(--n200); color:var(--n500); font-size:12px; font-weight:600;
-}
-.tpl-scope .tag.good {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .tag.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .timeline {
-position:relative; padding-left:22px;
-}
-.tpl-scope .timeline::before {
-content:""; position:absolute; left:7px; top:7px; bottom:7px; width:2px; background:var(--n100);
-}
-.tpl-scope .step {
-position:relative; padding:7px 0 9px;
-}
-.tpl-scope .step::before {
-content:""; position:absolute; left:-20px; top:12px; width:10px; height:10px; border-radius:50%;
-  background:var(--primary); box-shadow:0 0 0 3px var(--primary-soft);
-}
-.tpl-scope .step.done::before {
-background:var(--ok); box-shadow:0 0 0 3px var(--ok-soft);
-}
-.tpl-scope .step.bad::before {
-background:var(--danger); box-shadow:0 0 0 3px var(--danger-soft);
-}
-.tpl-scope .step .time {
-color:var(--n400); font-size:11px;
-}
-.tpl-scope .step .node {
-font-weight:800;
-}
-.tpl-scope .step .detail {
-color:var(--n600); font-size:12px;
-}
-.tpl-scope .alert {
-padding:10px; border-radius:var(--r-md); background:var(--warn-soft); border:1px solid #fde68a; color:var(--warn-deep); font-size:12px;
-}
-.tpl-scope .alert.bad {
-background:var(--danger-soft); border-color:#fecaca; color:var(--danger-deep);
-}
-.tpl-scope .foot {
-padding:10px 14px; border-top:1px solid var(--n100); color:var(--n400); font-size:11px;
-}
-.tpl-scope .muted {
-color:var(--n500);
-}
-.tpl-scope .faint {
-color:var(--n400);
-}
-.tpl-scope .text {
-font-size:13px; color:var(--n600); line-height:1.6;
-}
-@media (max-width:360px) {
-.tpl-scope .hero h1 {
-font-size:20px;
-}
-.tpl-scope .score {
-font-size:36px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(2,minmax(0,1fr));
-}
-}
-
-/* ===== help_card ===== */
-.tpl-scope {
---primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
-  --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
-  --ok:#6B9B7A; --ok-soft:#E8F2EC; --ok-deep:#3D6B4D;
-  --warn:#D4A537; --warn-soft:#FBF3DD; --warn-deep:#9C7715;
-  --danger:#E5484D; --danger-soft:#FDECEC; --danger-deep:#b91c1c;
-  
-  --n0:#FAF8F5; --n50:#F0EDE7; --n100:#E4E0D8; --n200:#D9D4CC; --n300:#C4BEB4;
-  --n400:#A8A09A; --n500:#8A8278; --n600:#6B6660; --n700:#4A463F; --n800:#3D3A36;
-  
-  --font-serif:'Noto Serif SC','Songti SC','STSong',serif;
-  --font-sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;
-  
-  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px; --r-full:999px;
-  
-  --sh-sm:0 1px 3px rgba(62,56,50,.08); --sh-md:0 4px 12px rgba(62,56,50,.10); --sh-lg:0 8px 24px rgba(62,56,50,.12);
-}
-.tpl-scope * {
-margin:0; padding:0; box-sizing:border-box;
-}
-.tpl-scope img {
-max-width:100%; height:auto; display:block;
-}
-.tpl-scope a {
-color:var(--primary); text-decoration:none;
-}
-.tpl-scope .card {
-max-width:430px; margin:0 auto; background:#fff; border:1px solid var(--n100);
-  border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--sh-md);
-}
-.tpl-scope .hero {
-padding:16px; color:#fff; background:linear-gradient(135deg,var(--primary),var(--primary-deep));
-}
-.tpl-scope .hero.blue {
-background:linear-gradient(135deg,var(--accent),var(--accent-deep));
-}
-.tpl-scope .eyebrow {
-display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:var(--r-full);
-  background:rgba(255,255,255,.18); font-size:12px; font-weight:600;
-}
-.tpl-scope .hero h1 {
-font-family:var(--font-serif); margin:8px 0 0; font-size:22px; line-height:1.18; letter-spacing:.5px;
-}
-.tpl-scope .hero .sub {
-margin-top:6px; color:rgba(255,255,255,.88); font-size:13px;
-}
-.tpl-scope .hero-row {
-display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-}
-.tpl-scope .score {
-font-size:42px; font-weight:800; line-height:1;
-}
-.tpl-scope .score small {
-font-size:14px; font-weight:600; opacity:.82;
-}
-.tpl-scope .section {
-padding:13px 14px; border-top:1px solid var(--n100);
-}
-.tpl-scope .section-title {
-margin:0 0 10px; display:flex; align-items:center; gap:7px; color:var(--n800);
-  font-size:15px; font-weight:800; font-family:var(--font-serif);
-}
-.tpl-scope .section-title::before {
-content:""; width:4px; height:16px; border-radius:2px; background:var(--primary);
-}
-.tpl-scope .section-title.blue::before {
-background:var(--accent);
-}
-.tpl-scope .pill {
-display:inline-flex; align-items:center; justify-content:center; min-height:22px; padding:2px 9px;
-  border-radius:var(--r-full); background:var(--primary-soft); color:var(--primary-deep);
-  font-size:12px; font-weight:700; white-space:nowrap;
-}
-.tpl-scope .pill.blue {
-background:var(--accent-soft); color:var(--accent);
-}
-.tpl-scope .pill.ok {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .pill.warn {
-background:var(--warn-soft); color:var(--warn-deep);
-}
-.tpl-scope .pill.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .grid {
-display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(3,minmax(0,1fr));
-}
-.tpl-scope .stat {
-min-width:0; padding:10px 9px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .stat .num {
-color:var(--primary-deep); font-size:20px; font-weight:800; line-height:1.1;
-}
-.tpl-scope .stat .num.bad {
-color:var(--danger);
-}
-.tpl-scope .stat .num.warn {
-color:var(--warn-deep);
-}
-.tpl-scope .stat .num.ok {
-color:var(--ok-deep);
-}
-.tpl-scope .stat .lbl {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .dim {
-padding:9px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .dim:last-child {
-border-bottom:0;
-}
-.tpl-scope .dim-head {
-display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:13px;
-}
-.tpl-scope .dim-name {
-font-weight:700;
-}
-.tpl-scope .dim-name small {
-margin-left:5px; color:var(--n400); font-weight:600;
-}
-.tpl-scope .dim-score {
-color:var(--primary-deep); font-weight:800; white-space:nowrap;
-}
-.tpl-scope .bar {
-height:7px; margin-top:6px; border-radius:var(--r-full); background:var(--n200); overflow:hidden;
-}
-.tpl-scope .bar > span {
-display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--primary),var(--accent));
-}
-.tpl-scope .bar > span.warn {
-background:linear-gradient(90deg,var(--warn),#f97316);
-}
-.tpl-scope .bar > span.bad {
-background:linear-gradient(90deg,var(--danger),#fb7185);
-}
-.tpl-scope .note {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .row {
-display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .row:last-child {
-border-bottom:0;
-}
-.tpl-scope .row .k {
-color:var(--n500); flex:0 0 auto;
-}
-.tpl-scope .row .v {
-font-weight:700; text-align:right; min-width:0;
-}
-.tpl-scope .list {
-display:flex; flex-direction:column; gap:8px;
-}
-.tpl-scope .item {
-padding:10px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .item.warn {
-background:var(--warn-soft); border-color:#fde68a;
-}
-.tpl-scope .item.bad {
-background:var(--danger-soft); border-color:#fecaca;
-}
-.tpl-scope .item.ok {
-background:var(--ok-soft); border-color:#bbf7d0;
-}
-.tpl-scope .item .top {
-display:flex; align-items:center; justify-content:space-between; gap:8px; font-weight:800;
-}
-.tpl-scope .item .txt {
-margin-top:5px; color:var(--n600); font-size:12px;
-}
-.tpl-scope .tags {
-display:flex; flex-wrap:wrap; gap:6px;
-}
-.tpl-scope .tag {
-padding:4px 8px; border-radius:var(--r-md); background:var(--n200); color:var(--n500); font-size:12px; font-weight:600;
-}
-.tpl-scope .tag.good {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .tag.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .timeline {
-position:relative; padding-left:22px;
-}
-.tpl-scope .timeline::before {
-content:""; position:absolute; left:7px; top:7px; bottom:7px; width:2px; background:var(--n100);
-}
-.tpl-scope .step {
-position:relative; padding:7px 0 9px;
-}
-.tpl-scope .step::before {
-content:""; position:absolute; left:-20px; top:12px; width:10px; height:10px; border-radius:50%;
-  background:var(--primary); box-shadow:0 0 0 3px var(--primary-soft);
-}
-.tpl-scope .step.done::before {
-background:var(--ok); box-shadow:0 0 0 3px var(--ok-soft);
-}
-.tpl-scope .step.bad::before {
-background:var(--danger); box-shadow:0 0 0 3px var(--danger-soft);
-}
-.tpl-scope .step .time {
-color:var(--n400); font-size:11px;
-}
-.tpl-scope .step .node {
-font-weight:800;
-}
-.tpl-scope .step .detail {
-color:var(--n600); font-size:12px;
-}
-.tpl-scope .alert {
-padding:10px; border-radius:var(--r-md); background:var(--warn-soft); border:1px solid #fde68a; color:var(--warn-deep); font-size:12px;
-}
-.tpl-scope .alert.bad {
-background:var(--danger-soft); border-color:#fecaca; color:var(--danger-deep);
-}
-.tpl-scope .foot {
-padding:10px 14px; border-top:1px solid var(--n100); color:var(--n400); font-size:11px;
-}
-.tpl-scope .muted {
-color:var(--n500);
-}
-.tpl-scope .faint {
-color:var(--n400);
-}
-.tpl-scope .text {
-font-size:13px; color:var(--n600); line-height:1.6;
-}
-@media (max-width:360px) {
-.tpl-scope .hero h1 {
-font-size:20px;
-}
-.tpl-scope .score {
-font-size:36px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(2,minmax(0,1fr));
-}
-}
-
-/* ===== risk_assessment_card ===== */
-.tpl-scope {
---primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
-  --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
-  --ok:#6B9B7A; --ok-soft:#E8F2EC; --ok-deep:#3D6B4D;
-  --warn:#D4A537; --warn-soft:#FBF3DD; --warn-deep:#9C7715;
-  --danger:#E5484D; --danger-soft:#FDECEC; --danger-deep:#b91c1c;
-  
-  --n0:#FAF8F5; --n50:#F0EDE7; --n100:#E4E0D8; --n200:#D9D4CC; --n300:#C4BEB4;
-  --n400:#A8A09A; --n500:#8A8278; --n600:#6B6660; --n700:#4A463F; --n800:#3D3A36;
-  
-  --font-serif:'Noto Serif SC','Songti SC','STSong',serif;
-  --font-sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;
-  
-  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px; --r-full:999px;
-  
-  --sh-sm:0 1px 3px rgba(62,56,50,.08); --sh-md:0 4px 12px rgba(62,56,50,.10); --sh-lg:0 8px 24px rgba(62,56,50,.12);
-}
-.tpl-scope * {
-margin:0; padding:0; box-sizing:border-box;
-}
-.tpl-scope img {
-max-width:100%; height:auto; display:block;
-}
-.tpl-scope a {
-color:var(--primary); text-decoration:none;
-}
-.tpl-scope .card {
-max-width:430px; margin:0 auto; background:#fff; border:1px solid var(--n100);
-  border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--sh-md);
-}
-.tpl-scope .hero {
-padding:16px; color:#fff; background:linear-gradient(135deg,var(--primary),var(--primary-deep));
-}
-.tpl-scope .hero.blue {
-background:linear-gradient(135deg,var(--accent),var(--accent-deep));
-}
-.tpl-scope .eyebrow {
-display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:var(--r-full);
-  background:rgba(255,255,255,.18); font-size:12px; font-weight:600;
-}
-.tpl-scope .hero h1 {
-font-family:var(--font-serif); margin:8px 0 0; font-size:22px; line-height:1.18; letter-spacing:.5px;
-}
-.tpl-scope .hero .sub {
-margin-top:6px; color:rgba(255,255,255,.88); font-size:13px;
-}
-.tpl-scope .hero-row {
-display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-}
-.tpl-scope .score {
-font-size:42px; font-weight:800; line-height:1;
-}
-.tpl-scope .score small {
-font-size:14px; font-weight:600; opacity:.82;
-}
-.tpl-scope .section {
-padding:13px 14px; border-top:1px solid var(--n100);
-}
-.tpl-scope .section-title {
-margin:0 0 10px; display:flex; align-items:center; gap:7px; color:var(--n800);
-  font-size:15px; font-weight:800; font-family:var(--font-serif);
-}
-.tpl-scope .section-title::before {
-content:""; width:4px; height:16px; border-radius:2px; background:var(--primary);
-}
-.tpl-scope .section-title.blue::before {
-background:var(--accent);
-}
-.tpl-scope .pill {
-display:inline-flex; align-items:center; justify-content:center; min-height:22px; padding:2px 9px;
-  border-radius:var(--r-full); background:var(--primary-soft); color:var(--primary-deep);
-  font-size:12px; font-weight:700; white-space:nowrap;
-}
-.tpl-scope .pill.blue {
-background:var(--accent-soft); color:var(--accent);
-}
-.tpl-scope .pill.ok {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .pill.warn {
-background:var(--warn-soft); color:var(--warn-deep);
-}
-.tpl-scope .pill.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .grid {
-display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(3,minmax(0,1fr));
-}
-.tpl-scope .stat {
-min-width:0; padding:10px 9px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .stat .num {
-color:var(--primary-deep); font-size:20px; font-weight:800; line-height:1.1;
-}
-.tpl-scope .stat .num.bad {
-color:var(--danger);
-}
-.tpl-scope .stat .num.warn {
-color:var(--warn-deep);
-}
-.tpl-scope .stat .num.ok {
-color:var(--ok-deep);
-}
-.tpl-scope .stat .lbl {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .dim {
-padding:9px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .dim:last-child {
-border-bottom:0;
-}
-.tpl-scope .dim-head {
-display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:13px;
-}
-.tpl-scope .dim-name {
-font-weight:700;
-}
-.tpl-scope .dim-name small {
-margin-left:5px; color:var(--n400); font-weight:600;
-}
-.tpl-scope .dim-score {
-color:var(--primary-deep); font-weight:800; white-space:nowrap;
-}
-.tpl-scope .bar {
-height:7px; margin-top:6px; border-radius:var(--r-full); background:var(--n200); overflow:hidden;
-}
-.tpl-scope .bar > span {
-display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--primary),var(--accent));
-}
-.tpl-scope .bar > span.warn {
-background:linear-gradient(90deg,var(--warn),#f97316);
-}
-.tpl-scope .bar > span.bad {
-background:linear-gradient(90deg,var(--danger),#fb7185);
-}
-.tpl-scope .note {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .row {
-display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .row:last-child {
-border-bottom:0;
-}
-.tpl-scope .row .k {
-color:var(--n500); flex:0 0 auto;
-}
-.tpl-scope .row .v {
-font-weight:700; text-align:right; min-width:0;
-}
-.tpl-scope .list {
-display:flex; flex-direction:column; gap:8px;
-}
-.tpl-scope .item {
-padding:10px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .item.warn {
-background:var(--warn-soft); border-color:#fde68a;
-}
-.tpl-scope .item.bad {
-background:var(--danger-soft); border-color:#fecaca;
-}
-.tpl-scope .item.ok {
-background:var(--ok-soft); border-color:#bbf7d0;
-}
-.tpl-scope .item .top {
-display:flex; align-items:center; justify-content:space-between; gap:8px; font-weight:800;
-}
-.tpl-scope .item .txt {
-margin-top:5px; color:var(--n600); font-size:12px;
-}
-.tpl-scope .tags {
-display:flex; flex-wrap:wrap; gap:6px;
-}
-.tpl-scope .tag {
-padding:4px 8px; border-radius:var(--r-md); background:var(--n200); color:var(--n500); font-size:12px; font-weight:600;
-}
-.tpl-scope .tag.good {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .tag.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .timeline {
-position:relative; padding-left:22px;
-}
-.tpl-scope .timeline::before {
-content:""; position:absolute; left:7px; top:7px; bottom:7px; width:2px; background:var(--n100);
-}
-.tpl-scope .step {
-position:relative; padding:7px 0 9px;
-}
-.tpl-scope .step::before {
-content:""; position:absolute; left:-20px; top:12px; width:10px; height:10px; border-radius:50%;
-  background:var(--primary); box-shadow:0 0 0 3px var(--primary-soft);
-}
-.tpl-scope .step.done::before {
-background:var(--ok); box-shadow:0 0 0 3px var(--ok-soft);
-}
-.tpl-scope .step.bad::before {
-background:var(--danger); box-shadow:0 0 0 3px var(--danger-soft);
-}
-.tpl-scope .step .time {
-color:var(--n400); font-size:11px;
-}
-.tpl-scope .step .node {
-font-weight:800;
-}
-.tpl-scope .step .detail {
-color:var(--n600); font-size:12px;
-}
-.tpl-scope .alert {
-padding:10px; border-radius:var(--r-md); background:var(--warn-soft); border:1px solid #fde68a; color:var(--warn-deep); font-size:12px;
-}
-.tpl-scope .alert.bad {
-background:var(--danger-soft); border-color:#fecaca; color:var(--danger-deep);
-}
-.tpl-scope .foot {
-padding:10px 14px; border-top:1px solid var(--n100); color:var(--n400); font-size:11px;
-}
-.tpl-scope .muted {
-color:var(--n500);
-}
-.tpl-scope .faint {
-color:var(--n400);
-}
-.tpl-scope .text {
-font-size:13px; color:var(--n600); line-height:1.6;
-}
-@media (max-width:360px) {
-.tpl-scope .hero h1 {
-font-size:20px;
-}
-.tpl-scope .score {
-font-size:36px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(2,minmax(0,1fr));
-}
-}
-
-/* ===== risk_level_card ===== */
-.tpl-scope {
---primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
-  --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
-  --ok:#6B9B7A; --ok-soft:#E8F2EC; --ok-deep:#3D6B4D;
-  --warn:#D4A537; --warn-soft:#FBF3DD; --warn-deep:#9C7715;
-  --danger:#E5484D; --danger-soft:#FDECEC; --danger-deep:#b91c1c;
-  
-  --n0:#FAF8F5; --n50:#F0EDE7; --n100:#E4E0D8; --n200:#D9D4CC; --n300:#C4BEB4;
-  --n400:#A8A09A; --n500:#8A8278; --n600:#6B6660; --n700:#4A463F; --n800:#3D3A36;
-  
-  --font-serif:'Noto Serif SC','Songti SC','STSong',serif;
-  --font-sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;
-  
-  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px; --r-full:999px;
-  
-  --sh-sm:0 1px 3px rgba(62,56,50,.08); --sh-md:0 4px 12px rgba(62,56,50,.10); --sh-lg:0 8px 24px rgba(62,56,50,.12);
-}
-.tpl-scope * {
-margin:0; padding:0; box-sizing:border-box;
-}
-.tpl-scope img {
-max-width:100%; height:auto; display:block;
-}
-.tpl-scope a {
-color:var(--primary); text-decoration:none;
-}
-.tpl-scope .card {
-max-width:430px; margin:0 auto; background:#fff; border:1px solid var(--n100);
-  border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--sh-md);
-}
-.tpl-scope .hero {
-padding:16px; color:#fff; background:linear-gradient(135deg,var(--primary),var(--primary-deep));
-}
-.tpl-scope .hero.blue {
-background:linear-gradient(135deg,var(--accent),var(--accent-deep));
-}
-.tpl-scope .eyebrow {
-display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:var(--r-full);
-  background:rgba(255,255,255,.18); font-size:12px; font-weight:600;
-}
-.tpl-scope .hero h1 {
-font-family:var(--font-serif); margin:8px 0 0; font-size:22px; line-height:1.18; letter-spacing:.5px;
-}
-.tpl-scope .hero .sub {
-margin-top:6px; color:rgba(255,255,255,.88); font-size:13px;
-}
-.tpl-scope .hero-row {
-display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-}
-.tpl-scope .score {
-font-size:42px; font-weight:800; line-height:1;
-}
-.tpl-scope .score small {
-font-size:14px; font-weight:600; opacity:.82;
-}
-.tpl-scope .section {
-padding:13px 14px; border-top:1px solid var(--n100);
-}
-.tpl-scope .section-title {
-margin:0 0 10px; display:flex; align-items:center; gap:7px; color:var(--n800);
-  font-size:15px; font-weight:800; font-family:var(--font-serif);
-}
-.tpl-scope .section-title::before {
-content:""; width:4px; height:16px; border-radius:2px; background:var(--primary);
-}
-.tpl-scope .section-title.blue::before {
-background:var(--accent);
-}
-.tpl-scope .pill {
-display:inline-flex; align-items:center; justify-content:center; min-height:22px; padding:2px 9px;
-  border-radius:var(--r-full); background:var(--primary-soft); color:var(--primary-deep);
-  font-size:12px; font-weight:700; white-space:nowrap;
-}
-.tpl-scope .pill.blue {
-background:var(--accent-soft); color:var(--accent);
-}
-.tpl-scope .pill.ok {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .pill.warn {
-background:var(--warn-soft); color:var(--warn-deep);
-}
-.tpl-scope .pill.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .grid {
-display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(3,minmax(0,1fr));
-}
-.tpl-scope .stat {
-min-width:0; padding:10px 9px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .stat .num {
-color:var(--primary-deep); font-size:20px; font-weight:800; line-height:1.1;
-}
-.tpl-scope .stat .num.bad {
-color:var(--danger);
-}
-.tpl-scope .stat .num.warn {
-color:var(--warn-deep);
-}
-.tpl-scope .stat .num.ok {
-color:var(--ok-deep);
-}
-.tpl-scope .stat .lbl {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .dim {
-padding:9px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .dim:last-child {
-border-bottom:0;
-}
-.tpl-scope .dim-head {
-display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:13px;
-}
-.tpl-scope .dim-name {
-font-weight:700;
-}
-.tpl-scope .dim-name small {
-margin-left:5px; color:var(--n400); font-weight:600;
-}
-.tpl-scope .dim-score {
-color:var(--primary-deep); font-weight:800; white-space:nowrap;
-}
-.tpl-scope .bar {
-height:7px; margin-top:6px; border-radius:var(--r-full); background:var(--n200); overflow:hidden;
-}
-.tpl-scope .bar > span {
-display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--primary),var(--accent));
-}
-.tpl-scope .bar > span.warn {
-background:linear-gradient(90deg,var(--warn),#f97316);
-}
-.tpl-scope .bar > span.bad {
-background:linear-gradient(90deg,var(--danger),#fb7185);
-}
-.tpl-scope .note {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .row {
-display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .row:last-child {
-border-bottom:0;
-}
-.tpl-scope .row .k {
-color:var(--n500); flex:0 0 auto;
-}
-.tpl-scope .row .v {
-font-weight:700; text-align:right; min-width:0;
-}
-.tpl-scope .list {
-display:flex; flex-direction:column; gap:8px;
-}
-.tpl-scope .item {
-padding:10px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .item.warn {
-background:var(--warn-soft); border-color:#fde68a;
-}
-.tpl-scope .item.bad {
-background:var(--danger-soft); border-color:#fecaca;
-}
-.tpl-scope .item.ok {
-background:var(--ok-soft); border-color:#bbf7d0;
-}
-.tpl-scope .item .top {
-display:flex; align-items:center; justify-content:space-between; gap:8px; font-weight:800;
-}
-.tpl-scope .item .txt {
-margin-top:5px; color:var(--n600); font-size:12px;
-}
-.tpl-scope .tags {
-display:flex; flex-wrap:wrap; gap:6px;
-}
-.tpl-scope .tag {
-padding:4px 8px; border-radius:var(--r-md); background:var(--n200); color:var(--n500); font-size:12px; font-weight:600;
-}
-.tpl-scope .tag.good {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .tag.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .timeline {
-position:relative; padding-left:22px;
-}
-.tpl-scope .timeline::before {
-content:""; position:absolute; left:7px; top:7px; bottom:7px; width:2px; background:var(--n100);
-}
-.tpl-scope .step {
-position:relative; padding:7px 0 9px;
-}
-.tpl-scope .step::before {
-content:""; position:absolute; left:-20px; top:12px; width:10px; height:10px; border-radius:50%;
-  background:var(--primary); box-shadow:0 0 0 3px var(--primary-soft);
-}
-.tpl-scope .step.done::before {
-background:var(--ok); box-shadow:0 0 0 3px var(--ok-soft);
-}
-.tpl-scope .step.bad::before {
-background:var(--danger); box-shadow:0 0 0 3px var(--danger-soft);
-}
-.tpl-scope .step .time {
-color:var(--n400); font-size:11px;
-}
-.tpl-scope .step .node {
-font-weight:800;
-}
-.tpl-scope .step .detail {
-color:var(--n600); font-size:12px;
-}
-.tpl-scope .alert {
-padding:10px; border-radius:var(--r-md); background:var(--warn-soft); border:1px solid #fde68a; color:var(--warn-deep); font-size:12px;
-}
-.tpl-scope .alert.bad {
-background:var(--danger-soft); border-color:#fecaca; color:var(--danger-deep);
-}
-.tpl-scope .foot {
-padding:10px 14px; border-top:1px solid var(--n100); color:var(--n400); font-size:11px;
-}
-.tpl-scope .muted {
-color:var(--n500);
-}
-.tpl-scope .faint {
-color:var(--n400);
-}
-.tpl-scope .text {
-font-size:13px; color:var(--n600); line-height:1.6;
-}
-@media (max-width:360px) {
-.tpl-scope .hero h1 {
-font-size:20px;
-}
-.tpl-scope .score {
-font-size:36px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(2,minmax(0,1fr));
-}
-}
-
-/* ===== risk_warning_card ===== */
-.tpl-scope {
---primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
-  --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
-  --ok:#6B9B7A; --ok-soft:#E8F2EC; --ok-deep:#3D6B4D;
-  --warn:#D4A537; --warn-soft:#FBF3DD; --warn-deep:#9C7715;
-  --danger:#E5484D; --danger-soft:#FDECEC; --danger-deep:#b91c1c;
-  
-  --n0:#FAF8F5; --n50:#F0EDE7; --n100:#E4E0D8; --n200:#D9D4CC; --n300:#C4BEB4;
-  --n400:#A8A09A; --n500:#8A8278; --n600:#6B6660; --n700:#4A463F; --n800:#3D3A36;
-  
-  --font-serif:'Noto Serif SC','Songti SC','STSong',serif;
-  --font-sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;
-  
-  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px; --r-full:999px;
-  
-  --sh-sm:0 1px 3px rgba(62,56,50,.08); --sh-md:0 4px 12px rgba(62,56,50,.10); --sh-lg:0 8px 24px rgba(62,56,50,.12);
-}
-.tpl-scope * {
-margin:0; padding:0; box-sizing:border-box;
-}
-.tpl-scope img {
-max-width:100%; height:auto; display:block;
-}
-.tpl-scope a {
-color:var(--primary); text-decoration:none;
-}
-.tpl-scope .card {
-max-width:430px; margin:0 auto; background:#fff; border:1px solid var(--n100);
-  border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--sh-md);
-}
-.tpl-scope .hero {
-padding:16px; color:#fff; background:linear-gradient(135deg,var(--primary),var(--primary-deep));
-}
-.tpl-scope .hero.blue {
-background:linear-gradient(135deg,var(--accent),var(--accent-deep));
-}
-.tpl-scope .eyebrow {
-display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:var(--r-full);
-  background:rgba(255,255,255,.18); font-size:12px; font-weight:600;
-}
-.tpl-scope .hero h1 {
-font-family:var(--font-serif); margin:8px 0 0; font-size:22px; line-height:1.18; letter-spacing:.5px;
-}
-.tpl-scope .hero .sub {
-margin-top:6px; color:rgba(255,255,255,.88); font-size:13px;
-}
-.tpl-scope .hero-row {
-display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-}
-.tpl-scope .score {
-font-size:42px; font-weight:800; line-height:1;
-}
-.tpl-scope .score small {
-font-size:14px; font-weight:600; opacity:.82;
-}
-.tpl-scope .section {
-padding:13px 14px; border-top:1px solid var(--n100);
-}
-.tpl-scope .section-title {
-margin:0 0 10px; display:flex; align-items:center; gap:7px; color:var(--n800);
-  font-size:15px; font-weight:800; font-family:var(--font-serif);
-}
-.tpl-scope .section-title::before {
-content:""; width:4px; height:16px; border-radius:2px; background:var(--primary);
-}
-.tpl-scope .section-title.blue::before {
-background:var(--accent);
-}
-.tpl-scope .pill {
-display:inline-flex; align-items:center; justify-content:center; min-height:22px; padding:2px 9px;
-  border-radius:var(--r-full); background:var(--primary-soft); color:var(--primary-deep);
-  font-size:12px; font-weight:700; white-space:nowrap;
-}
-.tpl-scope .pill.blue {
-background:var(--accent-soft); color:var(--accent);
-}
-.tpl-scope .pill.ok {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .pill.warn {
-background:var(--warn-soft); color:var(--warn-deep);
-}
-.tpl-scope .pill.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .grid {
-display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(3,minmax(0,1fr));
-}
-.tpl-scope .stat {
-min-width:0; padding:10px 9px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .stat .num {
-color:var(--primary-deep); font-size:20px; font-weight:800; line-height:1.1;
-}
-.tpl-scope .stat .num.bad {
-color:var(--danger);
-}
-.tpl-scope .stat .num.warn {
-color:var(--warn-deep);
-}
-.tpl-scope .stat .num.ok {
-color:var(--ok-deep);
-}
-.tpl-scope .stat .lbl {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .dim {
-padding:9px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .dim:last-child {
-border-bottom:0;
-}
-.tpl-scope .dim-head {
-display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:13px;
-}
-.tpl-scope .dim-name {
-font-weight:700;
-}
-.tpl-scope .dim-name small {
-margin-left:5px; color:var(--n400); font-weight:600;
-}
-.tpl-scope .dim-score {
-color:var(--primary-deep); font-weight:800; white-space:nowrap;
-}
-.tpl-scope .bar {
-height:7px; margin-top:6px; border-radius:var(--r-full); background:var(--n200); overflow:hidden;
-}
-.tpl-scope .bar > span {
-display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--primary),var(--accent));
-}
-.tpl-scope .bar > span.warn {
-background:linear-gradient(90deg,var(--warn),#f97316);
-}
-.tpl-scope .bar > span.bad {
-background:linear-gradient(90deg,var(--danger),#fb7185);
-}
-.tpl-scope .note {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .row {
-display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .row:last-child {
-border-bottom:0;
-}
-.tpl-scope .row .k {
-color:var(--n500); flex:0 0 auto;
-}
-.tpl-scope .row .v {
-font-weight:700; text-align:right; min-width:0;
-}
-.tpl-scope .list {
-display:flex; flex-direction:column; gap:8px;
-}
-.tpl-scope .item {
-padding:10px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .item.warn {
-background:var(--warn-soft); border-color:#fde68a;
-}
-.tpl-scope .item.bad {
-background:var(--danger-soft); border-color:#fecaca;
-}
-.tpl-scope .item.ok {
-background:var(--ok-soft); border-color:#bbf7d0;
-}
-.tpl-scope .item .top {
-display:flex; align-items:center; justify-content:space-between; gap:8px; font-weight:800;
-}
-.tpl-scope .item .txt {
-margin-top:5px; color:var(--n600); font-size:12px;
-}
-.tpl-scope .tags {
-display:flex; flex-wrap:wrap; gap:6px;
-}
-.tpl-scope .tag {
-padding:4px 8px; border-radius:var(--r-md); background:var(--n200); color:var(--n500); font-size:12px; font-weight:600;
-}
-.tpl-scope .tag.good {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .tag.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .timeline {
-position:relative; padding-left:22px;
-}
-.tpl-scope .timeline::before {
-content:""; position:absolute; left:7px; top:7px; bottom:7px; width:2px; background:var(--n100);
-}
-.tpl-scope .step {
-position:relative; padding:7px 0 9px;
-}
-.tpl-scope .step::before {
-content:""; position:absolute; left:-20px; top:12px; width:10px; height:10px; border-radius:50%;
-  background:var(--primary); box-shadow:0 0 0 3px var(--primary-soft);
-}
-.tpl-scope .step.done::before {
-background:var(--ok); box-shadow:0 0 0 3px var(--ok-soft);
-}
-.tpl-scope .step.bad::before {
-background:var(--danger); box-shadow:0 0 0 3px var(--danger-soft);
-}
-.tpl-scope .step .time {
-color:var(--n400); font-size:11px;
-}
-.tpl-scope .step .node {
-font-weight:800;
-}
-.tpl-scope .step .detail {
-color:var(--n600); font-size:12px;
-}
-.tpl-scope .alert {
-padding:10px; border-radius:var(--r-md); background:var(--warn-soft); border:1px solid #fde68a; color:var(--warn-deep); font-size:12px;
-}
-.tpl-scope .alert.bad {
-background:var(--danger-soft); border-color:#fecaca; color:var(--danger-deep);
-}
-.tpl-scope .foot {
-padding:10px 14px; border-top:1px solid var(--n100); color:var(--n400); font-size:11px;
-}
-.tpl-scope .muted {
-color:var(--n500);
-}
-.tpl-scope .faint {
-color:var(--n400);
-}
-.tpl-scope .text {
-font-size:13px; color:var(--n600); line-height:1.6;
-}
-@media (max-width:360px) {
-.tpl-scope .hero h1 {
-font-size:20px;
-}
-.tpl-scope .score {
-font-size:36px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(2,minmax(0,1fr));
-}
-}
-
-/* ===== tcm_syndrome_card ===== */
-.tpl-scope {
---primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
-  --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
-  --ok:#6B9B7A; --ok-soft:#E8F2EC; --ok-deep:#3D6B4D;
-  --warn:#D4A537; --warn-soft:#FBF3DD; --warn-deep:#9C7715;
-  --danger:#E5484D; --danger-soft:#FDECEC; --danger-deep:#b91c1c;
-  
-  --n0:#FAF8F5; --n50:#F0EDE7; --n100:#E4E0D8; --n200:#D9D4CC; --n300:#C4BEB4;
-  --n400:#A8A09A; --n500:#8A8278; --n600:#6B6660; --n700:#4A463F; --n800:#3D3A36;
-  
-  --font-serif:'Noto Serif SC','Songti SC','STSong',serif;
-  --font-sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;
-  
-  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px; --r-full:999px;
-  
-  --sh-sm:0 1px 3px rgba(62,56,50,.08); --sh-md:0 4px 12px rgba(62,56,50,.10); --sh-lg:0 8px 24px rgba(62,56,50,.12);
-}
-.tpl-scope * {
-margin:0; padding:0; box-sizing:border-box;
-}
-.tpl-scope img {
-max-width:100%; height:auto; display:block;
-}
-.tpl-scope a {
-color:var(--primary); text-decoration:none;
-}
-.tpl-scope .card {
-max-width:430px; margin:0 auto; background:#fff; border:1px solid var(--n100);
-  border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--sh-md);
-}
-.tpl-scope .hero {
-padding:16px; color:#fff; background:linear-gradient(135deg,var(--primary),var(--primary-deep));
-}
-.tpl-scope .hero.blue {
-background:linear-gradient(135deg,var(--accent),var(--accent-deep));
-}
-.tpl-scope .eyebrow {
-display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:var(--r-full);
-  background:rgba(255,255,255,.18); font-size:12px; font-weight:600;
-}
-.tpl-scope .hero h1 {
-font-family:var(--font-serif); margin:8px 0 0; font-size:22px; line-height:1.18; letter-spacing:.5px;
-}
-.tpl-scope .hero .sub {
-margin-top:6px; color:rgba(255,255,255,.88); font-size:13px;
-}
-.tpl-scope .hero-row {
-display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-}
-.tpl-scope .score {
-font-size:42px; font-weight:800; line-height:1;
-}
-.tpl-scope .score small {
-font-size:14px; font-weight:600; opacity:.82;
-}
-.tpl-scope .section {
-padding:13px 14px; border-top:1px solid var(--n100);
-}
-.tpl-scope .section-title {
-margin:0 0 10px; display:flex; align-items:center; gap:7px; color:var(--n800);
-  font-size:15px; font-weight:800; font-family:var(--font-serif);
-}
-.tpl-scope .section-title::before {
-content:""; width:4px; height:16px; border-radius:2px; background:var(--primary);
-}
-.tpl-scope .section-title.blue::before {
-background:var(--accent);
-}
-.tpl-scope .pill {
-display:inline-flex; align-items:center; justify-content:center; min-height:22px; padding:2px 9px;
-  border-radius:var(--r-full); background:var(--primary-soft); color:var(--primary-deep);
-  font-size:12px; font-weight:700; white-space:nowrap;
-}
-.tpl-scope .pill.blue {
-background:var(--accent-soft); color:var(--accent);
-}
-.tpl-scope .pill.ok {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .pill.warn {
-background:var(--warn-soft); color:var(--warn-deep);
-}
-.tpl-scope .pill.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .grid {
-display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(3,minmax(0,1fr));
-}
-.tpl-scope .stat {
-min-width:0; padding:10px 9px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .stat .num {
-color:var(--primary-deep); font-size:20px; font-weight:800; line-height:1.1;
-}
-.tpl-scope .stat .num.bad {
-color:var(--danger);
-}
-.tpl-scope .stat .num.warn {
-color:var(--warn-deep);
-}
-.tpl-scope .stat .num.ok {
-color:var(--ok-deep);
-}
-.tpl-scope .stat .lbl {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .dim {
-padding:9px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .dim:last-child {
-border-bottom:0;
-}
-.tpl-scope .dim-head {
-display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:13px;
-}
-.tpl-scope .dim-name {
-font-weight:700;
-}
-.tpl-scope .dim-name small {
-margin-left:5px; color:var(--n400); font-weight:600;
-}
-.tpl-scope .dim-score {
-color:var(--primary-deep); font-weight:800; white-space:nowrap;
-}
-.tpl-scope .bar {
-height:7px; margin-top:6px; border-radius:var(--r-full); background:var(--n200); overflow:hidden;
-}
-.tpl-scope .bar > span {
-display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--primary),var(--accent));
-}
-.tpl-scope .bar > span.warn {
-background:linear-gradient(90deg,var(--warn),#f97316);
-}
-.tpl-scope .bar > span.bad {
-background:linear-gradient(90deg,var(--danger),#fb7185);
-}
-.tpl-scope .note {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .row {
-display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .row:last-child {
-border-bottom:0;
-}
-.tpl-scope .row .k {
-color:var(--n500); flex:0 0 auto;
-}
-.tpl-scope .row .v {
-font-weight:700; text-align:right; min-width:0;
-}
-.tpl-scope .list {
-display:flex; flex-direction:column; gap:8px;
-}
-.tpl-scope .item {
-padding:10px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .item.warn {
-background:var(--warn-soft); border-color:#fde68a;
-}
-.tpl-scope .item.bad {
-background:var(--danger-soft); border-color:#fecaca;
-}
-.tpl-scope .item.ok {
-background:var(--ok-soft); border-color:#bbf7d0;
-}
-.tpl-scope .item .top {
-display:flex; align-items:center; justify-content:space-between; gap:8px; font-weight:800;
-}
-.tpl-scope .item .txt {
-margin-top:5px; color:var(--n600); font-size:12px;
-}
-.tpl-scope .tags {
-display:flex; flex-wrap:wrap; gap:6px;
-}
-.tpl-scope .tag {
-padding:4px 8px; border-radius:var(--r-md); background:var(--n200); color:var(--n500); font-size:12px; font-weight:600;
-}
-.tpl-scope .tag.good {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .tag.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .timeline {
-position:relative; padding-left:22px;
-}
-.tpl-scope .timeline::before {
-content:""; position:absolute; left:7px; top:7px; bottom:7px; width:2px; background:var(--n100);
-}
-.tpl-scope .step {
-position:relative; padding:7px 0 9px;
-}
-.tpl-scope .step::before {
-content:""; position:absolute; left:-20px; top:12px; width:10px; height:10px; border-radius:50%;
-  background:var(--primary); box-shadow:0 0 0 3px var(--primary-soft);
-}
-.tpl-scope .step.done::before {
-background:var(--ok); box-shadow:0 0 0 3px var(--ok-soft);
-}
-.tpl-scope .step.bad::before {
-background:var(--danger); box-shadow:0 0 0 3px var(--danger-soft);
-}
-.tpl-scope .step .time {
-color:var(--n400); font-size:11px;
-}
-.tpl-scope .step .node {
-font-weight:800;
-}
-.tpl-scope .step .detail {
-color:var(--n600); font-size:12px;
-}
-.tpl-scope .alert {
-padding:10px; border-radius:var(--r-md); background:var(--warn-soft); border:1px solid #fde68a; color:var(--warn-deep); font-size:12px;
-}
-.tpl-scope .alert.bad {
-background:var(--danger-soft); border-color:#fecaca; color:var(--danger-deep);
-}
-.tpl-scope .foot {
-padding:10px 14px; border-top:1px solid var(--n100); color:var(--n400); font-size:11px;
-}
-.tpl-scope .muted {
-color:var(--n500);
-}
-.tpl-scope .faint {
-color:var(--n400);
-}
-.tpl-scope .text {
-font-size:13px; color:var(--n600); line-height:1.6;
-}
-@media (max-width:360px) {
-.tpl-scope .hero h1 {
-font-size:20px;
-}
-.tpl-scope .score {
-font-size:36px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(2,minmax(0,1fr));
-}
-}
-
-/* ===== tongue_diagnosis_card ===== */
-.tpl-scope {
---primary:#E8843C; --primary-deep:#D06E2A; --primary-soft:#FDF6F0;
-  --accent:#3A6B8C; --accent-soft:#E8F0F5; --accent-deep:#1E4A66;
-  --ok:#6B9B7A; --ok-soft:#E8F2EC; --ok-deep:#3D6B4D;
-  --warn:#D4A537; --warn-soft:#FBF3DD; --warn-deep:#9C7715;
-  --danger:#E5484D; --danger-soft:#FDECEC; --danger-deep:#b91c1c;
-  
-  --n0:#FAF8F5; --n50:#F0EDE7; --n100:#E4E0D8; --n200:#D9D4CC; --n300:#C4BEB4;
-  --n400:#A8A09A; --n500:#8A8278; --n600:#6B6660; --n700:#4A463F; --n800:#3D3A36;
-  
-  --font-serif:'Noto Serif SC','Songti SC','STSong',serif;
-  --font-sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;
-  
-  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-xl:24px; --r-full:999px;
-  
-  --sh-sm:0 1px 3px rgba(62,56,50,.08); --sh-md:0 4px 12px rgba(62,56,50,.10); --sh-lg:0 8px 24px rgba(62,56,50,.12);
-}
-.tpl-scope * {
-margin:0; padding:0; box-sizing:border-box;
-}
-.tpl-scope img {
-max-width:100%; height:auto; display:block;
-}
-.tpl-scope a {
-color:var(--primary); text-decoration:none;
-}
-.tpl-scope .card {
-max-width:430px; margin:0 auto; background:#fff; border:1px solid var(--n100);
-  border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--sh-md);
-}
-.tpl-scope .hero {
-padding:16px; color:#fff; background:linear-gradient(135deg,var(--primary),var(--primary-deep));
-}
-.tpl-scope .hero.blue {
-background:linear-gradient(135deg,var(--accent),var(--accent-deep));
-}
-.tpl-scope .eyebrow {
-display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:var(--r-full);
-  background:rgba(255,255,255,.18); font-size:12px; font-weight:600;
-}
-.tpl-scope .hero h1 {
-font-family:var(--font-serif); margin:8px 0 0; font-size:22px; line-height:1.18; letter-spacing:.5px;
-}
-.tpl-scope .hero .sub {
-margin-top:6px; color:rgba(255,255,255,.88); font-size:13px;
-}
-.tpl-scope .hero-row {
-display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-}
-.tpl-scope .score {
-font-size:42px; font-weight:800; line-height:1;
-}
-.tpl-scope .score small {
-font-size:14px; font-weight:600; opacity:.82;
-}
-.tpl-scope .section {
-padding:13px 14px; border-top:1px solid var(--n100);
-}
-.tpl-scope .section-title {
-margin:0 0 10px; display:flex; align-items:center; gap:7px; color:var(--n800);
-  font-size:15px; font-weight:800; font-family:var(--font-serif);
-}
-.tpl-scope .section-title::before {
-content:""; width:4px; height:16px; border-radius:2px; background:var(--primary);
-}
-.tpl-scope .section-title.blue::before {
-background:var(--accent);
-}
-.tpl-scope .pill {
-display:inline-flex; align-items:center; justify-content:center; min-height:22px; padding:2px 9px;
-  border-radius:var(--r-full); background:var(--primary-soft); color:var(--primary-deep);
-  font-size:12px; font-weight:700; white-space:nowrap;
-}
-.tpl-scope .pill.blue {
-background:var(--accent-soft); color:var(--accent);
-}
-.tpl-scope .pill.ok {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .pill.warn {
-background:var(--warn-soft); color:var(--warn-deep);
-}
-.tpl-scope .pill.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .grid {
-display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(3,minmax(0,1fr));
-}
-.tpl-scope .stat {
-min-width:0; padding:10px 9px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .stat .num {
-color:var(--primary-deep); font-size:20px; font-weight:800; line-height:1.1;
-}
-.tpl-scope .stat .num.bad {
-color:var(--danger);
-}
-.tpl-scope .stat .num.warn {
-color:var(--warn-deep);
-}
-.tpl-scope .stat .num.ok {
-color:var(--ok-deep);
-}
-.tpl-scope .stat .lbl {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .dim {
-padding:9px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .dim:last-child {
-border-bottom:0;
-}
-.tpl-scope .dim-head {
-display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:13px;
-}
-.tpl-scope .dim-name {
-font-weight:700;
-}
-.tpl-scope .dim-name small {
-margin-left:5px; color:var(--n400); font-weight:600;
-}
-.tpl-scope .dim-score {
-color:var(--primary-deep); font-weight:800; white-space:nowrap;
-}
-.tpl-scope .bar {
-height:7px; margin-top:6px; border-radius:var(--r-full); background:var(--n200); overflow:hidden;
-}
-.tpl-scope .bar > span {
-display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--primary),var(--accent));
-}
-.tpl-scope .bar > span.warn {
-background:linear-gradient(90deg,var(--warn),#f97316);
-}
-.tpl-scope .bar > span.bad {
-background:linear-gradient(90deg,var(--danger),#fb7185);
-}
-.tpl-scope .note {
-margin-top:4px; color:var(--n500); font-size:11px;
-}
-.tpl-scope .row {
-display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px dashed var(--n100);
-}
-.tpl-scope .row:last-child {
-border-bottom:0;
-}
-.tpl-scope .row .k {
-color:var(--n500); flex:0 0 auto;
-}
-.tpl-scope .row .v {
-font-weight:700; text-align:right; min-width:0;
-}
-.tpl-scope .list {
-display:flex; flex-direction:column; gap:8px;
-}
-.tpl-scope .item {
-padding:10px; background:var(--n50); border:1px solid var(--n100); border-radius:var(--r-md);
-}
-.tpl-scope .item.warn {
-background:var(--warn-soft); border-color:#fde68a;
-}
-.tpl-scope .item.bad {
-background:var(--danger-soft); border-color:#fecaca;
-}
-.tpl-scope .item.ok {
-background:var(--ok-soft); border-color:#bbf7d0;
-}
-.tpl-scope .item .top {
-display:flex; align-items:center; justify-content:space-between; gap:8px; font-weight:800;
-}
-.tpl-scope .item .txt {
-margin-top:5px; color:var(--n600); font-size:12px;
-}
-.tpl-scope .tags {
-display:flex; flex-wrap:wrap; gap:6px;
-}
-.tpl-scope .tag {
-padding:4px 8px; border-radius:var(--r-md); background:var(--n200); color:var(--n500); font-size:12px; font-weight:600;
-}
-.tpl-scope .tag.good {
-background:var(--ok-soft); color:var(--ok-deep);
-}
-.tpl-scope .tag.bad {
-background:var(--danger-soft); color:var(--danger-deep);
-}
-.tpl-scope .timeline {
-position:relative; padding-left:22px;
-}
-.tpl-scope .timeline::before {
-content:""; position:absolute; left:7px; top:7px; bottom:7px; width:2px; background:var(--n100);
-}
-.tpl-scope .step {
-position:relative; padding:7px 0 9px;
-}
-.tpl-scope .step::before {
-content:""; position:absolute; left:-20px; top:12px; width:10px; height:10px; border-radius:50%;
-  background:var(--primary); box-shadow:0 0 0 3px var(--primary-soft);
-}
-.tpl-scope .step.done::before {
-background:var(--ok); box-shadow:0 0 0 3px var(--ok-soft);
-}
-.tpl-scope .step.bad::before {
-background:var(--danger); box-shadow:0 0 0 3px var(--danger-soft);
-}
-.tpl-scope .step .time {
-color:var(--n400); font-size:11px;
-}
-.tpl-scope .step .node {
-font-weight:800;
-}
-.tpl-scope .step .detail {
-color:var(--n600); font-size:12px;
-}
-.tpl-scope .alert {
-padding:10px; border-radius:var(--r-md); background:var(--warn-soft); border:1px solid #fde68a; color:var(--warn-deep); font-size:12px;
-}
-.tpl-scope .alert.bad {
-background:var(--danger-soft); border-color:#fecaca; color:var(--danger-deep);
-}
-.tpl-scope .foot {
-padding:10px 14px; border-top:1px solid var(--n100); color:var(--n400); font-size:11px;
-}
-.tpl-scope .muted {
-color:var(--n500);
-}
-.tpl-scope .faint {
-color:var(--n400);
-}
-.tpl-scope .text {
-font-size:13px; color:var(--n600); line-height:1.6;
-}
-@media (max-width:360px) {
-.tpl-scope .hero h1 {
-font-size:20px;
-}
-.tpl-scope .score {
-font-size:36px;
-}
-.tpl-scope .grid.three {
-grid-template-columns:repeat(2,minmax(0,1fr));
-}
+--primary:#3A6B8C; --primary-deep:#1E4A66; --primary-soft:#E8F0F5;
+  --accent:#E8843C; --accent-soft:#FDF6F0; --accent-deep:#D06E2A;
 }
 
 </style>
-<script type="text/html" id="tpl_health_report_card">
+<script type="text/html" id="tpl_institution_quality_report">
 <div class="hero">
-    <div class="eyebrow">📑 {{badge|完整风险评估报告}}<\/div>
+    <div class="eyebrow">{{badge|机构日报 · T-1 数据}}<\/div>
     <div class="hero-row">
       <div>
-        <h1>{{name|张明华}} · {{overall_label|中风险}}<\/h1>
-        <p class="sub">{{age|72}}岁 · {{gender|男}} · 档案号 {{id_card|YL-2026-0001}}<\/p>
+        <h1>{{orgName|阳光社区养老服务中心}}<\/h1>
+        <p class="sub">{{period|2026-08-01}} · {{serviceScope|上门/院内/巡访}}<\/p>
       <\/div>
-      <div style="text-align:right">
-        <div class="score">{{overall_score|6.5}}<small>/10<\/small><\/div>
-        <p class="sub">综合总评<\/p>
-      <\/div>
+      <div class="score">{{totalScore|85.2}}<small>分<\/small><\/div>
     <\/div>
+    <p class="sub">等级 {{level|B级}} · 行业前 {{percentile|92}}% · 环比 {{delta|+1.5}} · {{rankLabel|正常归档}}<\/p>
   <\/div>
 
   <div class="section">
-    <div class="alert">📖 {{reportIntro|本报告涵盖基础信息、综合风险总评、疾病风险、体质辨识、中医证候、个性化调理、禁忌提醒与维度结论八大模块。}}<\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">① 基础信息<\/div>
-    <div class="row"><span class="k">姓名<\/span><span class="v">{{name|张明华}}<\/span><\/div>
-    <div class="row"><span class="k">年龄 / 性别<\/span><span class="v">{{age|72}}岁 · {{gender|男}}<\/span><\/div>
-    <div class="row"><span class="k">慢病情况<\/span><span class="v">{{chronic|高血压}}<\/span><\/div>
-    <div class="row"><span class="k">失智评估<\/span><span class="v">{{dementia|无}}<\/span><\/div>
-    <div class="row"><span class="k">失能评估<\/span><span class="v">{{disability|无}}<\/span><\/div>
-    <div class="row"><span class="k">档案号<\/span><span class="v">{{id_card|YL-2026-0001}}<\/span><\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">② 综合风险总评<\/div>
+    <div class="section-title">📊 T-1 关键指标<\/div>
     <div class="grid three">
-      <div class="stat"><div class="num {{overallClass|warn}}">{{overall_score|6.5}}<\/div><div class="lbl">综合评分<\/div><\/div>
-      <div class="stat"><div class="num {{overallClass|warn}}">{{overall_label|中风险}}<\/div><div class="lbl">风险等级<\/div><\/div>
-      <div class="stat"><div class="num bad">{{abnormal_count|4}}<\/div><div class="lbl">异常指标<\/div><\/div>
+      <div class="stat"><div class="num">{{workOrderCount|286}}<\/div><div class="lbl">完成工单<\/div><\/div>
+      <div class="stat"><div class="num ok">{{goodRate|94.6}}%<\/div><div class="lbl">好评率<\/div><\/div>
+      <div class="stat"><div class="num {{complaintClass|warn}}">{{complaintRate|2.3}}%<\/div><div class="lbl">投诉率<\/div><\/div>
     <\/div>
-    <p class="text" style="margin-top:10px">{{conclusion|多项舌诊指标异常，血瘀体质趋于明显，建议尽早中医调理干预}}<\/p>
   <\/div>
 
   <div class="section">
-    <div class="section-title">👅 舌诊六项快捷指标<\/div>
-    <div class="grid three">
-    {{#quick_indicators}}
-      <div class="stat">
-        <div class="num {{statusClass|bad}}">{{value|偏暗}}<\/div>
-        <div class="lbl">{{name|舌色}} · {{statusLabel|异常}}<\/div>
-      <\/div>
-    {{/quick_indicators}}
-    <\/div>
-    {{^quick_indicators}}
-    <p class="text">暂无舌诊快捷指标<\/p>
-    {{/quick_indicators}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">③ 疾病风险评估<\/div>
-    {{#disease_risks}}
+    <div class="section-title">📐 D1-D4 综合评分<\/div>
+    {{#dimensions}}
     <div class="dim">
       <div class="dim-head">
-        <span class="dim-name">{{name|高血压风险}}<\/span>
-        <span class="dim-score">{{score|68}}<small>/100<\/small><\/span>
-      <\/div>
-      <div class="bar"><span class="{{barClass|warn}}" style="width:{{score|68}}%"><\/span><\/div>
-      <div class="note">风险等级：{{level|中}}<\/div>
-    <\/div>
-    {{/disease_risks}}
-    {{^disease_risks}}
-    <p class="text">暂无疾病风险数据<\/p>
-    {{/disease_risks}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">④ 体质辨识<\/div>
-    <div class="tags" style="margin-bottom:8px">
-      <span class="tag good">主体质：{{primary_constitution|血瘀质}}<\/span>
-    <\/div>
-    {{#constitutions}}
-    <div class="dim">
-      <div class="dim-head">
-        <span class="dim-name">{{name|血瘀质}}<small>{{mark|主体质 ★}}<\/small><\/span>
-        <span class="dim-score">{{score|62}}<\/span>
-      <\/div>
-      <div class="bar"><span class="{{barClass}}" style="width:{{score|62}}%"><\/span><\/div>
-    <\/div>
-    {{/constitutions}}
-    {{^constitutions}}
-    <p class="text">暂无体质辨识数据<\/p>
-    {{/constitutions}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">⑤ 中医证候<\/div>
-    <div class="list">
-      <div class="item">
-        <div class="top"><span>{{syndrome_name|肝阳上亢兼血瘀}}<\/span><span class="pill warn">证候<\/span><\/div>
-        <div class="txt">{{syndrome_desc|肝阳偏亢，血行不畅。舌暗苔薄黄，脉弦细。多见头晕头痛，急躁易怒，面色晦暗。}}<\/div>
-      <\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">⑥ 个性化调理方案<\/div>
-    <div class="list">
-    {{#herbal}}
-      <div class="item ok">
-        <div class="top"><span>🌿 {{name|天麻钩藤饮}}<\/span><span class="pill ok">中药<\/span><\/div>
-        <div class="txt">{{content|平肝潜阳，适用于肝阳上亢所致头晕头痛}}<\/div>
-      <\/div>
-    {{/herbal}}
-    {{#acupoints}}
-      <div class="item">
-        <div class="top"><span>📍 {{name|太冲}}<\/span><span class="pill">穴位<\/span><\/div>
-        <div class="txt">{{content|平肝熄风，每日按揉 3 分钟}}<\/div>
-      <\/div>
-    {{/acupoints}}
-    {{#dietary}}
-      <div class="item">
-        <div class="top"><span>🍲 {{name|低盐低脂饮食}}<\/span><span class="pill blue">膳食<\/span><\/div>
-        <div class="txt">{{content|每日食盐控制在 5g 以内}}<\/div>
-      <\/div>
-    {{/dietary}}
-    {{#exercise}}
-      <div class="item">
-        <div class="top"><span>🏃 {{name|太极拳}}<\/span><span class="pill blue">运动<\/span><\/div>
-        <div class="txt">{{content|每日 20 分钟，动作舒缓不憋气}}<\/div>
-      <\/div>
-    {{/exercise}}
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">⑦ 禁忌提醒<\/div>
-    <div class="list">
-    {{#contraindications}}
-      <div class="item bad">
-        <div class="top"><span>{{type|饮食}}<\/span><span class="pill bad">禁忌<\/span><\/div>
-        <div class="txt">{{items|忌高盐高脂、忌烟酒}}<\/div>
-      <\/div>
-    {{/contraindications}}
-    <\/div>
-    {{^contraindications}}
-    <p class="text">暂无特殊禁忌<\/p>
-    {{/contraindications}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">⑧ 维度结论<\/div>
-    <p class="text">{{dimension_conclusion|综合舌诊、脉诊、面诊与问卷数据，建议以平肝潜阳、活血化瘀为调理主线。}}<\/p>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🗂️ 报告信息<\/div>
-    <div class="row"><span class="k">报告编号<\/span><span class="v">{{report_code|TCM-R-20260728-0001}}<\/span><\/div>
-    <div class="row"><span class="k">生成时间<\/span><span class="v">{{generate_time|2026-07-28 09:30}}<\/span><\/div>
-    <div class="row"><span class="k">数据源<\/span><span class="v">{{data_source|舌诊报告 + 健康问卷}}<\/span><\/div>
-  <\/div>
-
-  <div class="foot">{{footer_note|本报告由人工智能分析生成，仅供健康管理参考，不构成医疗诊断依据；如有不适请及时就医。}}<\/div>
-</script>
-<script type="text/html" id="tpl_risk_assessment_card">
-<div class="hero">
-    <div class="eyebrow">🩺 {{badge|综合风险评估}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>{{elderly_name|张明华}} · {{overall_label|中风险}}<\/h1>
-        <p class="sub">{{age|72}}岁 · {{gender|男}} · {{primary_constitution|血瘀质}}<\/p>
-      <\/div>
-      <div style="text-align:right">
-        <div class="score">{{overall_score|6.5}}<small>/10<\/small><\/div>
-        <p class="sub">综合评分<\/p>
-      <\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="alert">🤖 {{aiNote|AI 生成 · 基于最新舌诊/脉诊/面诊数据，仅供参考，不构成医疗诊断}}<\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">👤 基础信息<\/div>
-    <div class="row"><span class="k">姓名<\/span><span class="v">{{elderly_name|张明华}}<\/span><\/div>
-    <div class="row"><span class="k">年龄 / 性别<\/span><span class="v">{{age|72}}岁 · {{gender|男}}<\/span><\/div>
-    <div class="row"><span class="k">慢病情况<\/span><span class="v">{{chronic|高血压}}<\/span><\/div>
-    <div class="row"><span class="k">失智评估<\/span><span class="v">{{dementia|无}}<\/span><\/div>
-    <div class="row"><span class="k">失能评估<\/span><span class="v">{{disability|无}}<\/span><\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📊 综合研判<\/div>
-    <div class="grid three">
-      <div class="stat"><div class="num {{scoreClass|warn}}">{{overall_score|6.5}}<\/div><div class="lbl">综合评分<\/div><\/div>
-      <div class="stat"><div class="num {{scoreClass|warn}}">{{overall_label|中风险}}<\/div><div class="lbl">风险等级<\/div><\/div>
-      <div class="stat"><div class="num bad">{{abnormal_count|4}}<\/div><div class="lbl">异常项数<\/div><\/div>
-    <\/div>
-    <p class="text" style="margin-top:10px">{{conclusion|多项舌诊指标异常，体质偏颇趋于明显，建议尽早中医调理}}<\/p>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">👅 舌诊六项指标<\/div>
-    <div class="grid three">
-    {{#indicators}}
-      <div class="stat">
-        <div class="num {{statusClass|bad}}">{{value|偏暗}}<\/div>
-        <div class="lbl">{{name|舌色}} · {{statusLabel|异常}}<\/div>
-      <\/div>
-    {{/indicators}}
-    <\/div>
-    {{^indicators}}
-    <p class="text">暂无舌诊指标数据<\/p>
-    {{/indicators}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🔍 舌象 / 脉象 / 面诊<\/div>
-    <div class="list">
-      <div class="item">
-        <div class="top"><span>舌象<\/span><span class="pill">望诊<\/span><\/div>
-        <div class="txt">{{tongue_summary|舌偏暗，苔薄黄，舌体正常，舌下络脉正常}}<\/div>
-      <\/div>
-      <div class="item">
-        <div class="top"><span>脉象 · {{pulse_type|弦细}}<\/span><span class="pill blue">{{pulse_rate|78次/分}}<\/span><\/div>
-        <div class="txt">{{pulse_interpretation|脉弦细，主肝郁血虚或阴虚阳亢}}<\/div>
-      <\/div>
-      <div class="item">
-        <div class="top"><span>面诊 · {{face_complexion|微黄}}<\/span><span class="pill">望色<\/span><\/div>
-        <div class="txt">{{face_interpretation|面色微黄，提示脾虚或气血不足}}<\/div>
-      <\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📈 疾病风险评估 TOP5<\/div>
-    {{#disease_risks}}
-    <div class="dim">
-      <div class="dim-head">
-        <span class="dim-name">{{name|高血压风险}}<\/span>
-        <span class="dim-score">{{score|68}}<small>/100<\/small><\/span>
-      <\/div>
-      <div class="bar"><span class="{{barClass|warn}}" style="width:{{score|68}}%"><\/span><\/div>
-      <div class="note">风险等级：{{level|中}}<\/div>
-    <\/div>
-    {{/disease_risks}}
-    {{^disease_risks}}
-    <p class="text">暂无疾病风险评估数据<\/p>
-    {{/disease_risks}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🧬 体质辨识<\/div>
-    <div class="tags" style="margin-bottom:8px">
-      <span class="tag good">主体质：{{primary_constitution|血瘀质}}<\/span>
-    <\/div>
-    {{#constitutions}}
-    <div class="dim">
-      <div class="dim-head">
-        <span class="dim-name">{{name|血瘀质}}<small>{{mark|主体质 ★}}<\/small><\/span>
-        <span class="dim-score">{{score|62}}<\/span>
-      <\/div>
-      <div class="bar"><span class="{{barClass}}" style="width:{{score|62}}%"><\/span><\/div>
-    <\/div>
-    {{/constitutions}}
-    {{^constitutions}}
-    <p class="text">暂无体质辨识数据<\/p>
-    {{/constitutions}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📜 中医证候<\/div>
-    <div class="list">
-      <div class="item">
-        <div class="top"><span>{{syndrome_name|肝阳上亢兼血瘀}}<\/span><span class="pill warn">证候<\/span><\/div>
-        <div class="txt">{{syndrome_desc|肝阳偏亢，血行不畅。舌暗苔薄黄，脉弦细。多见头晕头痛，急躁易怒，面色晦暗。}}<\/div>
-      <\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">💡 个性化调理方案摘要<\/div>
-    {{#care_summary}}
-    <div class="row"><span class="k">{{label|中药}}<\/span><span class="v">{{content|天麻钩藤饮、血府逐瘀汤}}<\/span><\/div>
-    {{/care_summary}}
-    {{^care_summary}}
-    <p class="text">暂无调理方案摘要<\/p>
-    {{/care_summary}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">⚠️ 禁忌提醒<\/div>
-    <div class="list">
-    {{#contraindications}}
-      <div class="item bad">
-        <div class="top"><span>{{type|饮食}}<\/span><span class="pill bad">禁忌<\/span><\/div>
-        <div class="txt">{{items|忌高盐高脂、忌烟酒}}<\/div>
-      <\/div>
-    {{/contraindications}}
-    <\/div>
-    {{^contraindications}}
-    <p class="text">暂无特殊禁忌<\/p>
-    {{/contraindications}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🗂️ 报告信息<\/div>
-    <div class="row"><span class="k">报告编号<\/span><span class="v">{{report_code|TCM-20260728-0001}}<\/span><\/div>
-    <div class="row"><span class="k">生成时间<\/span><span class="v">{{generate_time|2026-07-28 09:00}}<\/span><\/div>
-    <div class="row"><span class="k">数据源<\/span><span class="v">{{data_source|最新舌诊报告}}<\/span><\/div>
-  <\/div>
-
-  <div class="foot">来源：{{sourceLabel|中医四诊数据 + 复合风险模型}} · 评估结果仅作健康管理参考，不构成医疗诊断<\/div>
-</script>
-<script type="text/html" id="tpl_tongue_diagnosis_card">
-<div class="hero">
-    <div class="eyebrow">👅 {{badge|云诊舌象辨识}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>{{conclusion|血行不畅 · 兼有热象}}<\/h1>
-        <p class="sub">{{elderName|张阿姨}} · {{elderAge|72岁}} · {{device|云诊365 舌诊仪}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{assessTime|2026-07-30}}<\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📋 舌象总述<\/div>
-    <p class="text">{{tongue_summary|舌偏暗，苔薄黄，舌体正常，舌下络脉正常；提示血行不畅、兼有热象。}}<\/p>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🔬 舌诊指标（{{indicators_count|6}}）<\/div>
-    <div class="grid three">
-      {{#tongue_indicators}}
-      <div class="stat">
-        <div class="num {{valClass}}">{{value}}<\/div>
-        <div class="lbl">{{name}} · {{statusLabel|正常}}<\/div>
-      <\/div>
-      {{/tongue_indicators}}
-    <\/div>
-    {{^tongue_indicators}}
-    <p class="text">暂无舌诊结构化指标<\/p>
-    {{/tongue_indicators}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📐 形态测量<\/div>
-    {{#measures}}
-    <div class="row"><span class="k">{{k}}<\/span><span class="v">{{v}}<\/span><\/div>
-    {{/measures}}
-    {{^measures}}
-    <p class="text">暂无形态测量数据<\/p>
-    {{/measures}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">⚠️ 异常项解析（{{abnormal_count|2}}）<\/div>
-    <div class="list">
-      {{#abnormal_items}}
-      <div class="item {{itemClass|warn}}">
-        <div class="top"><span>{{name}}<\/span><span class="pill {{pillClass|warn}}">{{levelLabel|异常}}<\/span><\/div>
-        <div class="txt">{{desc}}<\/div>
-      <\/div>
-      {{/abnormal_items}}
-      {{^abnormal_items}}
-      <div class="item ok"><div class="txt">本次舌象各项指标未见明显异常<\/div><\/div>
-      {{/abnormal_items}}
-    <\/div>
-  <\/div>
-
-  {{#risk_warning}}
-  <div class="section">
-    <div class="section-title">🚨 风险预警<\/div>
-    <div class="alert bad">{{risk_warning}}<\/div>
-  <\/div>
-  {{/risk_warning}}
-
-  {{#advice}}
-  <div class="section">
-    <div class="section-title">➡️ 下一步建议<\/div>
-    <p class="text">{{advice}}<\/p>
-  <\/div>
-  {{/advice}}
-
-  <div class="foot">来源：{{sourceLabel|AI 生成 · 云诊舌诊设备结构化数据}} · 舌象辨识仅供参考，不作为诊断依据<\/div>
-</script>
-<script type="text/html" id="tpl_constitution_card">
-<div class="hero">
-    <div class="eyebrow">🧬 {{badge|中医九种体质辨识}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>★ 主体质：{{primary_constitution|血瘀质}}<\/h1>
-        <p class="sub">{{elderName|张阿姨}} · {{elderAge|72岁}} · {{method|舌诊 + 问卷}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{assessTime|2026-07-30}}<\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🔎 主体质解读<\/div>
-    <div class="tags">
-      <span class="tag bad">{{primary_constitution|血瘀质}}<\/span>
-      <span class="tag">主分 {{primaryScore|62}}<\/span>
-      <span class="tag">{{primaryLevel|倾向明显}}<\/span>
-    <\/div>
-    <p class="text" style="margin-top:8px">{{primaryDesc|血瘀质以血行不畅、瘀血内停为主要特征，常见面色晦暗、唇色偏紫、肌肤干燥、易生瘀斑，宜活血化瘀、畅通气机。}}<\/p>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📊 九种体质得分（{{constitutions_count|9}}）<\/div>
-    {{#constitutions}}
-    <div class="dim">
-      <div class="dim-head">
-        <span class="dim-name">{{name}}<small>{{level}}<\/small><\/span>
+        <span class="dim-name">{{code}} {{name}}<small>{{weight}}<\/small><\/span>
         <span class="dim-score">{{score}}<\/span>
       <\/div>
-      <div class="bar"><span class="{{barClass}}" style="width:{{score}}%"><\/span><\/div>
-      {{#note}}<div class="note">{{note}}<\/div>{{/note}}
+      <div class="bar"><span class="{{barClass}}" style="width:{{pct}}%"><\/span><\/div>
+      <div class="note">{{desc}}<\/div>
     <\/div>
-    {{/constitutions}}
-    {{^constitutions}}
-    <p class="text">暂无体质辨识得分数据<\/p>
-    {{/constitutions}}
+    {{/dimensions}}
+    {{^dimensions}}<p class="text">暂无数据<\/p>{{/dimensions}}
   <\/div>
 
   <div class="section">
-    <div class="section-title">⚖️ 兼夹体质倾向<\/div>
+    <div class="section-title">⚠️ 问题 TOP（{{problemCount|2}}）<\/div>
     <div class="list">
-      {{#tendencies}}
+      {{#problemTop}}
       <div class="item {{itemClass}}">
-        <div class="top"><span>{{name}}<\/span><span class="pill {{pillClass}}">{{score}} 分<\/span><\/div>
+        <div class="top"><span>{{title}}<\/span><span class="pill {{pillClass}}">{{count}} 次<\/span><\/div>
         <div class="txt">{{desc}}<\/div>
       <\/div>
-      {{/tendencies}}
-      {{^tendencies}}
-      <div class="item"><div class="txt">未见明显兼夹体质倾向<\/div><\/div>
-      {{/tendencies}}
+      {{/problemTop}}
+    <\/div>
+    {{^problemTop}}<p class="text">暂无数据<\/p>{{/problemTop}}
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">🏷️ 口碑标签<\/div>
+    <div class="tags">
+      {{#praiseTags}}<span class="tag good">{{.}}<\/span>{{/praiseTags}}
+      {{#riskTags}}<span class="tag bad">{{.}}<\/span>{{/riskTags}}
+    <\/div>
+    {{^praiseTags}}<p class="text">暂无数据<\/p>{{/praiseTags}}
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">🤖 AI 建议（{{suggestionCount|2}}）<\/div>
+    <div class="list">
+      {{#aiSuggestions}}
+      <div class="item {{itemClass}}">
+        <div class="top"><span>{{type}}<\/span><span class="pill {{pillClass}}">{{dimension}}<\/span><\/div>
+        <div class="txt">{{text}}<\/div>
+      <\/div>
+      {{/aiSuggestions}}
+    <\/div>
+    {{^aiSuggestions}}<p class="text">暂无数据<\/p>{{/aiSuggestions}}
+  <\/div>
+
+  {{#warnText}}
+  <div class="section">
+    <div class="section-title">🚨 末位预警提示<\/div>
+    <div class="alert bad">{{warnText}}<\/div>
+  <\/div>
+  {{/warnText}}
+
+  <div class="foot">来源：{{source|服务质量评估 · 机构报告}} · 综合分 = D1×30% + D2×20% + D3×20% + D4×30%<\/div>
+</script>
+<script type="text/html" id="tpl_org_quality_ranking">
+<div class="hero">
+    <div class="eyebrow">{{badge|监管视图 · 机构排名}}<\/div>
+    <div class="hero-row">
+      <div>
+        <h1>{{region|南宁市辖区}}<\/h1>
+        <p class="sub">前 20% 优先推荐 · 后 10% 预警推送<\/p>
+      <\/div>
+      <div class="sub" style="text-align:right">{{period|2026-08-01}}<\/div>
     <\/div>
   <\/div>
 
   <div class="section">
-    <div class="section-title">🍵 调养建议（{{suggestions_count|3}}）<\/div>
+    <div class="section-title">📊 辖区概览<\/div>
+    <div class="grid three">
+      <div class="stat"><div class="num">{{orgTotal|156}}<\/div><div class="lbl">参评机构<\/div><\/div>
+      <div class="stat"><div class="num ok">{{recommendCount|31}}<\/div><div class="lbl">推荐标签<\/div><\/div>
+      <div class="stat"><div class="num bad">{{warningCount|16}}<\/div><div class="lbl">预警机构<\/div><\/div>
+    <\/div>
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">🏆 综合评分排行<\/div>
+    <div class="list">
+      {{#ranking}}
+      <div class="item {{itemClass}}">
+        <div class="top">
+          <span><span class="pill {{noClass}}">No.{{rank}}<\/span> {{orgName}}<\/span>
+          <span class="pill {{levelClass}}">{{level}} · {{score}}<\/span>
+        <\/div>
+        <div class="txt">{{area}} · D1 {{d1}} / D2 {{d2}} / D3 {{d3}} / D4 {{d4}} · 环比 {{delta}}<\/div>
+        <div class="tags" style="margin-top:6px"><span class="tag {{tagClass}}">{{tag}}<\/span><\/div>
+      <\/div>
+      {{/ranking}}
+    <\/div>
+    {{^ranking}}<p class="text">暂无数据<\/p>{{/ranking}}
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">📣 监管提示<\/div>
+    <div class="alert {{alertClass|bad}}">{{supervisionNote|后 10% 机构应进入监管端消息中心，并生成整改跟踪任务。}}<\/div>
+  <\/div>
+
+  <div class="foot">来源：{{source|服务质量评估 · 机构排名}} · 由每日 02:00 T-1 评估批次生成<\/div>
+</script>
+<script type="text/html" id="tpl_staff_quality_report">
+<div class="hero">
+    <div class="eyebrow">人员日报 · {{serviceType|上门服务}}<\/div>
+    <div class="hero-row">
+      <div>
+        <h1>{{staffName|张美丽}}<\/h1>
+        <p class="sub">{{orgName|阳光社区养老服务中心}} · 工号 {{staffNo|NN20240015}}<\/p>
+      <\/div>
+      <div class="score">{{totalScore|91.2}}<small>分<\/small><\/div>
+    <\/div>
+    <p class="sub">{{level|A级}} · 机构内第 {{orgRank|3}} 名 / {{orgTotal|58}} 人 · {{tagStatus|前20%服务适配候选}}<\/p>
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">📊 近 30 日概览<\/div>
+    <div class="grid three">
+      <div class="stat"><div class="num">{{workOrderCount|86}}<\/div><div class="lbl">工单量<\/div><\/div>
+      <div class="stat"><div class="num ok">{{onTimeRate|95.3}}%<\/div><div class="lbl">准时到达率<\/div><\/div>
+      <div class="stat"><div class="num {{complaintClass|warn}}">{{complaintCount|1}}<\/div><div class="lbl">投诉件数<\/div><\/div>
+    <\/div>
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">📐 个人 D1-D4 评分<\/div>
+    {{#dimensions}}
+    <div class="dim">
+      <div class="dim-head">
+        <span class="dim-name">{{code}} {{name}}<small>{{weight}}<\/small><\/span>
+        <span class="dim-score">{{score}}<\/span>
+      <\/div>
+      <div class="bar"><span class="{{barClass}}" style="width:{{pct}}%"><\/span><\/div>
+      <div class="note">{{desc}}<\/div>
+    <\/div>
+    {{/dimensions}}
+    {{^dimensions}}<p class="text">暂无数据<\/p>{{/dimensions}}
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">🏷️ 评价标签<\/div>
+    <div class="tags">
+      {{#goodTags}}<span class="tag good">{{.}}<\/span>{{/goodTags}}
+      {{#badTags}}<span class="tag bad">{{.}}<\/span>{{/badTags}}
+    <\/div>
+    {{^goodTags}}<p class="text">暂无数据<\/p>{{/goodTags}}
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">💬 近期用户评价（{{reviewCount|2}}）<\/div>
+    <div class="list">
+      {{#reviews}}
+      <div class="item">
+        <div class="top"><span>{{who}}<\/span><span class="pill {{starClass}}">{{stars}}<\/span><\/div>
+        <div class="txt">{{text}}<\/div>
+      <\/div>
+      {{/reviews}}
+    <\/div>
+    {{^reviews}}<p class="text">暂无数据<\/p>{{/reviews}}
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">🤖 AI 改进建议（{{suggestionCount|2}}）<\/div>
+    <div class="list">
+      {{#aiSuggestions}}
+      <div class="item {{itemClass}}">
+        <div class="top"><span>{{type}}<\/span><span class="pill {{pillClass}}">{{dimension}}<\/span><\/div>
+        <div class="txt">{{text}}<\/div>
+      <\/div>
+      {{/aiSuggestions}}
+    <\/div>
+    {{^aiSuggestions}}<p class="text">暂无数据<\/p>{{/aiSuggestions}}
+  <\/div>
+
+  <div class="foot">来源：{{source|服务质量评估 · 人员报告}} · D1 取近30日评价加权，D2-D4 使用 T-1 工单与投诉数据<\/div>
+</script>
+<script type="text/html" id="tpl_staff_quality_ranking">
+<div class="hero">
+    <div class="eyebrow">{{badge|机构管理端 · 人员排名}}<\/div>
+    <div class="hero-row">
+      <div>
+        <h1>{{orgName|阳光社区养老服务中心}}<\/h1>
+        <p class="sub">前 20% 写入服务适配标签 · 后 10% 推送管理员<\/p>
+      <\/div>
+      <div class="sub" style="text-align:right">{{period|2026-08-01}}<\/div>
+    <\/div>
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">📊 人员概览<\/div>
+    <div class="grid three">
+      <div class="stat"><div class="num">{{staffTotal|58}}<\/div><div class="lbl">参评人员<\/div><\/div>
+      <div class="stat"><div class="num ok">{{adaptCount|12}}<\/div><div class="lbl">服务适配<\/div><\/div>
+      <div class="stat"><div class="num bad">{{warningCount|6}}<\/div><div class="lbl">预警人员<\/div><\/div>
+    <\/div>
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">🏆 人员综合排名<\/div>
+    <div class="list">
+      {{#ranking}}
+      <div class="item {{itemClass}}">
+        <div class="top">
+          <span><span class="pill {{noClass}}">No.{{rank}}<\/span> {{staffName}}<\/span>
+          <span class="pill {{levelClass}}">{{level}} · {{score}}<\/span>
+        <\/div>
+        <div class="txt">{{serviceType}} · 工单 {{workOrders}} · 投诉 {{complaints}} · 环比 {{delta}}<\/div>
+        <div class="tags" style="margin-top:6px"><span class="tag {{tagClass}}">{{tag}}<\/span><\/div>
+      <\/div>
+      {{/ranking}}
+    <\/div>
+    {{^ranking}}<p class="text">暂无数据<\/p>{{/ranking}}
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">⚠️ 投诉排行 TOP（{{complaintTopCount|2}}）<\/div>
+    <div class="list">
+      {{#complaintTop}}
+      <div class="item {{itemClass}}">
+        <div class="top"><span>{{staffName}}<\/span><span class="pill {{pillClass}}">{{count}} 件<\/span><\/div>
+        <div class="txt">{{summary}}<\/div>
+      <\/div>
+      {{/complaintTop}}
+    <\/div>
+    {{^complaintTop}}<p class="text">暂无数据<\/p>{{/complaintTop}}
+  <\/div>
+
+  {{#supervisionNote}}
+  <div class="section">
+    <div class="section-title">📣 管理提示<\/div>
+    <div class="alert {{alertClass|warn}}">{{supervisionNote}}<\/div>
+  <\/div>
+  {{/supervisionNote}}
+
+  <div class="foot">来源：{{source|服务质量评估 · 人员排名}} · 后 10% 人员预警将推送至对应机构管理员<\/div>
+</script>
+<script type="text/html" id="tpl_rectification_suggestion">
+<div class="hero">
+    <div class="eyebrow">🛠️ 整改建议 · {{period|2026-08-01}}<\/div>
+    <div class="hero-row">
+      <div>
+        <h1>{{targetName|阳光社区养老服务中心}}<\/h1>
+        <p class="sub">薄弱维度 {{weakDimension|D4 投诉率}} · 当前分 {{weakScore|76.3}}<\/p>
+      <\/div>
+      <div class="score">{{confidence|91}}<small>%<\/small><\/div>
+    <\/div>
+    <p class="sub">置信度 {{confidence|91}}% · 建议发起对象 {{targetType|机构管理员}}<\/p>
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">📊 整改概览<\/div>
+    <div class="grid three">
+      <div class="stat"><div class="num warn">{{openIssues|3}}<\/div><div class="lbl">待整改项<\/div><\/div>
+      <div class="stat"><div class="num bad">{{complaints|7}}<\/div><div class="lbl">关联投诉<\/div><\/div>
+      <div class="stat"><div class="num">{{slaHours|24}}h<\/div><div class="lbl">响应 SLA<\/div><\/div>
+    <\/div>
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">🔍 问题归因（{{causeCount|2}}）<\/div>
+    <div class="list">
+      {{#causes}}
+      <div class="item {{itemClass}}">
+        <div class="top"><span>{{title}}<\/span><span class="pill {{pillClass}}">{{dimension}}<\/span><\/div>
+        <div class="txt">{{desc}}<\/div>
+      <\/div>
+      {{/causes}}
+    <\/div>
+    {{^causes}}<p class="text">暂无数据<\/p>{{/causes}}
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">✅ 可执行整改（{{suggestionCount|2}}）<\/div>
     <div class="list">
       {{#suggestions}}
       <div class="item">
-        <div class="top"><span>{{aspect}}<\/span><span class="pill {{pillClass|ok}}">{{tagLabel|建议}}<\/span><\/div>
-        <div class="txt">{{content}}<\/div>
+        <div class="top"><span>{{title}}<\/span><span class="pill blue">{{owner}}<\/span><\/div>
+        <div class="txt">{{action}}<\/div>
+        <div class="note">验收口径：{{acceptance}}<\/div>
       <\/div>
       {{/suggestions}}
-      {{^suggestions}}
-      <div class="item"><div class="txt">暂无调养建议<\/div><\/div>
-      {{/suggestions}}
     <\/div>
+    {{^suggestions}}<p class="text">暂无数据<\/p>{{/suggestions}}
   <\/div>
 
-  {{#reminder}}
   <div class="section">
-    <div class="section-title">⚠️ 注意事项<\/div>
-    <div class="alert">{{reminder}}<\/div>
+    <div class="section-title">📤 转交建议<\/div>
+    <div class="alert {{handoffClass|bad}}">{{handoffText|建议生成整改工单并抄送机构管理员。}}<\/div>
   <\/div>
-  {{/reminder}}
 
-  <div class="foot">来源：{{sourceLabel|AI 生成 · 基于舌诊与问卷的中医九种体质辨识}} · 结果仅供参考，不作为诊断依据<\/div>
+  <div class="foot">来源：{{source|服务质量评估 · 整改建议}} · 由固定维度规则生成，AI 仅用于表达润色<\/div>
 </script>
-<script type="text/html" id="tpl_tcm_syndrome_card">
+<script type="text/html" id="tpl_complaint_detail">
 <div class="hero">
-    <div class="eyebrow">🌿 {{badge|中医证候辨识}}<\/div>
+    <div class="eyebrow">📮 投诉工单 · {{status|已处理}}<\/div>
     <div class="hero-row">
       <div>
-        <h1>{{syndrome_name|肝阳上亢兼血瘀}}<\/h1>
-        <p class="sub">{{elderName|张阿姨}} · {{elderAge|72岁}} · {{method|舌诊 + 脉诊 + 面诊}}<\/p>
+        <h1>{{title|护理员上门迟到32分钟，未提前通知}}<\/h1>
+        <p class="sub">{{complaintId|CP-20260801-003}} · 严重度 {{severity|一般}}<\/p>
       <\/div>
-      <div class="sub" style="text-align:right">{{assessTime|2026-07-30}}<\/div>
+      <div class="sub" style="text-align:right">{{createdAt|2026-08-01 14:30}}<\/div>
     <\/div>
   <\/div>
 
   <div class="section">
-    <div class="section-title">📖 证型判读<\/div>
-    <div class="tags">
-      <span class="tag bad">{{syndromeMain|肝阳上亢}}<\/span>
-      <span class="tag">{{syndromeSub|血瘀内停}}<\/span>
-      <span class="tag">{{confidenceLabel|置信度 中高}}<\/span>
-    <\/div>
-    <p class="text" style="margin-top:8px">{{syndrome_desc|肝阳偏亢，血行不畅。舌暗苔薄黄，脉弦细。多见头晕头痛，急躁易怒，面色晦暗，失眠多梦。}}<\/p>
+    <div class="section-title">📋 基本信息<\/div>
+    <div class="row"><span class="k">投诉人<\/span><span class="v">{{complainant|陈**家属}}<\/span><\/div>
+    <div class="row"><span class="k">关联机构<\/span><span class="v">{{orgName|阳光社区养老服务中心}}<\/span><\/div>
+    <div class="row"><span class="k">服务人员<\/span><span class="v">{{staffName|张美丽}}<\/span><\/div>
+    <div class="row"><span class="k">投诉类型<\/span><span class="v">{{complaintType|服务时效}}<\/span><\/div>
+    <div class="row"><span class="k">关联工单<\/span><span class="v">{{workOrderNo|WO-20260801-003}}<\/span><\/div>
   <\/div>
 
   <div class="section">
-    <div class="section-title">🔍 四诊依据<\/div>
-    {{#evidences}}
-    <div class="row"><span class="k">{{k}}<\/span><span class="v">{{v}}<\/span><\/div>
-    {{/evidences}}
-    {{^evidences}}
-    <p class="text">暂无四诊记录<\/p>
-    {{/evidences}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🩺 主要表现（{{symptoms_count|4}}）<\/div>
-    <div class="list">
-      {{#symptoms}}
-      <div class="item {{itemClass}}">
-        <div class="top"><span>{{name}}<\/span><span class="pill {{pillClass|warn}}">{{degree|常见}}<\/span><\/div>
-        <div class="txt">{{desc}}<\/div>
-      <\/div>
-      {{/symptoms}}
-      {{^symptoms}}
-      <div class="item"><div class="txt">暂未采集到明显证候表现<\/div><\/div>
-      {{/symptoms}}
+    <div class="section-title">📝 投诉描述<\/div>
+    <div class="item bad">
+      <div class="top"><span>{{complaintType|服务时效}}<\/span><span class="pill bad">{{severity|一般}}<\/span><\/div>
+      <div class="txt">{{description|暂无描述}}<\/div>
     <\/div>
   <\/div>
 
   <div class="section">
-    <div class="section-title">🍵 调理方向<\/div>
-    <div class="list">
-      {{#treatments}}
-      <div class="item">
-        <div class="top"><span>{{aspect}}<\/span><span class="pill {{pillClass|ok}}">{{tagLabel|建议}}<\/span><\/div>
-        <div class="txt">{{content}}<\/div>
-      <\/div>
-      {{/treatments}}
-      {{^treatments}}
-      <div class="item"><div class="txt">暂无调理建议<\/div><\/div>
-      {{/treatments}}
-    <\/div>
-  <\/div>
-
-  {{#relatedRisk}}
-  <div class="section">
-    <div class="section-title">⚠️ 关联健康风险<\/div>
-    <div class="alert">{{relatedRisk}}<\/div>
-  <\/div>
-  {{/relatedRisk}}
-
-  <div class="foot">来源：{{sourceLabel|AI 生成 · 基于舌诊、脉诊与面诊综合判读}} · 证型判读仅供参考，用药请遵医嘱<\/div>
-</script>
-<script type="text/html" id="tpl_care_advice_card">
-<div class="hero">
-    <div class="eyebrow">💡 {{badge|个性化调理方案}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>{{elderName|张明华}} · {{constitution|血瘀质}}<\/h1>
-        <p class="sub">证候：{{syndrome|肝阳上亢兼血瘀}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{planTime|2026-07-28}}<\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="alert">🤖 {{aiNote|AI 生成 · 基于体质与证候的康养建议，仅供参考，执行前请咨询医师}}<\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🌿 中药调理（{{herbal_count|2}}）<\/div>
-    <div class="list">
-    {{#herbal}}
-      <div class="item ok">
-        <div class="top"><span>{{name|天麻钩藤饮}}<\/span><span class="pill ok">{{tag|平肝潜阳}}<\/span><\/div>
-        <div class="txt">{{content|清热安神，适用于肝阳上亢所致头晕头痛。}}<\/div>
-      <\/div>
-    {{/herbal}}
-    <\/div>
-    {{^herbal}}
-    <p class="text">暂无中药调理建议<\/p>
-    {{/herbal}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📍 穴位保健（{{acupoints_count|4}}）<\/div>
-    <div class="list">
-    {{#acupoints}}
-      <div class="item">
-        <div class="top"><span>{{name|太冲}}<\/span><span class="pill">{{tag|平肝熄风}}<\/span><\/div>
-        <div class="txt">{{content|每日按揉 3 分钟，以酸胀为度。}}<\/div>
-      <\/div>
-    {{/acupoints}}
-    <\/div>
-    {{^acupoints}}
-    <p class="text">暂无穴位保健建议<\/p>
-    {{/acupoints}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🍲 膳食调理（{{dietary_count|4}}）<\/div>
-    <div class="list">
-    {{#dietary}}
-      <div class="item">
-        <div class="top"><span>{{name|低盐低脂饮食}}<\/span><span class="pill blue">{{tag|日常}}<\/span><\/div>
-        <div class="txt">{{content|每日食盐控制在 5g 以内，减少动物油脂摄入。}}<\/div>
-      <\/div>
-    {{/dietary}}
-    <\/div>
-    {{^dietary}}
-    <p class="text">暂无膳食调理建议<\/p>
-    {{/dietary}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🏃 运动建议（{{exercise_count|3}}）<\/div>
-    <div class="list">
-    {{#exercise}}
-      <div class="item">
-        <div class="top"><span>{{name|太极拳}}<\/span><span class="pill blue">{{tag|舒缓}}<\/span><\/div>
-        <div class="txt">{{content|每日 20 分钟，动作舒缓不憋气。}}<\/div>
-      <\/div>
-    {{/exercise}}
-    <\/div>
-    {{^exercise}}
-    <p class="text">暂无运动建议<\/p>
-    {{/exercise}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">⚠️ 禁忌提醒<\/div>
-    <div class="list">
-    {{#contraindications}}
-      <div class="item bad">
-        <div class="top"><span>{{type|饮食}}<\/span><span class="pill bad">禁忌<\/span><\/div>
-        <div class="txt">{{items|忌高盐高脂、忌烟酒}}<\/div>
-      <\/div>
-    {{/contraindications}}
-    <\/div>
-    {{^contraindications}}
-    <p class="text">暂无特殊禁忌<\/p>
-    {{/contraindications}}
-  <\/div>
-
-  {{#followUp}}
-  <div class="section">
-    <div class="section-title">➡️ 随访安排<\/div>
-    <p class="text">{{followUp}}<\/p>
-  <\/div>
-  {{/followUp}}
-
-  <div class="foot">来源：{{sourceLabel|体质辨识 + 中医证候模型}} · 调理方案仅作康养参考，用药请遵医嘱<\/div>
-</script>
-<script type="text/html" id="tpl_dietary_regimen_card">
-<div class="hero">
-    <div class="eyebrow">🍲 {{sectionBadge|膳食调养}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>{{title|食疗调养方案}}<\/h1>
-        <p class="sub">{{elderName|张明华}} · {{constitution|气郁质}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{planTime|2026-07-28}}<\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🥗 宜食 / 忌食<\/div>
-    <div class="list">
-      <div class="item ok">
-        <div class="top"><span>宜食<\/span><span class="pill ok">推荐<\/span><\/div>
-        <div class="txt">{{dietaryAdvice|宜食用清淡、易消化、富含优质蛋白及膳食纤维的食物。}}<\/div>
-      <\/div>
-      <div class="item bad">
-        <div class="top"><span>忌食<\/span><span class="pill bad">回避<\/span><\/div>
-        <div class="txt">{{dietaryAvoid|忌食辛辣刺激、油腻煎炸、生冷寒凉及过甜过咸食物。}}<\/div>
-      <\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📌 调养要点<\/div>
-    <div class="tags">
-    {{#principles}}
-      <span class="tag">{{.}}<\/span>
-    {{/principles}}
-    <\/div>
-    {{^principles}}
-    <p class="text">暂无调养要点<\/p>
-    {{/principles}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🍵 食疗配方（{{recipes_count|3}}）<\/div>
-    <div class="list">
-    {{#recipes}}
-      <div class="item">
-        <div class="top">
-          <span>{{recipeEmoji|🍵}} {{recipeTitle|三花橘皮茶}}<\/span>
-          <span class="pill {{recipePill|ok}}">{{recipeTag|代茶饮}}<\/span>
-        <\/div>
-        <div class="row"><span class="k">药材<\/span><span class="v">{{recipeMedicine|菊花、茉莉花、玫瑰花各 3g}}<\/span><\/div>
-        <div class="row"><span class="k">食材<\/span><span class="v">{{recipeIngredients|陈皮 5g、枸杞 6粒、冰糖适量}}<\/span><\/div>
-        <div class="row"><span class="k">做法<\/span><span class="v">{{recipeMethod|沸水冲泡 5–8 分钟，可反复冲泡。}}<\/span><\/div>
-        <div class="row"><span class="k">功效<\/span><span class="v">{{recipeEffect|疏肝理气、健脾和胃。}}<\/span><\/div>
-        <div class="txt">引自：{{recipeSource|《常见病食疗方》}}<\/div>
-      <\/div>
-    {{/recipes}}
-    <\/div>
-    {{^recipes}}
-    <p class="text">暂无食疗配方推荐<\/p>
-    {{/recipes}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">💧 食用提示<\/div>
-    <div class="list">
-    {{#tips}}
-      <div class="item warn">
-        <div class="top"><span>{{tipTitle|服用时机}}<\/span><span class="pill warn">提示<\/span><\/div>
-        <div class="txt">{{tipText|药膳宜餐后温服，胃寒者不宜空腹饮用。}}<\/div>
-      <\/div>
-    {{/tips}}
-    <\/div>
-    {{^tips}}
-    <p class="text">暂无额外食用提示<\/p>
-    {{/tips}}
-  <\/div>
-
-  <div class="section">
-    <div class="alert">⚠️ {{notice|药膳配方需在中医师辨证指导下使用，孕妇、过敏体质及正在服药人群请先咨询医师。}}<\/div>
-  <\/div>
-
-  <div class="foot">来源：{{sourceLabel|体质辨识 + 中医食疗方库}} · 膳食建议仅作康养参考，不替代药物治疗<\/div>
-</script>
-<script type="text/html" id="tpl_face_observation_card">
-<div class="hero">
-    <div class="eyebrow">😶 {{badge|云诊面象辨识}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>{{conclusion|气血不畅 · 面色晦暗}}<\/h1>
-        <p class="sub">{{elderName|张阿姨}} · {{elderAge|72岁}} · {{device|云诊365 面象仪}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{assessTime|2026-07-30}}<\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📋 面象总述<\/div>
-    <p class="text">{{face_summary|面色晦暗少泽、唇色暗紫、眼神欠神，提示气血运行不畅，与血瘀体质倾向一致。}}<\/p>
-    <div class="grid" style="margin-top:10px">
-      <div class="stat"><div class="num {{abnormalNumClass|bad}}">{{abnormal_count|5}}<\/div><div class="lbl">异常指标数<\/div><\/div>
-      <div class="stat"><div class="num ok">{{normal_count|3}}<\/div><div class="lbl">正常指标数<\/div><\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🔬 面象指标（{{indicators_count|8}}）<\/div>
-    <div class="grid">
-      {{#face_indicators}}
-      <div class="stat">
-        <div class="num {{valClass}}">{{value}}<\/div>
-        <div class="lbl">{{name}} · {{statusLabel|正常}}<\/div>
-      <\/div>
-      {{/face_indicators}}
-    <\/div>
-    {{^face_indicators}}
-    <p class="text">暂无面象结构化指标<\/p>
-    {{/face_indicators}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">⚠️ 异常项解析（{{abnormal_items_count|2}}）<\/div>
-    <div class="list">
-      {{#abnormal_items}}
-      <div class="item {{itemClass|warn}}">
-        <div class="top"><span>{{name}}<\/span><span class="pill {{pillClass|warn}}">{{levelLabel|异常}}<\/span><\/div>
-        <div class="txt">{{desc}}<\/div>
-      <\/div>
-      {{/abnormal_items}}
-      {{^abnormal_items}}
-      <div class="item ok"><div class="txt">本次面象各项指标未见明显异常<\/div><\/div>
-      {{/abnormal_items}}
-    <\/div>
-  <\/div>
-
-  {{#crossCheck}}
-  <div class="section">
-    <div class="section-title">🔗 与舌象/体质的互证<\/div>
-    <div class="alert">{{crossCheck}}<\/div>
-  <\/div>
-  {{/crossCheck}}
-
-  {{#advice}}
-  <div class="section">
-    <div class="section-title">➡️ 下一步建议<\/div>
-    <p class="text">{{advice}}<\/p>
-  <\/div>
-  {{/advice}}
-
-  <div class="foot">来源：{{sourceLabel|AI 生成 · 云诊面象设备结构化数据}} · 面象辨识仅供参考，不作为诊断依据<\/div>
-</script>
-<script type="text/html" id="tpl_health_warning_card">
-<div class="hero">
-    <div class="eyebrow">{{badge|健康风险预警}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>{{levelIcon|⚠️}} 风险等级：{{level|关注}}<\/h1>
-        <p class="sub">{{elderName|张阿姨}} · {{elderAge|72岁}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{assessTime|2026-07-30 18:20}}<\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📋 综合研判<\/div>
-    <p class="text">{{summary|结合老人近 7 天设备信号与风险规则，当前风险等级为“关注”，建议加强居家观察并补充远程指标。}}<\/p>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📡 触发信号（{{signals_count|2}}）<\/div>
-    <div class="list">
-    {{#signals}}
-      <div class="item">
-        <div class="top">
-          <span>{{type|血压}}<\/span>
-          <span class="pill {{statusPill|bad}}">{{statusLabel|异常}}<\/span>
-        <\/div>
-        <div class="txt">{{value|148/92 mmHg}} · {{source|本地设备}}<\/div>
-      <\/div>
-    {{/signals}}
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">⚖️ 命中风险规则（{{rules_count|1}}）<\/div>
-    <div class="list">
-    {{#rules}}
-      <div class="item">
-        <div class="top"><span>{{ruleName|血压持续偏高}}<\/span><span class="pill warn">{{riskLevel|关注}}<\/span><\/div>
-        <div class="txt">{{condition|收缩压≥140 且持续≥3天}}<\/div>
-      <\/div>
-    {{/rules}}
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">✅ 处置建议（{{actions_count|2}}）<\/div>
-    <div class="list">
-    {{#recommendedActions}}
-      <div class="item">
-        <div class="top"><span class="pill {{priorityPill|bad}}">{{priority|高}}<\/span><span class="muted">{{owner|家属/护理员}}<\/span><\/div>
-        <div class="txt">{{action|每日测量血压并记录}}<\/div>
-      <\/div>
-    {{/recommendedActions}}
-    <\/div>
-  <\/div>
-
-  {{#nextSteps}}
-  <div class="section">
-    <div class="section-title">➡️ 下一步<\/div>
-    <p class="text">{{nextSteps}}<\/p>
-  <\/div>
-  {{/nextSteps}}
-
-  {{#remoteGap}}
-  <div class="section">
-    <div class="section-title">⚠️ 远程数据缺口<\/div>
-    <p class="text">{{remoteGap}}<\/p>
-  <\/div>
-  {{/remoteGap}}
-
-  <div class="foot">来源：{{sourceLabel|本地设备信号 + 风险规则}} · 健康风险预警仅作辅助提示，急症请立即就医<\/div>
-</script>
-<script type="text/html" id="tpl_risk_warning_card">
-<div class="hero">
-    <div class="eyebrow">{{badge|风险预警}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>⚠️ {{warningTitle|风险预警}}<\/h1>
-        <p class="sub">{{subtitle|基于中医体质辨识与健康信号的综合提示}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{assessTime|2026-07-30}}<\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📊 预警概览<\/div>
-    <div class="grid three">
-      <div class="stat"><div class="num bad">{{warnings_count|2}}<\/div><div class="lbl">预警条目<\/div><\/div>
-      <div class="stat"><div class="num warn">{{topLevel|中}}<\/div><div class="lbl">最高等级<\/div><\/div>
-      <div class="stat"><div class="num">{{scope|体质辨识}}<\/div><div class="lbl">评估范围<\/div><\/div>
-    <\/div>
-  <\/div>
-
-  {{#summary}}
-  <div class="section">
-    <div class="section-title">📝 总体研判<\/div>
-    <p class="text">{{summary}}<\/p>
-  <\/div>
-  {{/summary}}
-
-  <div class="section">
-    <div class="section-title">⚠️ 预警提示（{{warnings_count|2}}）<\/div>
-    <div class="list">
-    {{#warnings}}
-      <div class="item {{itemClass|bad}}">
-        <div class="top">
-          <span>⚠️ {{category|肝胆异常}}<\/span>
-          <span class="pill {{levelPill|bad}}">{{level|中}}<\/span>
-        <\/div>
-        <div class="txt">{{warningText|提示肝胆异常。可能有睡眠不佳，情志不畅等表现。}}<\/div>
-        {{#advice}}
-        <div class="note">建议：{{advice}}<\/div>
-        {{/advice}}
-      <\/div>
-    {{/warnings}}
-    <\/div>
-    {{^warnings}}
-    <p class="text">当前未发现明显健康风险提示，请继续保持良好作息。<\/p>
-    {{/warnings}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🏷️ 关联表现<\/div>
-    <div class="tags">
-    {{#symptomTags}}
-      <span class="tag {{tagClass}}">{{name}}<\/span>
-    {{/symptomTags}}
-    <\/div>
-    {{^symptomTags}}
-    <p class="text">暂未记录关联表现。<\/p>
-    {{/symptomTags}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">✅ 调理方向<\/div>
-    <div class="list">
-    {{#suggestions}}
-      <div class="item">
-        <div class="top"><span>{{name}}<\/span><span class="pill {{pillClass|ok}}">{{tag|建议}}<\/span><\/div>
-        <div class="txt">{{detail}}<\/div>
-      <\/div>
-    {{/suggestions}}
-    <\/div>
-    {{^suggestions}}
-    <p class="text">暂无调理建议，请咨询专业医师。<\/p>
-    {{/suggestions}}
-  <\/div>
-
-  {{#notice}}
-  <div class="section">
-    <div class="section-title">📌 就医提示<\/div>
-    <div class="alert bad">{{notice}}<\/div>
-  <\/div>
-  {{/notice}}
-
-  <div class="foot">来源：{{sourceLabel|中医体质辨识 + 健康风险规则}} · 预警提示仅供参考，不能替代医师诊断<\/div>
-</script>
-<script type="text/html" id="tpl_health_risk_signal_card">
-<div class="hero">
-    <div class="eyebrow">{{badge|设备信号}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>📡 {{elderName|张阿姨}} 信号总览<\/h1>
-        <p class="sub">{{deviceScope|居家监测设备}} · {{period|近7天}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{assessTime|2026-07-30 18:20}}<\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📊 采集概览<\/div>
-    <div class="grid three">
-      <div class="stat"><div class="num">{{signals_count|2}}<\/div><div class="lbl">采集信号<\/div><\/div>
-      <div class="stat"><div class="num bad">{{abnormalCount|1}}<\/div><div class="lbl">异常项<\/div><\/div>
-      <div class="stat"><div class="num ok">{{normalCount|1}}<\/div><div class="lbl">正常项<\/div><\/div>
-    <\/div>
-  <\/div>
-
-  {{#summary}}
-  <div class="section">
-    <div class="section-title">📝 信号研判<\/div>
-    <p class="text">{{summary}}<\/p>
-  <\/div>
-  {{/summary}}
-
-  <div class="section">
-    <div class="section-title">📡 设备信号明细（{{signals_count|2}}）<\/div>
-    <div class="list">
-    {{#signals}}
-      <div class="item {{itemClass}}">
-        <div class="top">
-          <span>{{type|血压}}<\/span>
-          <span class="pill {{statusPill|bad}}">{{status_label|异常}}<\/span>
-        <\/div>
-        <div class="txt">{{value|148/92 mmHg}} · 来源：{{source|本地设备}}<\/div>
-        {{#reference}}
-        <div class="note">参考范围：{{reference}}<\/div>
-        {{/reference}}
-      <\/div>
-    {{/signals}}
-    <\/div>
-    {{^signals}}
-    <p class="text">暂无设备信号数据，请检查设备连接与采集状态。<\/p>
-    {{/signals}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🔧 采集信息<\/div>
-    <div class="row"><span class="k">采集设备<\/span><span class="v">{{deviceName|智能血压计 + 血糖仪}}<\/span><\/div>
-    <div class="row"><span class="k">最近同步<\/span><span class="v">{{lastSyncTime|2026-07-30 18:05}}<\/span><\/div>
-    <div class="row"><span class="k">上报方式<\/span><span class="v">{{uploadMode|蓝牙自动上报}}<\/span><\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🏷️ 异常标记<\/div>
-    <div class="tags">
-    {{#abnormalTags}}
-      <span class="tag {{tagClass}}">{{name}}<\/span>
-    {{/abnormalTags}}
-    <\/div>
-    {{^abnormalTags}}
-    <p class="text">近 7 天未产生异常标记。<\/p>
-    {{/abnormalTags}}
-  <\/div>
-
-  {{#remoteGap}}
-  <div class="section">
-    <div class="section-title">⚠️ 远程数据缺口<\/div>
-    <div class="alert">{{remoteGap}}<\/div>
-  <\/div>
-  {{/remoteGap}}
-
-  <div class="foot">来源：{{sourceLabel|本地设备信号}} · 信号异常不代表确诊，请结合临床判断<\/div>
-</script>
-<script type="text/html" id="tpl_health_risk_rule_card">
-<div class="hero">
-    <div class="eyebrow">{{badge|风险规则}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>⚖️ {{elderName|张阿姨}} 规则命中<\/h1>
-        <p class="sub">{{ruleLibrary|健康风险预警规则库}} · {{period|近7天}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{assessTime|2026-07-30 18:20}}<\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📊 命中概览<\/div>
-    <div class="grid three">
-      <div class="stat"><div class="num">{{rules_count|1}}<\/div><div class="lbl">命中规则<\/div><\/div>
-      <div class="stat"><div class="num warn">{{topLevel|关注}}<\/div><div class="lbl">最高等级<\/div><\/div>
-      <div class="stat"><div class="num">{{scanCount|12}}<\/div><div class="lbl">规则扫描数<\/div><\/div>
-    <\/div>
-  <\/div>
-
-  {{#judgement}}
-  <div class="section">
-    <div class="section-title">📝 综合研判<\/div>
-    <p class="text">{{judgement}}<\/p>
-  <\/div>
-  {{/judgement}}
-
-  <div class="section">
-    <div class="section-title">⚖️ 命中风险规则（{{rules_count|1}}）<\/div>
-    <div class="list">
-    {{#rules}}
-      <div class="item {{itemClass}}">
-        <div class="top">
-          <span>{{ruleName|血压持续偏高}}<\/span>
-          <span class="pill {{levelPill|warn}}">{{riskLevel|关注}}<\/span>
-        <\/div>
-        <div class="txt">判定条件：{{condition|收缩压≥140 且持续≥3天}}<\/div>
-        <div class="note">命中依据：{{evidence|近7天有4天收缩压≥140mmHg}}<\/div>
-      <\/div>
-    {{/rules}}
-    <\/div>
-    {{^rules}}
-    <p class="text">本次评估未命中任何风险规则，健康状态相对平稳。<\/p>
-    {{/rules}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🔎 判定信息<\/div>
-    <div class="row"><span class="k">规则库版本<\/span><span class="v">{{ruleVersion|v2.4.1（2026-07）}}<\/span><\/div>
-    <div class="row"><span class="k">数据窗口<\/span><span class="v">{{dataWindow|2026-07-24 至 2026-07-30}}<\/span><\/div>
-    <div class="row"><span class="k">判定方式<\/span><span class="v">{{judgeMode|本地规则自动研判}}<\/span><\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🕐 判定过程<\/div>
+    <div class="section-title">🕒 处理流程<\/div>
     <div class="timeline">
-    {{#timeline}}
+      {{#timeline}}
       <div class="step {{stepClass}}">
         <div class="time">{{time}}<\/div>
         <div class="node">{{node}}<\/div>
         <div class="detail">{{detail}}<\/div>
       <\/div>
-    {{/timeline}}
+      {{/timeline}}
     <\/div>
-    {{^timeline}}
-    <p class="text">暂无判定过程记录。<\/p>
-    {{/timeline}}
-  <\/div>
-
-  {{#nextSteps}}
-  <div class="section">
-    <div class="section-title">➡️ 处置建议<\/div>
-    <div class="alert">{{nextSteps}}<\/div>
-  <\/div>
-  {{/nextSteps}}
-
-  <div class="foot">来源：{{sourceLabel|健康风险预警规则库}} · 规则判定仅供辅助参考，不作为诊断依据<\/div>
-</script>
-<script type="text/html" id="tpl_risk_level_card">
-<div class="hero">
-    <div class="eyebrow">{{badge|评估标准}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>📊 {{title|风险等级标准}}<\/h1>
-        <p class="sub">{{subtitle|中医体质复合风险 0–10 分制}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{version|v2.4}}<\/div>
-    <\/div>
+    {{^timeline}}<p class="text">暂无数据<\/p>{{/timeline}}
   <\/div>
 
   <div class="section">
-    <div class="section-title">📌 计分说明<\/div>
-    <div class="alert">{{aiNote|中医体质复合风险采用 0–10 分制，划分为 5 个等级}}<\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🧭 分级对照（{{levels_count|5}}）<\/div>
-    <div class="list">
-    {{#risk_levels}}
-      <div class="item {{itemClass}}">
-        <div class="top">
-          <span class="pill {{pillClass}}">{{label|无风险}}<\/span>
-          <span>{{score_range|0–2}} 分<\/span>
-        <\/div>
-        <div class="txt">{{desc|当前指标正常，继续保持}}<\/div>
-        {{#action}}
-        <div class="note">建议动作：{{action}}<\/div>
-        {{/action}}
-      <\/div>
-    {{/risk_levels}}
-    <\/div>
-    {{^risk_levels}}
-    <p class="text">暂无分级标准数据。<\/p>
-    {{/risk_levels}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🧮 计分维度<\/div>
+    <div class="section-title">📉 评估影响<\/div>
     <div class="grid">
+      <div class="stat"><div class="num bad">{{orgImpact|-2.3}}<\/div><div class="lbl">机构 D4 影响<\/div><\/div>
+      <div class="stat"><div class="num bad">{{staffImpact|-4.1}}<\/div><div class="lbl">人员 D4 影响<\/div><\/div>
+    <\/div>
+    <div class="alert {{impactClass|bad}}" style="margin-top:10px">{{impactAnalysis|该投诉计入 T-1 投诉工单数，影响机构与人员 D4 投诉率。}}<\/div>
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">✅ 处理结果<\/div>
+    <div class="item ok">
+      <div class="top"><span>{{resultTitle|已完成回访与规范提醒}}<\/span><span class="pill {{satisfactionClass|ok}}">{{satisfaction|满意}}<\/span><\/div>
+      <div class="txt">{{resultText|暂无处理说明}}<\/div>
+    <\/div>
+  <\/div>
+
+  <div class="foot">来源：{{source|服务质量评估 · 投诉详情}} · 处理完成后回写投诉率维度<\/div>
+</script>
+<script type="text/html" id="tpl_evaluation_standard">
+<div class="hero">
+    <div class="eyebrow">📘 评估标准 · {{version|v2.0}}<\/div>
+    <div class="hero-row">
+      <div>
+        <h1>{{standardName|养老服务质量评估标准}}<\/h1>
+        <p class="sub">机构与人员双对象 · 每日 02:00 计算 T-1 完整数据<\/p>
+      <\/div>
+      <div class="sub" style="text-align:right">{{effectiveDate|2026-07-01 生效}}<\/div>
+    <\/div>
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">🧮 综合评分公式<\/div>
+    <div class="alert">{{formula|综合评分 = D1×30% + D2×20% + D3×20% + D4×30%；评分范围 0-100 分，保留 1 位小数。}}<\/div>
+  <\/div>
+
+  <div class="section">
+    <div class="section-title">📐 维度与权重<\/div>
     {{#dimensions}}
-      <div class="stat"><div class="num">{{weight}}<\/div><div class="lbl">{{name}}<\/div><\/div>
+    <div class="dim">
+      <div class="dim-head">
+        <span class="dim-name">{{code}} {{name}}<small>{{weight}}<\/small><\/span>
+        <span class="dim-score">{{target}}<\/span>
+      <\/div>
+      <div class="note">{{orgRule}}<\/div>
+      <div class="note">{{staffRule}}<\/div>
+    <\/div>
     {{/dimensions}}
-    <\/div>
-    {{^dimensions}}
-    <p class="text">暂无计分维度说明。<\/p>
-    {{/dimensions}}
+    {{^dimensions}}<p class="text">暂无数据<\/p>{{/dimensions}}
   <\/div>
 
   <div class="section">
-    <div class="section-title">🔎 使用说明<\/div>
-    <div class="row"><span class="k">评估周期<\/span><span class="v">{{cycle|每 30 天一次}}<\/span><\/div>
-    <div class="row"><span class="k">数据来源<\/span><span class="v">{{dataSource|体质问卷 + 设备信号}}<\/span><\/div>
-    <div class="row"><span class="k">复评规则<\/span><span class="v">{{recheckRule|等级上升即触发复评}}<\/span><\/div>
-  <\/div>
-
-  {{#tips}}
-  <div class="section">
-    <div class="section-title">💡 注意事项<\/div>
-    <p class="text">{{tips}}<\/p>
-  <\/div>
-  {{/tips}}
-
-  <div class="foot">来源：{{sourceLabel|桂颐智养健康风险评估标准}} · 等级划分供辅助参考，具体以医师判断为准<\/div>
-</script>
-<script type="text/html" id="tpl_elder_duplicate_confirm_card">
-<div class="hero">
-    <div class="eyebrow">{{badge|同名老人确认}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>👥 发现 {{count|2}} 位同名老人<\/h1>
-        <p class="sub">查询姓名：{{name|王秀兰}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{queryTime|2026-07-30 18:20}}<\/div>
-    <\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">⚠️ 需要你确认<\/div>
-    <div class="alert">{{notice|系统发现多位同名老人，为避免评估对象错误，请从下方候选中选择正确的一位后再继续。}}<\/div>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🗂️ 候选老人（{{count|2}}）<\/div>
-    <div class="list">
-    {{#candidates}}
-      <div class="item">
-        <div class="top">
-          <span>{{num|1}} · {{name|王秀兰}}<\/span>
-          <span class="pill {{pillClass|blue}}">{{age|68}}岁 · {{gender|女}}<\/span>
-        <\/div>
-        <div class="row"><span class="k">所在区域<\/span><span class="v">{{area|东区1栋}}<\/span><\/div>
-        <div class="row"><span class="k">慢病史<\/span><span class="v">{{chronic|无}}<\/span><\/div>
-        <div class="row"><span class="k">最近评估<\/span><span class="v">{{lastAssess|暂无记录}}<\/span><\/div>
-        <div class="txt">{{mark|档案编号未提供}}<\/div>
-      <\/div>
-    {{/candidates}}
-    <\/div>
-    {{^candidates}}
-      <p class="text">暂无同名候选老人，可直接继续评估。<\/p>
-    {{/candidates}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🔎 区分要点<\/div>
-    <div class="list">
-    {{#tips}}
-      <div class="item ok">
-        <div class="top"><span>{{label|区分维度}}<\/span><span class="pill ok">{{level|建议核对}}<\/span><\/div>
-        <div class="txt">{{desc|通过该维度可快速区分同名老人。}}<\/div>
-      <\/div>
-    {{/tips}}
-    <\/div>
-    {{^tips}}
-      <p class="text">暂无可用的区分要点，请人工核对档案信息。<\/p>
-    {{/tips}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">💬 快捷回复<\/div>
+    <div class="section-title">🏷️ 标签体系<\/div>
     <div class="tags">
-    {{#quickReplies}}
-      <span class="tag">{{.}}<\/span>
-    {{/quickReplies}}
+      {{#positiveTags}}<span class="tag good">{{.}}<\/span>{{/positiveTags}}
+      {{#negativeTags}}<span class="tag bad">{{.}}<\/span>{{/negativeTags}}
     <\/div>
-    {{^quickReplies}}
-      <p class="text">可直接回复候选序号完成确认。<\/p>
-    {{/quickReplies}}
-  <\/div>
-
-  {{#nextStep}}
-  <div class="section">
-    <div class="section-title">➡️ 下一步<\/div>
-    <p class="text">{{nextStep}}<\/p>
-  <\/div>
-  {{/nextStep}}
-
-  <div class="foot">来源：{{sourceLabel|老人档案库同名匹配}} · 确认对象后系统才会生成正式风险评估<\/div>
-</script>
-<script type="text/html" id="tpl_help_card">
-<div class="hero">
-    <div class="eyebrow">{{badge|使用帮助}}<\/div>
-    <div class="hero-row">
-      <div>
-        <h1>❓ {{title|健康风险评估师}}<\/h1>
-        <p class="sub">{{subtitle|对话式中医体质复合风险助手}}<\/p>
-      <\/div>
-      <div class="sub" style="text-align:right">{{version|v2.6}}<\/div>
-    <\/div>
+    {{^positiveTags}}<p class="text">暂无数据<\/p>{{/positiveTags}}
   <\/div>
 
   <div class="section">
-    <div class="section-title">🧭 我能帮你做什么<\/div>
-    <p class="text">{{intro|直接用日常口语提问即可，我会自动识别意图并调取对应的评估结果。}}<\/p>
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">💬 常用指令（{{helps_count|7}}）<\/div>
+    <div class="section-title">🎯 结果应用<\/div>
     <div class="list">
-    {{#helps}}
-      <div class="item">
-        <div class="top">
-          <span class="pill {{pillClass|blue}}">{{cmd|指令}}<\/span>
-          <span class="muted">{{scene|通用}}<\/span>
-        <\/div>
-        <div class="txt">{{text|说出该关键词即可查看对应内容。}}<\/div>
-      <\/div>
-    {{/helps}}
-    <\/div>
-    {{^helps}}
-      <p class="text">暂无可用指令说明。<\/p>
-    {{/helps}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">🏷️ 快捷关键词<\/div>
-    <div class="tags">
-    {{#keywords}}
-      <span class="tag">{{.}}<\/span>
-    {{/keywords}}
-    <\/div>
-    {{^keywords}}
-      <p class="text">可直接说「总体」「体质」「调理」「报告」等关键词。<\/p>
-    {{/keywords}}
-  <\/div>
-
-  <div class="section">
-    <div class="section-title">📶 五级风险划分<\/div>
-    <div class="list">
-    {{#levels}}
+      {{#applications}}
       <div class="item {{itemClass}}">
-        <div class="top"><span>{{name|风险等级}}<\/span><span class="pill {{pillClass|ok}}">{{range|—}}<\/span><\/div>
-        <div class="txt">{{desc|该等级对应的处置建议。}}<\/div>
+        <div class="top"><span>{{range}}<\/span><span class="pill {{pillClass}}">{{tag}}<\/span><\/div>
+        <div class="txt">{{desc}}<\/div>
       <\/div>
-    {{/levels}}
+      {{/applications}}
     <\/div>
-    {{^levels}}
-      <p class="text">说「风险等级」可查看五级划分标准。<\/p>
-    {{/levels}}
+    {{^applications}}<p class="text">暂无数据<\/p>{{/applications}}
   <\/div>
 
   <div class="section">
-    <div class="section-title">🪜 使用流程<\/div>
-    <div class="timeline">
-    {{#steps}}
-      <div class="step {{stepClass}}">
-        <div class="time">{{stage|步骤}}<\/div>
-        <div class="node">{{node|操作}}<\/div>
-        <div class="detail">{{detail|操作说明。}}<\/div>
-      <\/div>
-    {{/steps}}
-    <\/div>
-    {{^steps}}
-      <p class="text">选择老人 → 提问查看结果 → 生成完整报告。<\/p>
-    {{/steps}}
+    <div class="section-title">📅 计算节奏<\/div>
+    <div class="row"><span class="k">计算频率<\/span><span class="v">{{calcFreq|每日 02:00}}<\/span><\/div>
+    <div class="row"><span class="k">数据口径<\/span><span class="v">{{dataScope|T-1 完整数据}}<\/span><\/div>
+    <div class="row"><span class="k">评估对象<\/span><span class="v">{{targets|机构 / 服务人员}}<\/span><\/div>
+    <div class="row"><span class="k">标准版本<\/span><span class="v">{{version|v2.0}}<\/span><\/div>
   <\/div>
 
-  <div class="section">
-    <div class="section-title">⚠️ 免责声明<\/div>
-    <div class="alert">{{disclaimer|本报告由人工智能分析生成，仅供参考，不构成医疗诊断依据；如有不适请及时就医。}}<\/div>
-  <\/div>
-
-  <div class="foot">来源：{{sourceLabel|桂颐智养 · 健康风险评估师}} · 同名老人会自动弹出确认，请选择正确的一位<\/div>
+  <div class="foot">来源：{{source|服务质量评估 · 标准说明}} · 权重由管理端配置并形成标准版本<\/div>
 </script>
 </body>
 </html>
